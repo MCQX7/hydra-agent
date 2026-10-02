@@ -1,8 +1,8 @@
 # recette-recurrences.md — registre des récurrences de recette
 
 > **Registre du squelette Hydra.** Rempli par `hydra-recette`, **jamais à la
-> main** : Hydra écrit (occurrences datées, nouveaux motifs, archivages),
-> le designer valide ou corrige. Un motif ne devient une entrée qu'à partir de
+> main** : après chaque recette, Hydra propose (occurrences datées, nouveaux
+> motifs, archivages), et n'écrit qu'après le go du designer. Un motif ne devient une entrée qu'à partir de
 > **2+ occurrences sur des recettes distinctes**. Les motifs **non revus
 > depuis 5 recettes** sont proposés à l'archivage. Les motifs à **une seule
 > occurrence** vivent en zone « Candidats » (comptage tenu dans CE fichier,
@@ -14,7 +14,7 @@
 > Format d'entrée :
 > - **Motif** : `famille / type / localisation`
 >   - **Description** : …
->   - **Occurrences** : [AAAA-MM] sujet — note
+>   - **Occurrences** : [AAAA-MM-JJ] écran · build — note
 >   - **Sévérité habituelle** : …
 >   - **Cause probable** : …
 
@@ -23,10 +23,10 @@ _(aucun)_
 ## Candidats (motifs à une seule occurrence)
 
 > Zone de comptage PERSISTANT (jamais de mémoire d'agent). Un motif vu 1 fois
-> est écrit ici avec son occurrence datée `[AAAA-MM] recette — note`. Au
+> est écrit ici avec son occurrence datée `[AAAA-MM-JJ] écran · build — note`. Au
 > recroisement sur une **recette distincte** → 2 occurrences → promotion
-> proposée en « Motif actif ». hydra-recette lit/écrit cette zone à chaque
-> recette.
+> proposée en « Motif actif ». hydra-recette lit cette zone à chaque recette,
+> et propose ce qu'elle y ajoute.
 
 _(aucun)_
 

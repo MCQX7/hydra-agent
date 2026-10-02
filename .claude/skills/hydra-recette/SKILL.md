@@ -258,18 +258,22 @@ Si le registre `recette-recurrences.md` existe dans le contexte projet :
 rentables à checker). La hotlist **priorise** l'ordre de la passe — elle ne
 **remplace JAMAIS** la passe complète.
 
-**Après chaque recette, mettre à jour le registre** — le registre est le
+**Après chaque recette, proposer la mise à jour du registre** — le registre est le
 compteur PERSISTANT ; ne JAMAIS compter les récurrences de mémoire (entre
-deux recettes il y a des clear/compact) :
-- motif vu pour la 1ʳᵉ fois → l'écrire en zone **Candidats** avec son
-  occurrence datée `[AAAA-MM] recette — note` ;
+deux recettes il y a des clear/compact). Dans le message de fin au designer, et non
+dans le livrable du dev, le motif de chaque dérive et ce qu'il devient :
+- motif vu pour la 1ʳᵉ fois → une entrée en zone **Candidats**, avec son occurrence ;
 - motif déjà en Candidats et recroisé sur une **recette distincte** →
-  incrémenter (2 occurrences) → **promouvoir en Motif actif** ;
-- pour les motifs actifs, ajouter les **occurrences datées** rencontrées.
-Le comptage se LIT et s'ÉCRIT dans le registre, jamais en mémoire. Hydra
-écrit, le designer valide. **Une recette distincte**, c'est un autre build, ou le
-même relevé un autre jour : deux runs sur le même build le même jour sont UNE
-recette, donc une seule occurrence.
+  2 occurrences → **promotion en Motif actif** ;
+- motif actif recroisé → son occurrence ajoutée.
+L'occurrence s'écrit `[AAAA-MM-JJ] écran · build — note` : le jour du relevé et le
+build recetté, ce qui fait d'elle une recette distincte. **Une recette distincte**,
+c'est un autre build, ou le même relevé un autre jour : deux runs sur le même build le
+même jour sont UNE recette, donc une seule occurrence. L'occurrence ne nomme jamais un
+dossier de `topics/` : le contexte ne dépend d'aucun sujet.
+Le registre vit dans le contexte : la proposition se fait en diff, et rien ne s'écrit
+avant le go du designer (CLAUDE.md, « Écrire dans le contexte »). Le comptage se LIT et
+s'ÉCRIT dans le registre, jamais en mémoire.
 
 ## Incertitudes — l'exception
 

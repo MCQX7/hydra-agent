@@ -416,8 +416,14 @@ function assemble(explorationsDir){
     const o = Object.keys(v).sort((a, b) => v[b] - v[a]);
     // Écran indécidable — aucun exclusif, ou égalité entre deux écrans — se DIT, jamais ne se devine.
     x.ecran = o.length && (o.length === 1 || v[o[0]] > v[o[1]]) ? o[0] : null;
+    // Rangé, mais il porte aussi des exclusifs d'un autre écran : il mêle deux écrans, et la
+    // barre le nommerait du premier sans rien dire. Un proto annoté en entier sur le mauvais
+    // écran, lui, reste invisible : seul un écran déclaré par le proto le trahirait.
+    x.autres = x.ecran ? o.slice(1).map(e => ({ e, n: v[e] })) : [];
   });
   const flou = T.filter(x => x.t.size && !x.ecran);
+  const nomEcran = k => (so.ecrans.find(e => e.ecran === k) || {}).ecranNom || k;
+  const meles = T.filter(x => x.autres.length);
 
   // Un parcours se compose UNE ÉTAPE PAR FICHIER (maquette § Socle / variable) : chaque
   // étape est donc capturée et inspectée comme un proto. C'est ici qu'on les rassemble en
@@ -568,6 +574,10 @@ function assemble(explorationsDir){
     partiels.length ? partiels.map(b => situe(b) + ' ' + b.n + '/' + b.elig).join(' · ') : '',
     flou.length ? flou.map(x => esc(protoPisteId(x.v) || x.v.label)).join(', ')
                   + ' — écran indéterminable' : '',
+    meles.length ? meles.map(x => esc(protoPisteId(x.v) || x.v.label) + ' — rangé sous « '
+                    + esc(nomEcran(x.ecran)) + ' », porte aussi '
+                    + x.autres.map(a => a.n + ' bloc(s) propre(s) à « ' + esc(nomEcran(a.e)) + ' »').join(', '))
+                    .join(' · ') : '',
     sansAnnot.length ? sansAnnot.map(x => esc(protoPisteId(x.v) || x.v.label)).join(', ')
                        + ' sans aucun bloc annoté' : ''
   ].filter(Boolean);

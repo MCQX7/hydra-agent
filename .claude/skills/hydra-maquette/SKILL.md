@@ -214,7 +214,9 @@ autres blocs de A, présents dans tous ses propres protos, tombent en faux parti
 **Ce qui range un proto dans son écran, c'est un bloc qui n'est qu'à cet écran-là.** Un bloc
 partagé n'en range aucun : il a une ligne sur chaque écran, donc il vit sur plusieurs. Deux
 écrans dont tous les blocs se recouvrent ne se distinguent donc pas — la galerie nomme alors
-les protos qu'elle n'a pas pu situer. C'est le relevé de l'écran qui est à reprendre, jamais
+les protos qu'elle n'a pas pu situer. Un proto qui porte des blocs propres à deux écrans se
+range sous celui qui en a le plus, et la galerie nomme l'autre : une étape a pris les blocs
+d'une autre, c'est l'annotation ou la composition qui est à reprendre. C'est le relevé de l'écran qui est à reprendre, jamais
 un bloc à inventer pour le distinguer : un tableau gonflé d'un bloc qui n'existe pas ment sur
 l'écran observé, ce que la liste entière est là pour empêcher.
 **Sujet sans écran existant à reproduire** : une seule ligne, `| — | aucun écran existant |

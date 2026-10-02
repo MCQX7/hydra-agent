@@ -672,6 +672,14 @@ function convert(mdPath){
         .recetteFaits(rootDir, { livrable: { nom: path.basename(abs), texte: md }, ecrire: true });
       gaps = gaps.concat(r.bloquants, r.dits);
     } catch(e){ gaps.push('réconciliation de recette non exécutée (' + e.message + ') — conformes et dérives NON vérifiés'); }
+    // Le registre des récurrences ne se mettait jamais à jour : la règle vivait dans la tête,
+    // lue au début, oubliée à la fin. Le rappel vit ici, au livrable, et seulement quand
+    // l'instance tient un registre. Il vise le message au designer, pas le livrable du dev.
+    const inst = path.basename(path.dirname(rootDir)) === 'topics' ? path.dirname(path.dirname(rootDir)) : null;
+    if(inst && fs.existsSync(path.join(inst, 'context', 'recette-recurrences.md')))
+      gaps.push('registre des récurrences : dans ton message de fin, propose au designer sa mise à jour '
+        + '(hydra-recette § Hotlist) — le motif de chaque dérive, et pour chacun : nouveau candidat, candidat '
+        + 'recroisé à promouvoir, ou occurrence d\'un motif actif — en diff, et attends son go avant d\'écrire.');
   }
   return { outPath, gaps };
 }

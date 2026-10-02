@@ -162,4 +162,5 @@ sujet après sujet, le ton que writer a relevé.
 **À quoi il sert** : il compte les écarts qui reviennent d'une recette à l'autre, pour
 vérifier ceux-là en premier.
 
-**Comment le remplir** : jamais à la main. La recette le remplit, tu valides.
+**Comment le remplir** : jamais à la main. Après chaque recette, Hydra te propose ce
+qu'il y ajoute ; rien ne s'écrit sans ton accord.
