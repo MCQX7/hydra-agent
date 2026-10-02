@@ -4,17 +4,12 @@
 </picture>
 
 <p align="center">
+  <a href="https://mcqx7.github.io/hydra-agent/"><img alt="La présentation" src="https://img.shields.io/badge/pr%C3%A9sentation-en%20ligne-d5341a?style=flat-square"></a>
+  <a href="https://github.com/MCQX7/hydra-agent/releases/latest"><img alt="Version 1.0" src="https://img.shields.io/badge/version-1.0-111111?style=flat-square"></a>
   <a href="LICENSE"><img alt="Licence MIT" src="https://img.shields.io/badge/licence-MIT-111111?style=flat-square"></a>
-  <img alt="Pour Claude Code" src="https://img.shields.io/badge/pour-Claude%20Code-d5341a?style=flat-square">
+  <img alt="Pour Claude Code" src="https://img.shields.io/badge/pour-Claude%20Code-111111?style=flat-square">
   <img alt="Conçu pour Opus" src="https://img.shields.io/badge/con%C3%A7u%20pour-Opus-111111?style=flat-square">
   <img alt="En français" src="https://img.shields.io/badge/langue-fran%C3%A7ais-111111?style=flat-square">
-</p>
-
-<p align="center">
-  <a href="https://mcqx7.github.io/hydra-agent/"><b>La présentation complète</b></a> ·
-  <a href="#démarrer">Démarrer</a> ·
-  <a href="#demander-une-seule-chose">Demander une seule chose</a> ·
-  <a href="#les-têtes">Les têtes</a>
 </p>
 
 ---
@@ -27,36 +22,18 @@ le travail d'une petite équipe autour du designer, et lui laisse les décisions
 Il ne flatte pas : une idée faible se dit avec son pourquoi, une affirmation cite sa
 source, une absence de données se dit au lieu de se combler.
 
-## En un coup d'œil
+## Comment ça marche
 
-```mermaid
-flowchart TB
-  D([Ta demande]) --> C[Cortex<br/>cadre et oriente]
-  subgraph Discovery
-    A[Audit<br/>ton existant]
-    R[Research<br/>ce qui se fait ailleurs]
-  end
-  C --> A
-  C --> R
-  A --> I[Ideation<br/>pistes et critique]
-  R --> I
-  I --> M[Maquette<br/>protos]
-  M --> W[Writer<br/>textes]
-  W --> L([Livrables])
-  C -. une maquette et son build .-> RE[Recette<br/>corrections chiffrées]
-  RE -.-> L
-  classDef accent fill:#d5341a,stroke:#d5341a,color:#ffffff;
-  class C accent;
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/flux-sombre.png">
+  <img alt="Une demande entre ; cortex la cadre et l'oriente vers les têtes, qui s'appuient sur les outils de la mission ; des livrables sortent ; le tout repose sur le contexte de la mission." src="docs/assets/flux-clair.png">
+</picture>
 
-La phase de discovery réunit deux têtes : l'audit, qui regarde ton existant, et
-research, qui regarde ailleurs. Hydra n'appelle que les têtes dont ta demande a besoin.
+Cortex cadre ta demande et n'appelle que les têtes dont elle a besoin. Audit et
+research forment la phase de discovery : l'audit regarde ton existant, research ce
+qui se fait ailleurs.
 
 ## Ce qu'un sujet produit
-
-<img alt="Exemple : quatre protos mobiles d'une mission fictive, « la carte pour trouver un vélo », sur un même socle d'écran" src="docs/assets/exemple-protos.png">
-
-<sub>Exemple tiré d'une mission fictive : quatre pistes de nature différente, composées sur le même socle d'écran avec les composants du design system — seul le levier change, pour comparer sur pièce. La carte, absente du design system, est schématisée et étiquetée comme telle.</sub>
 
 | Livrable | Ce qu'il contient |
 |---|---|
