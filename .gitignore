@@ -1,0 +1,16 @@
+.DS_Store
+
+# Ton travail et ta mission : ils restent chez toi, jamais dans le dépôt de la méthode.
+/context/
+/topics/*
+# … sauf le dossier des archives, livré vide : un fichier témoin le garde, son contenu reste chez toi.
+!/topics/.archive/
+/topics/.archive/*
+!/topics/.archive/.gitkeep
+
+# Réglages propres à ta machine (dont l'exclusion de tes autres CLAUDE.md)
+.claude/settings.local.json
+
+# Matière régénérable par les outils
+.shots/
+.mesures/

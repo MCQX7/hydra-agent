@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hydra — <!--HYDRA:TYPE--></title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Polices via Google Fonts (réseau). PAS d'embarquement base64 : plusieurs
+     centaines de Ko par livrable pour un gain hors-ligne, alors qu'on lit
+     connecté. Hors-ligne → fallback système via les font-stacks. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* HYDRA RENDER — pré-rendu statique (contenu visible SANS JS → Quick Look).
+   Le markdown est parsé en amont par .tools/md-to-html.js. Signature Swiss/ITS.
+   Layout figé : masthead fixe + deux rails fixes ; SEUL le contenu défile. */
+:root{
+  --ink:#111; --ink-2:#5b5b5b; --ink-3:#8f8f8f;
+  --rule:#111; --rule-soft:#d9d8d3; --paper:#fff; --panel:#f6f5f1;
+  /* Couleur de signature Hydra — NE PAS utiliser la couleur de marque d'un
+     client. Un seul endroit à changer. */
+  --accent:#d5341a;        /* signature Hydra : vermillon profond */
+  --accent-tint:213,52,26; /* même couleur en RGB (fonds translucides) */
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Inter","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
+  --measure:66ch; --rail-l:220px; --masthead-h:92px; --gap:48px;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; background:var(--paper); color:var(--ink); }
+body{ font-family:var(--sans); font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+
+/* barre d'outils — au-dessus de TOUT (z le plus haut) */
+/* bouton « copier » : dans le FLUX du masthead (dernier enfant de la row) —
+   le flex garantit qu'il ne chevauche jamais le libellé, sans réserve chiffrée */
+#copyBtn{ align-self:center; font:600 11px/1 var(--sans); letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink); background:var(--paper); white-space:nowrap;
+  border:1px solid var(--rule-soft); padding:7px 11px; cursor:pointer;
+  transition:background .12s,color .12s,border-color .12s; }
+#copyBtn:hover{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+
+/* masthead — FIXE, opaque : le contenu défile DESSOUS */
+.masthead{ position:fixed; top:0; left:0; right:0; z-index:50;
+  height:var(--masthead-h); background:var(--paper); padding:20px 48px 0; }
+.masthead__row{ display:flex; align-items:baseline; gap:24px; padding-bottom:12px; }
+.masthead__mark{ font:900 26px/1 var(--serif); letter-spacing:-.02em; text-transform:uppercase; }
+.masthead__mark .dot{ color:var(--accent); }
+.masthead__type{ margin-left:auto; font-size:11px; font-weight:700; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap; }
+.masthead__rule{ height:3px; background:var(--ink); }
+.masthead__rule-thin{ height:1px; background:var(--accent); margin-top:2px; }
+
+/* rails — FIXES de chaque côté, défilent seuls si longs */
+.rail{ position:fixed; top:var(--masthead-h); bottom:0; overflow:auto;
+  z-index:40; background:var(--paper); font-size:12.5px; }
+.rail-l{ left:0; width:var(--rail-l); border-right:1px solid var(--rule); padding:26px 22px 40px 48px; }
+.rail__label{ font-size:10.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink-3); padding-bottom:8px; border-bottom:1px solid var(--rule); margin-bottom:14px; }
+.rail__toc{ list-style:none; margin:0; padding:0; }
+.rail__toc a{ display:flex; gap:10px; text-decoration:none; color:var(--ink-2);
+  padding:5px 0; border-bottom:1px solid var(--rule-soft); line-height:1.3; }
+.rail__toc a:hover{ color:var(--accent); }
+.rail__toc .num{ color:var(--accent); font-weight:600; font-variant-numeric:tabular-nums; min-width:22px; }
+.rail__empty{ color:var(--ink-3); }
+
+/* contenu — SEULE colonne qui défile ; padding-top > hauteur du masthead */
+.main{ margin-left:var(--rail-l); margin-right:var(--gap);
+  padding:calc(var(--masthead-h) + 28px) var(--gap) 120px var(--gap); }
+.article{ counter-reset:h2; max-width:var(--measure); }
+.article > :first-child{ margin-top:0; }
+
+/* ── typographie de l'article (Swiss) ── */
+.article h1{ font-family:var(--serif); font-optical-sizing:auto; font-weight:600;
+  font-size:clamp(2.6rem,5.4vw,4.4rem); line-height:.96; letter-spacing:-.018em;
+  margin:0 0 .5em; max-width:18ch; }
+.article h2{ font-family:var(--serif); font-optical-sizing:auto; font-weight:600;
+  font-size:clamp(1.7rem,3.3vw,2.5rem); line-height:1.04; letter-spacing:-.01em;
+  margin:2.4em 0 .6em; padding-top:.5em; border-top:2px solid var(--ink);
+  display:flex; gap:.5em; align-items:baseline; }
+.article h2::before{ counter-increment:h2; content:counter(h2,decimal-leading-zero);
+  font-family:var(--mono); font-size:.42em; font-weight:500; color:var(--accent);
+  letter-spacing:0; transform:translateY(-.35em); }
+.article h3{ font-family:var(--sans); font-weight:700; font-size:.95rem;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--ink); margin:2em 0 .5em; }
+.article h4{ font-family:var(--sans); font-weight:600; font-size:.8rem;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2); margin:1.6em 0 .4em; }
+.article p{ margin:0 0 1.1em; }
+.article a{ color:var(--ink); text-decoration:none;
+  background-image:linear-gradient(var(--accent),var(--accent));
+  background-size:100% 1px; background-position:0 100%; background-repeat:no-repeat;
+  padding-bottom:1px; transition:background-size .12s,color .12s; }
+.article a:hover{ color:var(--accent); }
+.article a.xref{ background:none; color:inherit; }              /* renvoi interne : ni accent, ni soulignement */
+.article a.xref:hover{ color:inherit; text-decoration:underline; } /* actionnable au survol seulement */
+.article strong{ font-weight:600; } /* amorti : le vrai correctif du sur-gras est l'écriture */
+.article em{ font-style:italic; }
+.article ul, .article ol{ margin:0 0 1.2em; padding-left:1.4em; }
+.article li{ margin:0 0 .35em; padding-left:.2em; }
+.article ul li::marker{ color:var(--accent); content:"— "; }
+.article ul li:has(> input[type="checkbox"]){ list-style:none; } /* une case à cocher tient lieu de puce */
+.article ul li:has(> input[type="checkbox"])::marker{ content:none; }
+.article ol{ list-style:none; counter-reset:li; padding-left:0; }
+.article ol > li{ counter-increment:li; padding-left:2.4em; position:relative; }
+.article ol > li::before{ content:counter(li,decimal-leading-zero); position:absolute; left:0; top:.05em;
+  font-family:var(--mono); font-size:.78em; color:var(--accent); font-weight:500; }
+.article li > ul, .article li > ol{ margin:.35em 0 .35em; }
+.article blockquote{ margin:1.4em 0; padding:.1em 0 .1em 22px; border-left:2px solid var(--accent);
+  color:var(--ink-2); font-style:italic; }
+.article blockquote p:last-child{ margin-bottom:0; }
+.article table{ width:100%; border-collapse:collapse; margin:1.6em 0; font-size:.94rem;
+  font-variant-numeric:tabular-nums; }
+.article thead th{ text-align:left; font-weight:700; font-size:.72rem; letter-spacing:.08em;
+  text-transform:uppercase; padding:10px 14px 10px 0; border-bottom:2px solid var(--ink); vertical-align:bottom; }
+.article tbody td{ padding:11px 14px 11px 0; border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+.article tbody tr:hover{ background:var(--panel); }
+.article th:last-child, .article td:last-child{ padding-right:0; }
+.article code{ font-family:var(--mono); font-size:.86em; background:var(--panel);
+  padding:.12em .35em; border:1px solid var(--rule-soft); }
+.article pre{ background:var(--panel); border:1px solid var(--rule-soft); border-left:2px solid var(--ink);
+  padding:18px 20px; overflow:auto; margin:1.5em 0; line-height:1.5; }
+.article pre code{ background:none; border:none; padding:0; font-size:.82rem; }
+.article hr{ border:0; border-top:1px solid var(--rule); margin:2.4em 0; }
+.article figure{ margin:1.8em 0; }
+.article img{ display:block; width:100%; height:auto; border:1px solid var(--rule-soft); }
+.article figure figcaption{ margin-top:8px; font-size:11.5px; letter-spacing:.02em;
+  color:var(--ink-3); border-left:2px solid var(--accent); padding-left:8px; }
+.article .img-missing{ display:block; border:1px dashed var(--accent);
+  background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(var(--accent-tint),.05) 9px,rgba(var(--accent-tint),.05) 10px);
+  color:var(--ink-2); font-family:var(--mono); font-size:12px; padding:16px 18px; margin:1.8em 0; }
+.article .img-missing strong{ color:var(--accent); font-weight:600; margin-right:8px; }
+
+/* toast (bouton copier) */
+.toast{ position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--ink); color:var(--paper); padding:11px 20px; font:600 12px/1 var(--sans);
+  letter-spacing:.1em; text-transform:uppercase; opacity:0; pointer-events:none;
+  transition:opacity .18s,transform .18s; z-index:110; }
+.toast.is-on{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* responsive — mobile : les deux rails passent en STATIQUE (plus de colonnes
+   fixes qui mangent le contenu), tout s'empile dans le flux */
+@media (max-width:900px){
+  .masthead{ position:static; height:auto; padding:22px 22px 0; }
+  .masthead__row{ flex-direction:column; align-items:flex-start; }
+  .masthead__type{ margin-left:0; }
+  #copyBtn{ order:-1; align-self:flex-end; }
+  .rail{ position:static; width:auto; bottom:auto; overflow:visible; }
+  .rail-l{ border-right:0; border-bottom:1px solid var(--rule); padding:20px 22px; }
+  .rail__toc{ columns:2; column-gap:24px; }
+  .main{ margin-left:0; margin-right:0; padding:24px 22px 80px; }
+}
+/* impression / PDF */
+@media print{
+  #copyBtn,.rail__note{ display:none; }
+  .masthead,.rail{ position:static; height:auto; width:auto; }
+  .rail-l{ border:0; }
+  .main{ margin:0; padding:0; }
+  a{ background:none !important; }
+  .article h2{ break-after:avoid; }
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead__row">
+    <div class="masthead__mark">Hydra<span class="dot">.</span></div>
+    <div class="masthead__type"><!--HYDRA:TYPE--></div>
+    <button id="copyBtn">Copier le markdown</button>
+  </div>
+  <div class="masthead__rule"></div>
+  <div class="masthead__rule-thin"></div>
+</header>
+
+<!-- rail gauche : sommaire -->
+<aside class="rail rail-l">
+  <div class="rail__label">Sommaire</div>
+  <ol class="rail__toc"><!--HYDRA:TOC--></ol>
+</aside>
+
+<!-- colonne de contenu (seule à défiler) -->
+<main class="main"><article class="article"><!--HYDRA:CONTENT--></article></main>
+
+<div class="toast" id="toast">Copié</div>
+
+<!-- source markdown brute conservée pour le bouton Copier (seul usage du JS) -->
+<script type="text/markdown" id="mdSource"><!--HYDRA:MDSOURCE--></script>
+<script>
+(function(){
+  var src=document.getElementById('mdSource'), btn=document.getElementById('copyBtn'), toast=document.getElementById('toast');
+  if(!btn) return;
+  function done(){ toast.classList.add('is-on'); setTimeout(function(){ toast.classList.remove('is-on'); },1400); }
+  btn.addEventListener('click',function(){
+    var txt=src?src.textContent:'';
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,fb); } else fb();
+    function fb(){ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); }
+  });
+})();
+</script>
+</body>
+</html>

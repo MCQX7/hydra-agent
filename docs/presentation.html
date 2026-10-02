@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hydra — Présentation</title>
+<!-- Page de présentation d'Hydra. Elle dit ce qu'Hydra fait et produit ; elle ne
+     détaille pas chaque règle des têtes, qui changent plus souvent qu'elle. La
+     source de vérité reste CLAUDE.md et .claude/skills/hydra-* : en cas de
+     désaccord, ce sont eux qui ont raison. Installer et démarrer : README.md. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#111; --ink-2:#5b5b5b; --ink-3:#8f8f8f;
+  --rule:#111; --rule-soft:#d9d8d3; --paper:#fff; --panel:#f6f5f1;
+  --accent:#d5341a;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Inter","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
+  --measure:74ch; --gap:48px;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; background:var(--paper); color:var(--ink); }
+body{ font-family:var(--sans); font-size:17px; line-height:1.62; counter-reset:sec;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+code{ font-family:var(--mono); font-size:.86em; }
+.wrap{ max-width:960px; margin:0 auto; padding:0 var(--gap) 120px; }
+
+.masthead{ padding:36px 0 0; margin-bottom:48px; }
+.masthead__row{ display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding-bottom:12px; }
+.masthead__mark{ font:900 26px/1 var(--serif); letter-spacing:-.02em; text-transform:uppercase; }
+.masthead__mark .dot{ color:var(--accent); }
+.masthead__type{ font-size:11px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); white-space:nowrap; }
+.masthead__rule{ height:3px; background:var(--ink); }
+.masthead__rule-thin{ height:1px; background:var(--accent); margin-top:2px; }
+
+.hero h1{ max-width:11ch; }
+.hero h1{ font-family:var(--serif); font-optical-sizing:auto; font-weight:600;
+  font-size:clamp(2.8rem,6vw,4.8rem); line-height:.96; letter-spacing:-.018em; margin:0 0 .35em; }
+.hero .lede{ font-size:1.28rem; line-height:1.45; color:var(--ink-2); max-width:44ch; }
+.hero .lede strong{ color:var(--ink); font-weight:600; }
+
+section{ max-width:var(--measure); }
+h2{ font-family:var(--serif); font-optical-sizing:auto; font-weight:600;
+  font-size:clamp(1.7rem,3.3vw,2.4rem); line-height:1.04; letter-spacing:-.01em;
+  margin:2.8em 0 .7em; padding-top:.5em; border-top:2px solid var(--ink);
+  display:flex; gap:.5em; align-items:baseline; counter-increment:sec; }
+h2::before{ content:counter(sec,decimal-leading-zero);
+  font-family:var(--mono); font-size:.42em; font-weight:500; color:var(--accent);
+  letter-spacing:0; transform:translateY(-.35em); }
+p{ margin:0 0 1.1em; }
+p.big{ font-size:1.1rem; }
+strong, b{ font-weight:700; }
+
+.steps{ list-style:none; counter-reset:st; padding:0; margin:1.4em 0 0; }
+.steps li{ counter-increment:st; padding-left:3em; position:relative; margin-bottom:1.2em; }
+.steps li::before{ content:counter(st,decimal-leading-zero); position:absolute; left:0; top:.05em;
+  font-family:var(--mono); font-size:1rem; color:var(--accent); font-weight:500; }
+
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:0; margin:1.6em 0; border-top:1px solid var(--rule); }
+.grid .cell{ padding:18px 22px 18px 0; border-bottom:1px solid var(--rule-soft); }
+.grid .cell:nth-child(odd){ border-right:1px solid var(--rule-soft); padding-right:28px; }
+.grid .cell:nth-child(even){ padding-left:28px; }
+.grid .name{ font:700 .78rem/1 var(--mono); letter-spacing:.1em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:6px; }
+.grid .desc{ font-size:.98rem; line-height:1.5; color:var(--ink-2); }
+.grid .desc b{ color:var(--ink); font-weight:600; }
+
+.cards{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:1.6em 0; }
+.card{ background:var(--panel); border:1px solid var(--rule-soft); border-left:2px solid var(--accent); padding:20px 22px; }
+.card h3{ font:700 .8rem/1 var(--sans); letter-spacing:.12em; text-transform:uppercase; margin:0 0 12px; }
+.card ul{ margin:0; padding-left:1.2em; }
+.card li{ margin-bottom:.4em; font-size:.96rem; color:var(--ink-2); }
+.card li::marker{ color:var(--accent); }
+.card li b{ color:var(--ink); font-weight:600; }
+.card p{ font-size:.96rem; color:var(--ink-2); margin:0; }
+
+.dem{ width:100%; border-collapse:collapse; margin:1.4em 0; font-size:.95rem; }
+.dem th{ font:700 .7rem/1.2 var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--accent);
+  text-align:left; padding:10px 14px 10px 0; border-bottom:2px solid var(--ink); vertical-align:bottom; }
+.dem td{ padding:12px 14px 12px 0; border-bottom:1px solid var(--rule-soft); vertical-align:top; color:var(--ink-2); }
+.dem td:first-child{ color:var(--ink); font-weight:600; width:34%; }
+@media (max-width:720px){ .dem, .dem tbody, .dem tr, .dem td{ display:block; width:auto; } .dem thead{ display:none; }
+  .dem td{ border-bottom:0; padding:2px 0; } .dem td:first-child{ width:auto; padding-top:14px; } .dem tr{ border-bottom:1px solid var(--rule-soft); padding-bottom:10px; } }
+
+.plain{ padding-left:1.2em; margin:1.2em 0; }
+.plain li{ margin-bottom:.6em; }
+.plain li::marker{ color:var(--accent); }
+
+.note{ font:500 .72rem/1.5 var(--mono); letter-spacing:.06em; text-transform:uppercase;
+  color:var(--ink-3); border-left:2px solid var(--rule-soft); padding-left:12px; margin-top:1.4em; }
+
+.flow{ margin:2em 0 .6em; }
+.flow figcaption{ font:500 .68rem/1 var(--mono); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); margin-bottom:1.2em; }
+.flow__arrow{ height:26px; position:relative; }
+.flow__arrow::before{ content:""; position:absolute; left:50%; top:0; bottom:6px; width:2px;
+  background:var(--ink); transform:translateX(-50%); }
+.flow__arrow::after{ content:""; position:absolute; left:50%; bottom:0; width:0; height:0;
+  border-left:5px solid transparent; border-right:5px solid transparent;
+  border-top:7px solid var(--ink); transform:translateX(-50%); }
+.flow__io{ border:1px solid var(--ink); padding:14px 20px; display:flex; align-items:baseline; gap:16px; }
+.flow__io--in{ background:var(--panel); }
+.flow__io--out{ background:var(--ink); color:var(--paper); }
+.flow__tag{ font:500 .6rem/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); white-space:nowrap; }
+.flow__io--out .flow__tag{ color:var(--paper); opacity:.65; }
+.flow__io-body{ font-size:1rem; }
+.flow__cortex{ border:1px solid var(--ink); border-left:3px solid var(--accent); padding:16px 22px; text-align:center; }
+.flow__cortex-name{ font:900 1.35rem/1 var(--serif); letter-spacing:-.01em; }
+.flow__cortex-role{ font:500 .7rem/1 var(--mono); letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-3); margin-top:8px; }
+.flow__work{ display:grid; grid-template-columns:1fr auto; border:1px solid var(--rule-soft); }
+.flow__heads{ padding:16px 20px; }
+.flow__feed{ padding:16px 20px; border-left:1px dashed var(--rule-soft); background:var(--panel);
+  display:flex; flex-direction:column; justify-content:center; max-width:220px; }
+.flow__label{ display:block; font:500 .58rem/1 var(--mono); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:11px; }
+.flow__chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.flow__chip{ font:600 .8rem/1 var(--sans); padding:7px 12px; border:1px solid var(--ink); border-radius:2px; }
+.flow__feed-list{ font:500 .8rem/1.5 var(--mono); color:var(--ink-2); }
+.flow__base{ margin-top:16px; border-top:2px solid var(--ink); padding-top:11px;
+  font-size:.9rem; color:var(--ink-2); text-align:center; }
+.flow__base-key{ font-family:var(--mono); font-size:.85em; color:var(--accent); }
+
+.encart{ margin:2em 0 .6em; border:1px solid var(--ink); background:var(--panel); padding:26px 28px; }
+.encart__kicker{ font:500 .62rem/1 var(--mono); letter-spacing:.18em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:12px; }
+.encart__title{ font-family:var(--serif); font-weight:600; font-size:1.5rem; line-height:1.1;
+  letter-spacing:-.01em; margin:0 0 .5em; }
+.encart p{ font-size:1rem; margin:0 0 .5em; }
+
+.footer{ margin-top:64px; padding-top:16px; border-top:1px solid var(--rule-soft);
+  font:500 11px/1.5 var(--mono); letter-spacing:.06em; color:var(--ink-3); text-transform:uppercase; }
+
+@media (max-width:720px){
+  .wrap{ padding:0 16px 80px; }
+  .grid, .cards{ grid-template-columns:1fr; }
+  .grid .cell:nth-child(odd){ border-right:0; padding-right:0; }
+  .grid .cell:nth-child(even){ padding-left:0; }
+  .flow__work{ grid-template-columns:1fr; }
+  .flow__feed{ border-left:0; border-top:1px dashed var(--rule-soft); max-width:none; }
+  .encart{ padding:20px 18px; }
+}
+@media print{ .wrap{ max-width:none; } .card{ break-inside:avoid; } h2{ break-after:avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="masthead__row">
+    <div class="masthead__mark">Hydra<span class="dot">.</span></div>
+    <div class="masthead__type">Présentation</div>
+  </div>
+  <div class="masthead__rule"></div>
+  <div class="masthead__rule-thin"></div>
+</header>
+
+<div class="hero">
+  <h1>Un corps,<br>plusieurs têtes.</h1>
+  <p class="lede">Une équipe design dans Claude Code. Tu déposes un <strong>sujet brut</strong> — ou une simple question&nbsp;; Hydra le cadre, l'analyse, le confronte à ce qui se fait ailleurs, ouvre des pistes, les compose en protos avec ton design system — et te rend des <strong>livrables prêts à trancher</strong>.</p>
+</div>
+
+<section>
+  <h2>À quoi ça sert</h2>
+  <p class="big">Un écran qui sous-performe, un nouvel écran à concevoir, une page à auditer, les bonnes pratiques d'usage d'un composant, une idée à challenger, un wording à trancher, un build à recetter. Hydra fait le travail d'une petite équipe autour du designer — <strong>analyse, recherche, exploration, rédaction, recette</strong> — et lui laisse les décisions.</p>
+  <p>Ce n'est pas un générateur d'écrans à la chaîne. Hydra raisonne avant de composer&nbsp;: il établit ce qui est vrai chez toi, cherche ce qui marche ailleurs, met plusieurs pistes en concurrence, et dit laquelle il recommande, pourquoi, et sur quelles preuves. Il ne flatte pas&nbsp;: une idée faible se dit avec son pourquoi. Et il ne comble jamais un manque en inventant&nbsp;: ce qu'il ne sait pas, il le dit.</p>
+</section>
+
+<section>
+  <h2>Comment ça marche</h2>
+
+  <figure class="flow" role="img" aria-label="Une demande entre&nbsp;; cortex la cadre et l'oriente vers les têtes, qui s'appuient sur les outils de la mission&nbsp;; les livrables sortent&nbsp;; le tout repose sur le contexte de la mission.">
+    <figcaption>Le flux, d'un coup d'œil</figcaption>
+    <div class="flow__io flow__io--in">
+      <span class="flow__tag">Entrée</span>
+      <div class="flow__io-body"><b>Une demande</b> — un sujet complet ou une question ciblée, un existant (lien de maquette ou URL) s'il y en a un, tes documents</div>
+    </div>
+    <div class="flow__arrow"></div>
+    <div class="flow__cortex">
+      <div class="flow__cortex-name">Cortex</div>
+      <div class="flow__cortex-role">cadre · oriente · vérifie avant de clore</div>
+    </div>
+    <div class="flow__arrow"></div>
+    <div class="flow__work">
+      <div class="flow__heads">
+        <span class="flow__label">Les têtes qu'il faut, et elles seules</span>
+        <div class="flow__chips">
+          <span class="flow__chip">Audit</span>
+          <span class="flow__chip">Research</span>
+          <span class="flow__chip">Ideation</span>
+          <span class="flow__chip">Maquette</span>
+          <span class="flow__chip">Writer</span>
+          <span class="flow__chip">Recette</span>
+        </div>
+      </div>
+      <div class="flow__feed">
+        <span class="flow__label">← Outils de la mission</span>
+        <div class="flow__feed-list">design · benchmark</div>
+      </div>
+    </div>
+    <div class="flow__arrow"></div>
+    <div class="flow__io flow__io--out">
+      <span class="flow__tag">Sortie</span>
+      <div class="flow__io-body"><b>Des livrables</b> — numérotés, sourcés, vérifiables</div>
+    </div>
+    <div class="flow__base"><span class="flow__base-key">context/</span> — la mission sous toute la chaîne&nbsp;: client, périmètre, vocabulaire, utilisateurs, métriques, design system, ton, outils</div>
+  </figure>
+
+  <ol class="steps">
+    <li><b>Tu déposes un sujet</b> — le problème en une phrase, l'existant s'il y en a un, tes documents dans le dossier du sujet, sous <code>topics/</code>.</li>
+    <li><b>Cortex cadre, en un seul message</b> — ce qu'il a trouvé et ce qui manque, la métrique qui jugera le sujet et son seuil, qui est touché, le périmètre, ce qui est déjà décidé, les rendus à produire (mobile, desktop, selon ta plateforme), et le mode de déroulé. Tu corriges d'un mot.</li>
+    <li><b>Les têtes s'enchaînent</b> — audit établit ce qui est vrai sur l'existant, research trouve ce qui se fait ailleurs, ideation ouvre et arbitre les pistes, maquette les compose, writer vérifie les textes.</li>
+    <li><b>Tu récupères les livrables</b> — et Hydra te propose d'ajouter au contexte ce que le sujet a appris&nbsp;: une métrique, un profil, un terme. Rien ne s'y écrit sans ton accord.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Une demande, pas forcément un sujet</h2>
+  <p>Tout n'appelle pas la chaîne complète. Hydra choisit les têtes d'après ce que tu demandes — inutile de les nommer — et <strong>s'arrête au livrable de la demande</strong>&nbsp;: il te propose la suite, il ne l'enchaîne pas.</p>
+  <table class="dem">
+    <thead><tr><th>Tu demandes</th><th>Tu reçois</th></tr></thead>
+    <tbody>
+      <tr><td>«&nbsp;Audite cette page&nbsp;», «&nbsp;trouve les points de friction de ce parcours&nbsp;»</td><td>La fiche et le rapport&nbsp;: constats priorisés, hypothèses, références, actions. Hydra propose ensuite d'ouvrir des pistes.</td></tr>
+      <tr><td>«&nbsp;Quels sont les meilleurs patterns pour…&nbsp;», «&nbsp;les bonnes pratiques de…&nbsp;»</td><td>Un livrable de recherche court&nbsp;: la réponse, son niveau de confiance, les écrans en images et les liens vers les sources.</td></tr>
+      <tr><td>«&nbsp;Que disent les études sur…&nbsp;», «&nbsp;qu'est-ce qui marche pour…&nbsp;» — un sujet précis, à documenter</td><td>Un livrable de recherche&nbsp;: ce que les études, articles et guides établissent, les enseignements pour ta problématique, et leur niveau de preuve.</td></tr>
+      <tr><td>Un benchmark ou un état de l'art approfondi</td><td>La fiche et un livrable de recherche complet&nbsp;: conclusions, ce qu'on ne sait pas, références datées — produits visités en direct compris.</td></tr>
+      <tr><td>«&nbsp;Challenge cette idée&nbsp;», «&nbsp;aide-moi à trancher&nbsp;»</td><td>La fiche et le rapport&nbsp;: les pistes, leur critique, une recommandation. Hydra propose ensuite de les composer en protos.</td></tr>
+      <tr><td>«&nbsp;Quel libellé pour…&nbsp;», «&nbsp;relis ces textes&nbsp;»</td><td>Des variantes argumentées, dans la conversation&nbsp;; un tableau pour un écran entier.</td></tr>
+      <tr><td>«&nbsp;Est-ce conforme à la maquette&nbsp;?&nbsp;»</td><td>La recette&nbsp;: la liste de corrections pour le développeur, valeurs mesurées à l'appui.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Deux façons de dérouler</h2>
+  <p>Au cadrage, cortex <strong>recommande</strong> un mode, et tu as le dernier mot.</p>
+  <div class="cards">
+    <div class="card">
+      <h3>D'un trait</h3>
+      <ul>
+        <li>Aucune pause&nbsp;: Hydra va jusqu'au bout de ta demande</li>
+        <li>Ses arbitrages sont <b>consignés en hypothèses</b>, à relire</li>
+        <li>Ce qui ne lui appartient pas remonte en questions</li>
+        <li>Pour un sujet cadré, à question fermée</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Étape par étape</h3>
+      <ul>
+        <li>Des pauses aux moments clés</li>
+        <li><b>Tu tranches</b> avant que la suite s'engage</li>
+        <li>Même profondeur&nbsp;: seules les pauses changent</li>
+        <li>Pour un sujet large, aux pistes à construire</li>
+      </ul>
+    </div>
+  </div>
+  <p><strong>Hydra peut contester ta demande, mais il y répond quand même.</strong> S'il pense que tu poses mal le problème, il te le dit, et il te propose sa façon de le voir à côté, étiquetée. Mais ses pistes et sa recommandation servent l'objectif que tu as fixé, pas le sien. Une contrainte de ta mission (une règle légale, un principe de marque) change la façon d'atteindre l'objectif, jamais l'objectif lui-même. Certaines décisions ne lui appartiennent jamais — la définition du problème, la métrique et son seuil, le périmètre&nbsp;: elles remontent, même d'un trait.</p>
+</section>
+
+<section>
+  <h2>Les têtes</h2>
+  <p>Chaque tête porte une méthode. Cortex décide <em>comment</em> mener le sujet&nbsp;; les autres <em>font</em>. La phase de discovery d'un sujet réunit deux d'entre elles&nbsp;: l'audit, qui regarde ton existant, et research, qui regarde ailleurs.</p>
+  <div class="grid">
+    <div class="cell"><div class="name">Cortex</div><div class="desc"><b>Chef d'orchestre.</b> Cadre le sujet, choisit le mode, enchaîne les têtes qu'il faut, et vérifie avant de clore que rien n'a été sauté.</div></div>
+    <div class="cell"><div class="name">Audit</div><div class="desc"><b>Comprendre ton existant.</b> Analyse ton écran et ton parcours — une page en ligne ou une maquette —, croise avec tes documents et tes données, sépare les faits des hypothèses. Pour savoir ce qui se fait ailleurs, elle appelle research.</div></div>
+    <div class="cell"><div class="name">Research</div><div class="desc"><b>Ce qui se fait et ce qui est prouvé ailleurs.</b> Les écrans de produits réels, cherchés par la tâche de l'usager et pas seulement dans ton secteur&nbsp;; les produits visités en ligne&nbsp;; les design systems publics&nbsp;; les études, articles et guides sur un sujet précis, dont elle tire des enseignements pour ta problématique. Chaque référence est sourcée, datée, cliquable. Les autres têtes l'appellent quand elles ont besoin de références.</div></div>
+    <div class="cell"><div class="name">Ideation</div><div class="desc"><b>Ouvrir et trancher.</b> Des pistes qui diffèrent en nature, au moins deux formes par levier, une critique en avocat du diable, une convergence sur des critères dits.</div></div>
+    <div class="cell"><div class="name">Maquette</div><div class="desc"><b>Composer les écrans.</b> Un proto manipulable par piste, avec les composants de tes librairies, dans les rendus de ta plateforme. Ce que ton design system n'a pas se schématise, étiqueté comme tel.</div></div>
+    <div class="cell"><div class="name">Writer</div><div class="desc"><b>Les textes d'interface.</b> Vérifie les textes des protos contre ta charte de ton — ou, sans charte, contre le ton relevé dans ton produit.</div></div>
+    <div class="cell"><div class="name">Recette</div><div class="desc"><b>La maquette contre le build.</b> Mesure les deux côtés, en desktop et en mobile, chiffre chaque écart, et rend au développeur une liste de corrections.</div></div>
+    <div class="cell"><div class="name">Accueil</div><div class="desc"><b>La première session.</b> Explique Hydra, pré-remplit le contexte avec toi à partir de tes sources, et lance ton premier sujet.</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Ce qu'on récupère</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Les livrables d'un sujet</h3>
+      <ul>
+        <li><b>01 · La fiche</b> — le cadrage&nbsp;: le problème, la métrique et son seuil, qui est touché, le périmètre, les rendus, ce qui est décidé</li>
+        <li><b>02 · Le rapport</b> — constats, hypothèses, références, pistes critiquées, recommandation&nbsp;; ou <b>la recherche</b>, quand la recherche est le sujet</li>
+        <li><b>03 · Le brief</b> — pour chaque piste, ce que l'écran doit montrer, et un texte de composition que n'importe qui peut reprendre dans son outil</li>
+        <li><b>La galerie</b> — un proto par piste, sur le même socle d'écran&nbsp;: seul le levier change, pour comparer sur pièce, en mobile et en desktop si ta plateforme le demande</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>La recette</h3>
+      <ul>
+        <li>Un tableau par zone de l'écran, par plateforme</li>
+        <li>Pour chaque écart&nbsp;: <b>la valeur attendue, la valeur mesurée</b> sur le build, la sévérité</li>
+        <li>Une capture annotée, les écarts numérotés</li>
+        <li>Un tableau, pas de prose&nbsp;: il part au développeur</li>
+      </ul>
+    </div>
+  </div>
+  <p>Tout s'écrit dans le dossier du sujet, en markdown rendu en HTML. Les références visuelles y sont rangées en images que tu ouvres partout. Les protos sont des pages HTML&nbsp;: ils s'ouvrent dans le navigateur, se cliquent, et ne touchent jamais à ta source dans l'outil de design. Un sujet terminé se range dans <code>topics/.archive/</code>.</p>
+</section>
+
+<section>
+  <h2>Le contexte, c'est ta mission</h2>
+  <p class="big">La méthode est la même pour tous. <strong>Le dossier <code>context/</code> la rend spécifique</strong> à ta mission&nbsp;: le client, le périmètre, le vocabulaire métier, les utilisateurs, les métriques, le design system, le ton, les outils. Changer de mission, c'est remplacer ce dossier — rien d'autre.</p>
+  <div class="cards">
+    <div class="card">
+      <h3>Au premier jour</h3>
+      <p>L'accueil pose les modèles vides et les pré-remplit avec toi&nbsp;: tes réponses, un brief de mission, une restitution d'étude. La mission d'abord — c'est elle qui rapporte le plus&nbsp;: le domaine précis, tes plateformes, le vrai jargon de l'équipe, ce qu'elle peut absorber.</p>
+    </div>
+    <div class="card">
+      <h3>Au fil des sujets</h3>
+      <p>Rien n'a à être complet d'emblée. À chaque cadrage, Hydra compare ce que le sujet nomme à ce que le contexte contient, demande ce qui manque, puis propose de l'ajouter. Il écrit après ton accord, et n'invente jamais pour combler un vide.</p>
+    </div>
+  </div>
+  <p><strong>Le design system</strong> se lit dans tes librairies&nbsp;: Hydra en rédige les fondations, l'index des composants et les règles d'usage — principes, ce qui est figé ou libre, règles par composant, comportement responsive —, que tu valides. Un fichier de design system en markdown que ton équipe a déjà s'utilise tel quel. <strong>Les utilisateurs</strong> se décrivent par axes, pas par personas&nbsp;: ce qui fait varier une décision de design, et les combinaisons qui reviennent, chacune avec son niveau de preuve. <strong>La charte de ton</strong> est facultative&nbsp;: sans elle, writer relève le ton de ton produit et te le propose.</p>
+</section>
+
+<section>
+  <h2>Branché sur les outils de ta mission</h2>
+  <p>Hydra ne connaît aucun outil par son nom&nbsp;: il lit ceux que ta mission déclare, rôle par rôle, et s'en sert.</p>
+  <div class="grid">
+    <div class="cell"><div class="name">Outil de design</div><div class="desc"><b>Maquettes et design system.</b> Lit un écran, sa structure et ses valeurs&nbsp;; pour un écran nouveau, pioche les composants dans tes librairies.</div></div>
+    <div class="cell"><div class="name">Benchmark</div><div class="desc"><b>Ce qui se fait.</b> Écrans et parcours de produits réels. Plusieurs outils&nbsp;: dans ton ordre de préférence. Sans outil, Hydra visite les produits en ligne.</div></div>
+    <div class="cell"><div class="name">Le navigateur</div><div class="desc"><b>Captures et mesures.</b> Hydra regarde chaque proto qu'il compose, et mesure le build pendant une recette.</div></div>
+  </div>
+  <p class="note">Un outil déclaré mais non branché&nbsp;: Hydra t'aide à le brancher. Aucun outil pour un rôle&nbsp;: il le dit, applique son repli, et la confiance baisse là où ça compte — jamais en silence.</p>
+</section>
+
+<section>
+  <h2>Les garde-fous</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Ce que Hydra s'interdit</h3>
+      <ul>
+        <li>Inventer un composant, une valeur, une convention</li>
+        <li>Affirmer sans source&nbsp;: tout se cite et se vérifie</li>
+        <li>Proposer un dark pattern&nbsp;: urgence artificielle, coût masqué, sortie cachée</li>
+        <li>Écrire dans ton contexte sans ton accord</li>
+        <li>S'inspirer d'un autre sujet&nbsp;: la structure d'un livrable vient de la méthode</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Ce que ses outils vérifient</h3>
+      <ul>
+        <li>Chaque proto est capturé, et Hydra doit <b>regarder</b> ses captures avant de rendre</li>
+        <li>La galerie vérifie que chaque piste du rapport a son proto, et clique un à un les boutons des protos&nbsp;: un bouton qui ne fait rien est signalé</li>
+        <li>Les livrables signalent tout sigle propre à la mission non défini, et toute référence réduite à un identifiant</li>
+        <li>Les compteurs d'une recette tombent juste avec son tableau</li>
+        <li>Un fichier d'instructions étranger à Hydra, chargé dans la session, est signalé</li>
+      </ul>
+    </div>
+  </div>
+  <p>L'accessibilité et le mobile first font partie des non-négociables de toute piste, avec ceux que ta mission déclare.</p>
+</section>
+
+<section>
+  <h2>Ce qu'Hydra ne fait pas</h2>
+  <ul class="plain">
+    <li>Pas de recherche utilisateur&nbsp;: il ne mène ni entretiens ni tests, il exploite ceux que tu lui donnes.</li>
+    <li>Il ne modifie jamais ta source dans l'outil de design.</li>
+    <li>La recette est visuelle&nbsp;: ni accessibilité, ni test fonctionnel.</li>
+    <li>Pas de contenu marketing long&nbsp;: writer s'occupe des textes d'interface.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ce qui vient</h2>
+  <p>Des pistes, pas des engagements&nbsp;:</p>
+  <ul class="plain">
+    <li><b>Lire l'analytics directement</b> — avec l'outil de la mission branché, Hydra ira chercher lui-même la donnée qui lui manque au lieu de te la demander&nbsp;: moins de questions de cadrage laissées ouvertes, moins de décisions en attente, des runs plus autonomes. Et, sur demande, la synthèse d'un indicateur sur une période, sans export à déposer.</li>
+    <li><b>Une tête par sous-agent</b> — chacune dans son propre contexte&nbsp;: des runs plus rapides et moins coûteux, des protos composés en parallèle.</li>
+    <li><b>S'arrêter avant les protos</b> — lire la fiche, le rapport et le brief, puis décider si les protos valent leur coût.</li>
+    <li><b>Partir d'un ticket</b> — le sujet récupéré dans l'outil de gestion de la mission, le livrable rendu au même endroit.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Pour qui</h2>
+  <p class="big">Pour un <strong>product designer en mission</strong> qui veut un partenaire de travail&nbsp;: quelqu'un qui analyse l'existant, va chercher les références, challenge ses idées au lieu de les flatter, et lui rend des livrables décidables.</p>
+  <div class="encart">
+    <div class="encart__kicker">Démarrer</div>
+    <h3 class="encart__title">Une session, et l'accueil te guide</h3>
+    <p>Il faut Claude Code avec accès à Opus, Node.js 22 ou plus récent, et Chrome. Les prérequis et l'installation sont dans le <code>README.md</code> du dossier.</p>
+    <p>Ensuite, ouvre une session Claude Code dans le dossier d'Hydra et commence par «&nbsp;je viens de lancer Hydra&nbsp;». C'est ce qui réveille l'accueil&nbsp;: il pré-remplit ton contexte avec toi, puis tu lances ton premier sujet.</p>
+    <p>Compte quelques minutes pour une question, une vingtaine à une demi-heure pour un sujet complet jusqu'aux protos. Hydra est conçu pour travailler avec Opus en effort élevé&nbsp;: c'est un parti pris. Il fonctionne aussi avec Sonnet ou un effort plus bas, si ton offre ne permet pas mieux — ses livrables sont alors moins bons.</p>
+  </div>
+</section>
+
+<div class="footer">Hydra · un corps, plusieurs têtes</div>
+
+</div>
+</body>
+</html>
