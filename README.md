@@ -5,8 +5,8 @@ un problème — et Hydra le mène : analyse de l'existant, recherche, pistes
 argumentées, protos composés avec ton design system, textes vérifiés, recette
 graphique du build. Le corps est l'orchestrateur ; les têtes sont des skills.
 
-Pour la présentation complète — le déroulé d'un sujet, les têtes, les livrables, les
-garde-fous : `docs/presentation.html`, à ouvrir dans un navigateur.
+**La présentation complète** — le déroulé d'un sujet, les têtes, les livrables, les
+garde-fous : [en ligne](https://mcqx7.github.io/hydra-agent/), ou `docs/presentation.html` dans le dossier.
 
 | Tête | Ce qu'elle fait |
 |---|---|
