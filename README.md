@@ -159,3 +159,8 @@ outil qui ne se lance pas se signale une fois, sans bloquer.
 Aucun contenu client dans la méthode : ni nom, ni chiffre, ni exemple tiré d'une
 mission. Tout ce qui est propre à une mission vit dans `context/` et dans
 `topics/`.
+
+## Licence
+
+MIT — libre d'utiliser, de modifier et de redistribuer, en citant l'auteur. Le texte
+complet est dans `LICENSE`.

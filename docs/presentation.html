@@ -32,7 +32,8 @@ code{ font-family:var(--mono); font-size:.86em; }
 .masthead__row{ display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding-bottom:12px; }
 .masthead__mark{ font:900 26px/1 var(--serif); letter-spacing:-.02em; text-transform:uppercase; }
 .masthead__mark .dot{ color:var(--accent); }
-.masthead__type{ font-size:11px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); white-space:nowrap; }
+.masthead__type{ font-size:11px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); white-space:nowrap; text-decoration:none; }
+a.masthead__type:hover{ text-decoration:underline; }
 .masthead__rule{ height:3px; background:var(--ink); }
 .masthead__rule-thin{ height:1px; background:var(--accent); margin-top:2px; }
 
@@ -153,7 +154,7 @@ strong, b{ font-weight:700; }
 <header class="masthead">
   <div class="masthead__row">
     <div class="masthead__mark">Hydra<span class="dot">.</span></div>
-    <div class="masthead__type">Présentation</div>
+    <a class="masthead__type" href="https://github.com/MCQX7/hydra-agent">Le dépôt sur GitHub →</a>
   </div>
   <div class="masthead__rule"></div>
   <div class="masthead__rule-thin"></div>
@@ -382,13 +383,13 @@ strong, b{ font-weight:700; }
   <div class="encart">
     <div class="encart__kicker">Démarrer</div>
     <h3 class="encart__title">Une session, et l'accueil te guide</h3>
-    <p>Il faut Claude Code avec accès à Opus, Node.js 22 ou plus récent, et Chrome. Les prérequis et l'installation sont dans le <code>README.md</code> du dossier.</p>
+    <p>Il faut Claude Code avec accès à Opus, Node.js 22 ou plus récent, et Chrome. Le code, les prérequis et l'installation sont sur <a href="https://github.com/MCQX7/hydra-agent">github.com/MCQX7/hydra-agent</a>, dans le <code>README.md</code>.</p>
     <p>Ensuite, ouvre une session Claude Code dans le dossier d'Hydra et commence par «&nbsp;je viens de lancer Hydra&nbsp;». C'est ce qui réveille l'accueil&nbsp;: il pré-remplit ton contexte avec toi, puis tu lances ton premier sujet.</p>
     <p>Compte quelques minutes pour une question, une vingtaine à une demi-heure pour un sujet complet jusqu'aux protos. Hydra est conçu pour travailler avec Opus en effort élevé&nbsp;: c'est un parti pris. Il fonctionne aussi avec Sonnet ou un effort plus bas, si ton offre ne permet pas mieux — ses livrables sont alors moins bons.</p>
   </div>
 </section>
 
-<div class="footer">Hydra · un corps, plusieurs têtes</div>
+<div class="footer">Hydra · un corps, plusieurs têtes · <a href="https://github.com/MCQX7/hydra-agent" style="color:inherit">le dépôt sur GitHub</a> · licence MIT</div>
 
 </div>
 </body>
