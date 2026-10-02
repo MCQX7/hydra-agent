@@ -30,7 +30,7 @@ source, une absence de données se dit au lieu de se combler.
 ## En un coup d'œil
 
 ```mermaid
-flowchart LR
+flowchart TB
   D([Ta demande]) --> C[Cortex<br/>cadre et oriente]
   subgraph Discovery
     A[Audit<br/>ton existant]
