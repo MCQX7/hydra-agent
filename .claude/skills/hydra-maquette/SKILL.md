@@ -126,11 +126,17 @@ pas seulement signalée ; une variante porte l'id de la piste qu'elle re-forme, 
 si transversale, et son propre id — `V` suivi d'un numéro — en titre au brief comme en
 `data-hydra-variante` sur ses protos ; elle ne compte pas comme couverture).
 Test : un tiers agit à partir du brief, le rapport à un clic pour la justification.
+**Protos après relecture** (champ « Protos » de la fiche) : écrire le brief en entier —
+socle observé et source du chrome compris, relevés comme avant toute composition —, le
+rendre, et s'arrêter : aucun proto. L'en-tête porte « **Protos :** non composés — en
+attente de la relecture du designer ». À la reprise, repartir de ce brief, de la fiche et
+du rapport, sans refaire ce qu'il porte déjà ; relire l'outil de design seulement pour ce
+que le brief ne donne pas ; passer le champ à « composés », puis composer comme d'habitude.
 Sa structure est ce gabarit, et lui seul :
 
 ```markdown
 # Brief d'exploration — [Sujet]
-**Date :** … · **Écrans :** [le ou les écrans, dans les rendus de la fiche]
+**Date :** … · **Écrans :** [le ou les écrans, dans les rendus de la fiche] · **Protos :** [composés / non composés — en attente de la relecture du designer]
 **Écrit par :** maquette
 
 *Repères — O : observation · S : signal · B : benchmark · C : constat · H : hypothèse de design · P : piste.*
@@ -229,7 +235,28 @@ structure du nœud (§ Ancrage) : une lecture faite pendant l'audit ne vaut pas 
 composition — c'est ici que l'ordre des blocs et leur largeur se décident, aux DEUX
 tailles. **Au moment de composer le chrome**, ses assets sont déjà arrêtés : le tableau
 du brief (§ Source du chrome) dit lesquels sont liés, lesquels sont approximés, et sur
-quel fait. Puis ne faire varier que le COMPOSANT du levier
+quel fait.
+**Le châssis se construit ainsi — c'est ce qui rend un proto aussi fidèle qu'un écran de
+production :**
+1. **Lire le code de CHAQUE écran du socle**, tous les écrans observés et non un
+   échantillon : la lecture de l'outil de design qui renvoie l'écran en code (HTML et
+   CSS, structure et valeurs), en plus de sa capture. Ce code, recoupé avec le design
+   system de `context/design/`, donne les tailles, les marges, les couleurs et l'ordre
+   exacts ; la capture seule laisse deviner.
+2. **Écrire le châssis comme un kit en code** : une pièce par bloc du socle observé (le
+   tableau du brief), réutilisable et paramétrable — le chrome, chaque bloc structurant,
+   les mentions —, avec les valeurs exactes. Puis **assembler chaque proto à partir de ce
+   kit**, par un script qui les génère tous : jamais un proto recopié à la main d'un
+   autre, qui dériverait. Le kit et son script vivent dans le sujet,
+   `explorations/.build/` — ils servent à la reprise et à la correction —, jamais dans
+   `context/` : chaque sujet construit le sien.
+3. **Boucler sur les captures** : capturer chaque proto en pleine hauteur, dans chaque
+   rendu ; les regarder toutes ; corriger d'un lot, dans le kit quand le défaut est du
+   socle — la correction vaut alors pour toutes les pistes —, régénérer, recapturer,
+   jusqu'à ce qu'aucune capture ne montre d'écart à l'écran observé.
+Écran nouveau, sans écran existant : le kit se construit de même, à partir des
+composants des librairies, lus en code dans l'outil de design.
+Puis ne faire varier que le COMPOSANT du levier
 d'une piste à l'autre : châssis partagé → protos COMPARABLES (même châssis ; le levier est ce qui
 change et se compare), et coût du châssis payé une fois. Le châssis n'est pas exonéré pour
 autant : il tient la même barre de précision que le composant, et surtout il

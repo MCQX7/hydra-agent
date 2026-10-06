@@ -124,7 +124,8 @@ de la maquette du sujet, mais sans les règles d'usage.
 - **les liens des fichiers de librairie, avec l'outil de design branché** : Hydra lit
   les variables, les styles de texte et les composants, et rédige les fondations et
   l'index du dossier ; tu relis et valides. C'est la voie la plus rapide et la plus
-  fiable pour les valeurs ;
+  fiable pour les valeurs. Tu n'as pas ces liens sous la main : un lien de maquette
+  suffit, Hydra retrouve les librairies qu'elle utilise ;
 - un fichier de design system en markdown que l'équipe a déjà (un `DESIGN.md`, par
   exemple) : Hydra en tire les fondations et les règles ;
 - sans outil branché : un export des variables, ou des captures de la page de styles ;

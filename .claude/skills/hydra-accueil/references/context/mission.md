@@ -62,9 +62,10 @@
 ## Outils de la mission
 
 > Un outil par ligne, sous son rôle. Plusieurs pour un même rôle : dans l'ordre de
-> préférence. Après l'outil, entre accents graves, le nom du connecteur tel que la
-> session le liste (commande /mcp) ; « aucun connecteur » si l'outil n'est pas
-> branché. Un rôle sans outil se laisse vide : la tête qui en a besoin le dit et
+> préférence. Le designer n'écrit que le nom de l'outil : Hydra cherche comment le
+> brancher et complète la ligne — entre accents graves, le nom du connecteur tel que la
+> session le liste (commande /mcp) ; « API, clé locale » pour un outil branché par son
+> API ; « aucun connecteur » s'il ne l'est pas. Un rôle sans outil se laisse vide : la tête qui en a besoin le dit et
 > applique son repli.
 
 - **Design** :

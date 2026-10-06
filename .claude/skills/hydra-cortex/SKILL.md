@@ -97,6 +97,18 @@ sauté si le designer l'a déjà exprimé :
   périmètre, du nombre de têtes à mobiliser, de la présence d'un existant à
   analyser et du caractère ouvert/fermé de la question — le designer le
   contredit d'un mot.
+- **Les protos** (sauté si la demande le dit déjà — « jusqu'aux protos », « arrête-toi
+  au brief » —, et pour une demande qui n'ira pas jusqu'aux pistes) — posée à chaque
+  sujet, au même titre que le mode : le designer ne le précise jamais de lui-même.
+  - **dans la foulée** = la maquette compose les protos après le brief, dans le même run ;
+  - **après relecture du brief** = le run s'arrête au brief rendu, même d'un trait ; le
+    designer relit la fiche, le rapport et le brief, puis demande la composition quand
+    il veut.
+  Cortex propose un défaut motivé en UNE ligne — le coût des protos face à
+  l'incertitude des pistes — ; le designer le contredit d'un mot. **Jamais prise en
+  hypothèse** : même d'un trait, une demande qui ne la tranche pas s'arrête au cadrage
+  sur cette question — la seule qui arrête un run d'un trait avant qu'il commence. Les
+  autres items manquants, d'un trait, partent en hypothèses comme d'habitude.
 - **Le KPI décisionnel ET son seuil de succès contextuel** : quelle métrique
   jugera le succès de CE sujet, et ce qui serait un bon résultat sur CE
   parcours (les baselines d'autres parcours ne font pas référentiel).
@@ -120,7 +132,7 @@ propre au client). Sa structure est ce gabarit, et lui seul :
 
 ```markdown
 # Fiche de sujet — [Sujet]
-**Date :** … · **Mode :** [d'un trait / séquencé] · **Rendus :** [mobile / desktop / mobile et desktop] · Demande : [la demande du designer, en une phrase ; le dépôt complet dans `inputs/`]
+**Date :** … · **Mode :** [d'un trait / séquencé] · **Rendus :** [mobile / desktop / mobile et desktop] · **Protos :** [dans la foulée / après relecture du brief] · Demande : [la demande du designer, en une phrase ; le dépôt complet dans `inputs/`]
 **Inputs :** [ce qui a été trouvé] · manque : [tout ce qui manque, en une ligne]
 
 ## Le problème
@@ -162,6 +174,12 @@ propre au client). Sa structure est ce gabarit, et lui seul :
   chaque piste ancrée d'une référence réelle, existant capté à la meilleure
   fidélité dispo — tout manque est déclaré en dette explicite, jamais passé
   sous silence.
+- **Protos après relecture du brief** : un périmètre décidé au cadrage, pas une pause —
+  le run, d'un trait compris, s'arrête au brief rendu, et le dit en une ligne : ce qui
+  est prêt, et comment demander la suite. **Reprise** : le designer demande la
+  composition d'un sujet dont le brief porte « Protos : non composés » → ni nouveau
+  cadrage, ni audit, ni idéation : `hydra-maquette` directement, qui repart du brief, de
+  la fiche et du rapport.
 - **Séquencé** : respecter les pauses de validation prévues par les skills
   (message de pause — cf. § Verbosité). Les limites d'autorité valent de même : une
   décision hors autorité que la pause n'a pas tranchée reste en « Questions de
@@ -480,7 +498,8 @@ déclarable en dette) :
   par raccourci).
 - [ ] **Couverture des pistes** — dès que le rapport porte une section Pistes (un sujet
   sans pistes, routé vers l'audit seul, writer ou recette, n'a pas de galerie : ce point
-  ne s'applique pas) : lire la ligne « Couverture : M / N » de
+  ne s'applique pas ; un brief qui porte « Protos : non composés », décidé au cadrage,
+  non plus — il s'applique à la reprise) : lire la ligne « Couverture : M / N » de
   `explorations/index.html` (écrite par proto-frame) ; clôture seulement si **M==N**.
   TENU-only — une objection (capacité non établie, décision produit, non-négociable du contexte)
   ne dispense PAS de composer : elle va en « Questions de cadrage non résolues », le

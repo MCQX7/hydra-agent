@@ -97,13 +97,18 @@ Pour chaque fichier, quatre temps, d'après le guide :
   (« je vois tel connecteur branché : est-ce l'outil de benchmark de la mission ? »),
   jamais de réponse par défaut : ils sont ceux du designer, pas forcément ceux de la
   mission, et aucun outil ne vaut pour tous les designers. Plusieurs outils pour un
-  rôle : dans quel ordre.
+  rôle : dans quel ordre. **Aucun outil de benchmark** : suggérer Lazyweb, une
+  bibliothèque d'écrans gratuite avec un connecteur — elle couvre les apps iOS et les
+  pages marketing, pas les parcours de sites —, sans l'imposer.
 - Puis vérifier s'il est branché, et noter son connecteur. **Plusieurs connecteurs
   pour un même outil** : prendre celui de l'éditeur de l'outil (le connecteur
   officiel), sans poser la question.
 - Un outil que la mission a sans qu'il soit branché : le déclarer avec « aucun
-  connecteur », et aider à le brancher depuis la documentation de l'outil — ce que la
-  commande `/mcp` montre ensuite fait foi.
+  connecteur », et aider à le brancher depuis la documentation de l'outil, cherchée
+  par Hydra — le designer n'a ni lien ni procédure à fournir. Par son connecteur ; à
+  défaut, par son API et une clé que le designer génère, rangée dans un réglage local,
+  jamais dans le dépôt, et notée « API, clé locale ». Ce que la commande `/mcp` montre
+  ensuite fait foi pour un connecteur.
 - **L'analytics** : demander si l'outil est branché à Claude par un connecteur (MCP)
   — pas si le designer y a accès, c'est une autre question. Dire qu'aujourd'hui Hydra
   travaille sur les exports et restitutions déposés dans un sujet : un connecteur
@@ -111,8 +116,9 @@ Pour chaque fichier, quatre temps, d'après le guide :
 - Un rôle sans outil reste vide : la tête qui en a besoin le dira et appliquera son repli.
 
 **Le design system** : suivre le `README.md` de `context/design/`. Outil de design
-branché → demander les liens des fichiers de librairie, les noter dans la section
-« Librairies » de l'index, lire variables, styles de texte et composants, et rédiger
+branché → demander les liens des fichiers de librairie — ou, à défaut, le lien d'une
+maquette qui les utilise : l'outil liste les librairies attachées à un fichier —, les
+noter dans la section « Librairies » de l'index, lire variables, styles de texte et composants, et rédiger
 les fondations et l'index. Une librairie partagée (publiée) se lit par la recherche de
 l'outil, composant par composant : aucun lien de page n'est à demander. Une librairie non
 partagée se lit page par page ; une première lecture qui n'en montre qu'une partie (peu

@@ -16,7 +16,9 @@ _(aucun : le design system de la mission n'est pas encore décrit)_
 _(aucune)_
 
 > Une ligne par librairie de l'outil de design : **nom** — lien du fichier — ce qu'elle
-> porte (composants, variables, styles). Pour un écran nouveau, sans maquette source,
+> porte (composants, variables, styles). Sans le lien d'une librairie, le lien d'une
+> maquette qui l'utilise suffit : l'outil liste les librairies attachées à un fichier, et
+> sa recherche y trouve leurs composants. Ce lien s'écrit alors une fois, en tête. Pour un écran nouveau, sans maquette source,
 > Hydra y lit les composants dont l'écran a besoin, au lieu de les reconstituer.
 
 ## Ce que ce dossier doit contenir

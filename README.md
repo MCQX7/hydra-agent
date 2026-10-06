@@ -45,7 +45,9 @@ qui se fait ailleurs.
 
 Deux façons de dérouler : **d'un trait** — Hydra va jusqu'au bout et consigne ses
 arbitrages en hypothèses — ou **par étapes** — il s'arrête aux moments clés pour que
-tu tranches.
+tu tranches. Et deux moments pour les protos, qui coûtent le plus : **dans la foulée**,
+ou **après ta relecture du brief** — tu lis la fiche, le rapport et le brief, puis tu
+demandes la composition si les pistes la valent. Hydra pose les deux questions au cadrage.
 
 ## Démarrer
 
@@ -59,11 +61,19 @@ tu tranches.
   mesurent le build.
 - **Les outils de ta mission**, si tu les as, branchés comme connecteurs MCP de Claude
   Code : un outil de design pour lire les maquettes, un outil de benchmark pour les
-  écrans de produits réels. Aucun n'est obligatoire ; l'analytics se lit aujourd'hui
-  par les exports que tu déposes dans un sujet.
+  écrans de produits réels — sans outil de benchmark, l'accueil te suggère Lazyweb,
+  gratuit. Aucun n'est obligatoire ; tu donnes leur nom, Hydra trouve comment les
+  brancher. L'analytics se lit aujourd'hui par les exports que tu déposes dans un sujet.
 
 **Puis** :
-1. Récupère ce dossier, et ouvre une session Claude Code à sa racine.
+1. Récupère Hydra, au choix :
+   - **sans rien installer** : en haut de cette page, bouton vert **Code**, puis
+     **Download ZIP** ; décompresse le dossier où tu veux ;
+   - **en une commande**, dans le Terminal, depuis le dossier où tu veux le mettre :
+     `npx degit MCQX7/hydra-agent hydra` — un dossier `hydra` est créé ;
+   - **avec git**, si tu l'utilises : `git clone https://github.com/MCQX7/hydra-agent.git`.
+
+   Puis ouvre une session Claude Code à la racine de ce dossier.
 2. Écris **« je viens de lancer Hydra »**. L'accueil t'explique le fonctionnement,
    pose les modèles vides du contexte et les pré-remplit avec toi : ta mission, tes
    outils, ton design system, tes utilisateurs.
@@ -165,6 +175,10 @@ qui ne se lance pas se signale une fois, sans bloquer.
 
 Aucun contenu client dans la méthode : ni nom, ni chiffre, ni exemple tiré d'une
 mission. Tout ce qui est propre à une mission vit dans `context/` et dans `topics/`.
+
+## Versions
+
+Ce qui change d'une version à l'autre, et comment mettre à jour sans toucher à ton contexte ni à tes sujets : [CHANGELOG.md](CHANGELOG.md).
 
 ## Licence
 

@@ -36,7 +36,9 @@ en mode dégradé déclaré.
   pour un même rôle → dans l'ordre de la liste, le suivant seulement si le précédent
   ne couvre pas la question ou n'atteint pas le critère d'arrêt de la tête. Déclaré
   mais non branché → le dire au designer, l'aider à le brancher depuis la
-  documentation de l'outil, puis appliquer le repli de la tête. Aucun déclaré → le
+  documentation de l'outil, que tu trouves toi-même — le designer déclare un outil par
+  son seul nom —, par son connecteur ou, à défaut, par son API et une clé qu'il génère,
+  rangée dans un réglage local, jamais dans le dépôt ; puis appliquer le repli de la tête. Aucun déclaré → le
   dire une fois, puis appliquer le repli de la tête. Plusieurs connecteurs pour un même
   outil → celui de l'éditeur de l'outil, le connecteur officiel. Le connecteur
   déclaré est refusé ou en échec → ne pas se rabattre sur un autre connecteur du même
@@ -56,7 +58,8 @@ en mode dégradé déclaré.
   + un problème) → pipeline : `hydra-audit` puis `hydra-ideation`, puis
   `hydra-maquette` pour les explorations visuelles, puis `hydra-writer`, qui vérifie
   les textes des protos — par défaut en run d'un trait, proposé au designer en fin de
-  run séquencé ; sorties en bout de chaîne.
+  run séquencé ; sorties en bout de chaîne. Les protos se composent dans la foulée ou
+  après la relecture du brief, selon la fiche (`hydra-cortex`, cadrage).
 - **Existant + problème, sans intention encore formée** → `hydra-audit`
   seul, puis proposer d'enchaîner sur l'idéation.
 - **Intention ou idée à explorer, challenger, trancher** → `hydra-ideation`, puis proposer
@@ -146,6 +149,14 @@ improviser un substitut.
   recommandation rédigée, et la colonne Sources d'un tableau. Tout autre champ
   d'étiquette (« Ancrage : », « Signal porteur : »…) dit d'abord ce qu'il porte —
   ce que la référence montre —, l'identifiant suit en note.
+- **L'outil de design se lit, il ne s'écrit jamais** : aucun calque créé, modifié ou
+  supprimé dans un fichier du designer, même temporairement, même pour mesurer ou faire
+  le rendu d'un état — un script qui écrit puis efface laisse une trace dans l'historique
+  du fichier, et une panne en cours de route laisse l'écriture en place. Lire par un
+  script reste permis, et nécessaire : charger un composant de librairie pour lire sa
+  structure et ses valeurs, faire le rendu en image d'un calque qui existe déjà — sans
+  jamais en poser une instance ni rien ajouter au fichier. Un état qui ne se lit pas
+  sans écrire se déclare non vu. Les protos se composent à part, en HTML.
 - **Écrire dans le contexte** : toute écriture dans un fichier de `context/`
   (capitalisation comprise) suit le protocole diff-d'abord : présenter l'état réel,
   le diff proposé, sa correspondance à la demande, puis ATTENDRE le go explicite du
@@ -206,5 +217,8 @@ jamais la réponse.
 - **Livrables en markdown** : chaque livrable est écrit en markdown puis rendu
   en HTML par le hook (`.tools/md-to-html.js`), qui déplace ensuite la source
   dans `.src/`. Ne jamais écrire de HTML de livrable à la main. Les captures
-  (`.shots/`) se régénèrent et ne se versionnent pas.
+  (`.shots/`) se régénèrent et ne se versionnent pas. Pour revoir les alertes d'un
+  livrable déjà rendu : `node .tools/md-to-html.js <sujet>/.src/<livrable>.md` les
+  redonne, même quand le rendu n'a pas changé — jamais supprimer un rendu ni recopier
+  une source pour forcer un nouveau rendu.
 - En français, direct, sans remplissage.
