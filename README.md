@@ -5,7 +5,7 @@
 
 <p align="center">
   <a href="https://mcqx7.github.io/hydra-agent/"><img alt="La présentation" src="https://img.shields.io/badge/pr%C3%A9sentation-en%20ligne-d5341a?style=flat-square"></a>
-  <a href="https://github.com/MCQX7/hydra-agent/releases/latest"><img alt="Version 1.0" src="https://img.shields.io/badge/version-1.0-111111?style=flat-square"></a>
+  <a href="https://github.com/MCQX7/hydra-agent/releases/latest"><img alt="Dernière version" src="https://img.shields.io/github/v/release/MCQX7/hydra-agent?style=flat-square&label=version&color=111111"></a>
   <a href="LICENSE"><img alt="Licence MIT" src="https://img.shields.io/badge/licence-MIT-111111?style=flat-square"></a>
   <img alt="Pour Claude Code" src="https://img.shields.io/badge/pour-Claude%20Code-111111?style=flat-square">
   <img alt="Conçu pour Opus" src="https://img.shields.io/badge/con%C3%A7u%20pour-Opus-111111?style=flat-square">
