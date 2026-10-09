@@ -6,7 +6,7 @@ même pour tous les designers et toutes les missions. **Le contexte** — le dos
 vocabulaire, les utilisateurs, les métriques, le design system, le ton, les outils.
 Changer de mission, c'est remplacer `context/`, rien d'autre.
 
-Les modèles vides de chaque fichier sont dans `.claude/skills/hydra-accueil/references/context/`. À la première
+Les modèles vides de chaque fichier sont dans le dossier `context/` voisin de ce guide. À la première
 session, l'accueil les recopie dans `context/` et les pré-remplit avec toi, à partir
 de tes réponses et des sources que tu as. Rien ne s'y écrit sans ton accord.
 

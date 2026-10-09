@@ -63,7 +63,34 @@
             "command": "node \"$CLAUDE_PROJECT_DIR/.tools/hydra-bilan.js\""
           }
         ]
+      },
+      {
+        "matcher": "Bash|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.tools/hydra-cles-garde.js\""
+          }
+        ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.tools/hydra-cles.js\""
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(node .tools/hydra-api.js:*)",
+      "Bash(node \"$CLAUDE_PROJECT_DIR/.tools/hydra-api.js\":*)",
+      "Bash(node .tools/hydra-cles-preparer.js:*)",
+      "Bash(node \"$CLAUDE_PROJECT_DIR/.tools/hydra-cles-preparer.js\":*)"
     ]
   }
 }

@@ -94,6 +94,12 @@ lien sans nœud se complète en le demandant, pas en supposant.
    chaque critique peut s'accompagner d'une piste, étiquetée comme hypothèse.
 4. Chaque observation est factuelle et localisée (« écran X, zone Y »),
    séparée de son interprétation.
+   **Le remplissage d'une maquette n'est pas un constat** : dates, prix, montants, noms
+   et textes de démonstration — même incohérents d'un écran à l'autre — sont des
+   valeurs de maquette, pas des décisions. Ils se notent une fois, en observation, comme
+   remplissage, sans constat ni action. Seule exception : une valeur qui porte le
+   problème même du sujet, ou une mécanique du parcours — une option cochée d'office en
+   est une, et reste un constat.
 5. **Exercer les états, pas seulement l'écran au chargement.** Sur une prod ou un
    proto interactif : parcourir chaque état que la personne peut atteindre (vide,
    partiel, complet, dépassement, erreur) et relever le texte et les valeurs

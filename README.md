@@ -63,9 +63,53 @@ demandes la composition si les pistes la valent. Hydra pose les deux questions a
   Code : un outil de design pour lire les maquettes, un outil de benchmark pour les
   écrans de produits réels — sans outil de benchmark, l'accueil te suggère Lazyweb,
   gratuit. Aucun n'est obligatoire ; tu donnes leur nom, Hydra trouve comment les
-  brancher. L'analytics se lit aujourd'hui par les exports que tu déposes dans un sujet.
+  brancher. Avec ton outil d'analytics branché, Hydra va chercher lui-même les chiffres
+  qui lui manquent ; sinon, il lit les exports que tu déposes dans un sujet.
 
-**Puis** :
+**Puis, au choix — les deux font tourner la même méthode** :
+
+### En plugin (conseillé)
+
+Hydra s'installe comme un plugin de Claude Code, pour le seul dossier de ta mission : il
+n'apparaît dans aucun autre dossier. Ton contexte et tes sujets vivent dans ce dossier.
+
+1. Crée un dossier vide pour ta mission — par exemple `hydra-ma-mission` — et ouvre le
+   Terminal dedans.
+2. Installe Hydra pour ce dossier :
+   ```
+   claude plugin marketplace add MCQX7/hydra-agent
+   claude plugin install hydra@hydra-agent --scope local
+   ```
+   La première commande fait connaître Hydra à Claude Code, une fois par machine ; la
+   seconde l'installe pour ce dossier seulement.
+3. Lance `claude` dans ce dossier et écris **« je viens d'installer Hydra »**. Hydra te dit
+   ce qu'il va poser ici et le pose à ton accord : ses règles (`CLAUDE.md`, que Hydra tient
+   à jour : ne le modifie pas), ses réglages (Opus, effort élevé, et l'écart des `CLAUDE.md`
+   des dossiers au-dessus), les modèles de ton contexte et le dossier de tes sujets. Il ne
+   s'installe que dans un dossier vide : dans un dossier qui contient déjà autre chose, il
+   ne touche à rien et te dit comment faire.
+4. Quitte, puis relance `claude` dans ce même dossier : les règles d'Hydra ne se chargent
+   qu'à l'ouverture d'une session.
+5. L'accueil reprend : il t'explique le fonctionnement et pré-remplit le contexte avec
+   toi — ta mission, tes outils, ton design system, tes utilisateurs.
+6. Dépose ton premier sujet : crée `topics/<nom>/inputs/`, mets-y tes documents, et
+   écris par exemple « Audit de [sujet] : [lien de la maquette ou URL de prod].
+   Déroule. »
+
+**Une nouvelle mission** : un nouveau dossier vide, et la même installation (étapes 1 à 5) ;
+la première commande de l'étape 2 n'est plus utile.
+
+**Mettre à jour** : `claude plugin update hydra@hydra-agent --scope local`, dans le Terminal,
+depuis le dossier de ta mission. À la session suivante, Hydra réécrit les règles de ton dossier de mission et te dit « Hydra
+vient d'être mis à jour : relance la session pour charger les nouvelles règles » —
+Claude Code lit les règles avant que le plugin ne les réécrive, d'où une relance. Ton
+contexte et tes sujets ne bougent pas.
+
+### En copie
+
+La méthode est recopiée dans ton dossier de travail, comme en 1.x ; tu la mets à jour en
+remplaçant ses fichiers (CHANGELOG, « Passer de la 1.x à la 2.0 »).
+
 1. Récupère Hydra, au choix :
    - **sans rien installer** : en haut de cette page, bouton vert **Code**, puis
      **Download ZIP** ; décompresse le dossier où tu veux ;
@@ -77,9 +121,10 @@ demandes la composition si les pistes la valent. Hydra pose les deux questions a
 2. Écris **« je viens de lancer Hydra »**. L'accueil t'explique le fonctionnement,
    pose les modèles vides du contexte et les pré-remplit avec toi : ta mission, tes
    outils, ton design system, tes utilisateurs.
-3. Dépose ton premier sujet : crée `topics/<nom>/inputs/`, mets-y tes documents, et
-   écris par exemple « Audit de [sujet] : [lien de la maquette ou URL de prod].
-   Déroule. »
+3. Dépose ton premier sujet, comme en plugin.
+
+Les deux peuvent vivre sur une même machine : le plugin n'existe que dans les dossiers où
+tu l'as installé.
 
 Le contexte n'a pas à être complet le premier jour : à chaque cadrage, Hydra demande
 ce qui manque, puis te propose de l'ajouter, et l'écrit après ton accord.
@@ -89,7 +134,9 @@ ce qui manque, puis te propose de l'ajouter, et l'écrit après ton accord.
 
 Claude Code charge dans chaque session ton `CLAUDE.md` personnel (`~/.claude/CLAUDE.md`)
 et ceux des dossiers au-dessus de celui-ci : ils se mêleraient à la méthode d'Hydra.
-Pour les écarter, crée `.claude/settings.local.json` (jamais versionné) :
+En plugin, le dossier de mission écarte à sa création ceux qu'il trouve au-dessus de lui ;
+en copie, ou pour un fichier ajouté ensuite, écarte-les dans `.claude/settings.local.json`
+(jamais versionné) :
 
 ```json
 {
@@ -136,8 +183,10 @@ l'enchaîne pas.
 ## Comment c'est rangé
 
 Trois couches, qui ne se mélangent jamais :
-1. **La méthode** — `CLAUDE.md`, `.claude/skills/hydra-*`, `.tools/`. Aucun contenu
-   client. La même pour tous.
+1. **La méthode** — les règles (`CLAUDE.md`), les têtes `hydra-*`, les outils (`.tools/`).
+   Aucun contenu client. La même pour tous. En plugin, elle vit dans le plugin, et ton
+   dossier de mission n'en garde que la copie des règles, tenue à jour par Hydra ; en
+   copie, elle vit dans ton dossier (`CLAUDE.md`, `.claude/skills/hydra-*`, `.tools/`).
 2. **Le contexte** — `context/`. Tout ce qui est propre à ta mission. Changer de
    mission, c'est remplacer ce dossier.
 3. **Les sujets** — `topics/<nom>/`. Un dossier par sujet : ce que tu déposes, et ce
@@ -156,8 +205,8 @@ Trois couches, qui ne se mélangent jamais :
 <details>
 <summary><b>Les outils, et ce qui casse sans eux</b></summary>
 
-Les outils sont branchés par les réglages de l'instance et tournent seuls ; un outil
-qui ne se lance pas se signale une fois, sans bloquer.
+Les outils sont branchés par le plugin — en copie, par les réglages du dossier — et
+tournent seuls ; un outil qui ne se lance pas se signale une fois, sans bloquer.
 
 | Outil | Ce qu'il fait | Sans lui |
 |---|---|---|
@@ -168,6 +217,7 @@ qui ne se lance pas se signale une fois, sans bloquer.
 | `hydra-qa-gate.js` | Garde de fin de tour : bloque tant que des captures neuves n'ont pas été regardées ou que les compteurs d'une recette ne tombent pas juste. | Un proto corrigé peut être livré sans avoir été revu. |
 | `hydra-mesure.js` | Relève les valeurs réelles du build (tailles, couleurs, positions) pour la recette. | La recette ne peut pas chiffrer ses écarts. |
 | `hydra-bilan.js` | Signale en cours de session un document déposé jamais lu, une recherche faite hors de research, la lecture d'un autre sujet, un fichier d'instructions étranger. | Ces oublis passent sans que personne ne les voie. |
+| `hydra-dossier.js` | En plugin : crée le dossier de mission, tient ses règles à jour à chaque ouverture de session, et fait taire les outils hors d'un dossier de mission. | Pas de dossier de mission ; après une mise à jour, des règles anciennes sans que rien le dise. |
 | `hydra-render.html`, `vendor/` | Gabarit de rendu des livrables, et la bibliothèque de conversion markdown (marked, licence MIT). | Rien ne se rend. |
 </details>
 

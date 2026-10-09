@@ -38,11 +38,23 @@ en mode dégradé déclaré.
   mais non branché → le dire au designer, l'aider à le brancher depuis la
   documentation de l'outil, que tu trouves toi-même — le designer déclare un outil par
   son seul nom —, par son connecteur ou, à défaut, par son API et une clé qu'il génère,
-  rangée dans un réglage local, jamais dans le dépôt ; puis appliquer le repli de la tête. Aucun déclaré → le
+  qu'il pose dans le fichier des clés que `node .tools/hydra-cles-preparer.js NOM…` prépare
+  et lui ouvre — jamais collée dans la conversation, jamais dans le dépôt ; puis appliquer le repli de la tête. Aucun déclaré → le
   dire une fois, puis appliquer le repli de la tête. Plusieurs connecteurs pour un même
   outil → celui de l'éditeur de l'outil, le connecteur officiel. Le connecteur
   déclaré est refusé ou en échec → ne pas se rabattre sur un autre connecteur du même
   outil : le dire, puis appliquer le repli de la tête.
+- **Une donnée d'usage qui manque se cherche avant de se déclarer** : la valeur actuelle
+  d'un KPI, un taux, l'étape où les gens décrochent — dès qu'une tête en a besoin, elle va
+  la chercher dans l'outil d'analytics déclaré et branché, par son connecteur ou son API —
+  sa clé par le nom de sa variable, écrit dans la ligne de l'outil — chargée au démarrage
+  depuis `.claude/cles.env`, fichier qui ne s'ouvre jamais —, l'appel passant par
+  `node .tools/hydra-api.js`, qui place la clé lui-même (`--entete 'Nom: {VARIABLE}'`) :
+  jamais de clé ni de variable de clé dans une commande à soi (curl, script), que le
+  contrôle de sécurité refuse ; nom absent de la ligne → le demander au designer —,
+  au lieu de la demander au designer. Des chiffres agrégés seulement, jamais ce qui touche
+  une personne ; chacun cite sa source (outil, période, ce qui a été demandé). Le manque
+  ne s'écrit que si l'outil n'est pas branché ou n'a pas la donnée.
 - **`.claude/skills/hydra-*`** contient les méthodes. Suis-les quand elles
   s'activent ; ne réinvente pas une méthode qu'une tête couvre déjà.
 - **`topics/<nom-du-sujet>/`** : un dossier par sujet — les inputs déposés,
@@ -101,8 +113,8 @@ manquant, checklist de complétude.
 
 Quel que soit le skill actif : toute production — constat, piste —
 s'ancre dans des références réelles. **La méthode de recherche appartient à
-`hydra-research`** : les autres têtes l'appellent en mode appui (question
-serrée, arrêt court — le détail est dans research) et ne portent AUCUNE méthode de recherche
+`hydra-research`** : les autres têtes l'appellent en mode appui (le benchmark
+d'un sujet à la mesure du sujet, puis des questions serrées — le détail est dans research) et ne portent AUCUNE méthode de recherche
 en propre — ni requêtes, ni sources, ni connecteurs à interroger. `hydra-research`
 absente : le déclarer, abaisser la confiance, consigner la dette — jamais
 improviser un substitut.

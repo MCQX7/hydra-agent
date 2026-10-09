@@ -60,6 +60,9 @@ const os = require('os');
 
 // —— Réglages "méthode" (pas du client) ————————————————————————————————————
 const RESEARCH_SKILL = 'hydra-research';
+// Le nom d'une tête, sans le préfixe du plugin : « hydra:hydra-research » en plugin,
+// « hydra-research » en copie. Tout contrôle qui reconnaît une tête à son nom passe par ici.
+const tete = s => { s = String(s); return s.slice(s.lastIndexOf(':') + 1); };
 // Marque posée par le modèle de mission.md, retirée par hydra-accueil à la fin de son bilan.
 const MARQUE_ACCUEIL = /<!--\s*hydra-accueil\s*:\s*en cours/i;
 const WEB_TOOLS = new Set(['WebSearch', 'WebFetch']);
@@ -143,7 +146,11 @@ function cheminsSujets(inp) {
   for (const k of ['file_path', 'path', 'pattern', 'notebook_path', 'command']) {
     const v = inp && inp[k]; if (typeof v !== 'string') continue;
     const re = /(?:^|[^\w.-])(topics\/([^\/\s'"`;|&()<>*?$]+)(?:\/[^\s'"`;|&()<>]*)?)/g; let m;
-    while ((m = re.exec(v))) out.push({ s: nfc(m[2]), p: nfc(m[1]) });
+    while ((m = re.exec(v))) {
+      // Un dossier caché nu (topics/.archive, listé) n'est pas un sujet : seul ce qui est dessous l'est.
+      if (m[2].startsWith('.') && !/^topics\/[^/]+\/[^/]/.test(m[1])) continue;
+      out.push({ s: nfc(m[2]), p: nfc(m[1]) });
+    }
   }
   return out;
 }
@@ -289,7 +296,7 @@ function noterAppel(acc, b, o) {
 // balayages, reste le seul fait d'écriture — une déduction par date ne doit ni rendre
 // ni bloquer quoi que ce soit.
 function autresLus(acc, courants, root) {
-  const enRun = [...acc.skills].some(s => /^hydra-/.test(String(s)));
+  const enRun = [...acc.skills].some(s => /^hydra-/.test(tete(s)));
   if (!courants.size && !enRun) return [];
   const crees = sujetsCrees(root, new Set([...acc.lectures.values()].filter(s => !courants.has(s))), acc.nommes, acc.debut);
   return [...acc.lectures].filter(([, s]) => !courants.has(s) && !crees.has(s));
@@ -365,8 +372,7 @@ function duree(tp, sujet) {
 // MCP) ne passent pas par ici.
 function skillHorsHydra(payload) {
   const nom = String((payload.tool_input || {}).skill || '');
-  const base = nom.includes(':') ? nom.slice(nom.lastIndexOf(':') + 1) : nom;
-  if (!nom || /^hydra-/.test(base)) return null;
+  if (!nom || /^hydra-/.test(tete(nom))) return null;
   return '⚠ Skill « ' + nom + ' » : ce n\'est pas une tête d\'Hydra. Seules les têtes hydra-* portent '
     + 'la méthode (CLAUDE.md § Routing). Charge-le seulement si c\'est le mode d\'emploi d\'un '
     + 'connecteur qu\'une tête utilise (le connecteur le demande ou le recommande), et ne laisse jamais '
@@ -393,7 +399,11 @@ function main() {
     const slug = projectRoot.replace(/\//g, '-');
     tp = path.join(os.homedir(), '.claude', 'projects', slug, payload.session_id + '.jsonl');
   }
-  if (!tp || !fs.existsSync(tp)) return; // silencieux
+  // Trace absente : au tout premier message d'une session, Claude Code ne l'a pas encore
+  // écrite. Rien à y lire, mais les constats du disque (instance neuve, CLAUDE.md extérieur)
+  // valent dès ce message.
+  const trace = !!tp && fs.existsSync(tp);
+  if (!trace && !payload.session_id) return; // silencieux
 
   const sid = payload.session_id || path.basename(tp).replace(/\.jsonl$/, '');
   const statePath = path.join(os.tmpdir(), 'hydra-bilan-' + sid + '.json');
@@ -424,9 +434,11 @@ function main() {
             reads.add(nfc(path.resolve(inp.file_path)));
         }
   });
-  state.offset = parseDelta(tp, state.offset);
-  for (const f of sidechains(tp)) {
-    try { state.subOffsets[path.basename(f)] = parseDelta(f, state.subOffsets[path.basename(f)] || 0); } catch (e) {}
+  if (trace) {
+    state.offset = parseDelta(tp, state.offset);
+    for (const f of sidechains(tp)) {
+      try { state.subOffsets[path.basename(f)] = parseDelta(f, state.subOffsets[path.basename(f)] || 0); } catch (e) {}
+    }
   }
   state.skills = [...skills]; state.reads = [...reads]; state.sujets = [...sujets];
   state.lectures = [...acc.lectures];
@@ -455,7 +467,7 @@ function main() {
   }
 
   // (g) ÉVÉNEMENT — une seule émission sur toute la session
-  if (state.researchUsed && !state.skills.includes(RESEARCH_SKILL) && !state.emittedG) {
+  if (state.researchUsed && !state.skills.some(s => tete(s) === RESEARCH_SKILL) && !state.emittedG) {
     lines.push('⟐ recherche menée sans ' + RESEARCH_SKILL + ' chargé — méthode de recherche non appliquée par sa tête propriétaire.');
     state.emittedG = true;
   }

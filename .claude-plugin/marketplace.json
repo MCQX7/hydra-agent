@@ -1,0 +1,22 @@
+{
+  "name": "hydra-agent",
+  "owner": {
+    "name": "MCQX7",
+    "url": "https://github.com/MCQX7"
+  },
+  "metadata": {
+    "description": "Hydra, une équipe design dans Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "hydra",
+      "source": "./plugin",
+      "description": "Hydra — une équipe design dans Claude Code : audit, recherche, pistes, protos, textes, recette.",
+      "version": "2.0.0",
+      "author": {
+        "name": "MCQX7"
+      },
+      "license": "MIT"
+    }
+  ]
+}

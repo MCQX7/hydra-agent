@@ -10,6 +10,8 @@
 
 # Réglages propres à ta machine (dont l'exclusion de tes autres CLAUDE.md)
 .claude/settings.local.json
+# Tes clés d'API : sur ta machine seulement, jamais dans un dépôt
+.claude/cles.env
 
 # Matière régénérable par les outils
 .shots/

@@ -33,10 +33,16 @@ audit, une idéation, une copy ou une décision.
 - **Autonome** : la recherche EST le sujet (« benchmark-moi les concurrents
   sur X »). Dérouler le playbook complet, sortie complète.
 - **Appui** : une autre tête Hydra a besoin de références ou d'une formulation
-  en cours de route (phase benchmark de l'audit, ancrage des pistes
-  d'ideation, références d'un écran pour maquette, requête d'extraction à proposer pour cortex). Périmètre serré à LA
-  question posée par la tête appelante, critère d'arrêt court (3-6 références
-  suffisent), sortie compacte : la liste de références R* avec source/date/ce
+  en cours de route. **Le benchmark d'un sujet** (phase benchmark de l'audit) nourrit tout ce
+  qui suit — constats, pistes, protos : sa profondeur se décide au Cadrage, **à la
+  mesure du sujet** (sa complexité, ce qui reste inconnu, l'enjeu de la décision),
+  jamais au hasard du run ni par un nombre fixé d'avance ; il couvre les angles que
+  le sujet demande et s'arrête quand les dernières recherches n'apportent plus ni
+  variante ni principe nouveau. Le cadrage dit la profondeur retenue et pourquoi ;
+  la sortie, les angles couverts et ce qui n'a pas pu être vu. Les autres demandes
+  (références d'un écran pour maquette, requête d'extraction à proposer pour
+  cortex, une question restée ouverte) : périmètre serré à LA question posée par
+  la tête appelante, critère d'arrêt court (3-6 références suffisent), sortie compacte : la liste de références R* avec source/date/ce
   qu'elles établissent — et, quand l'appelant travaille un pattern, le **principe
   sourcé** (loi, guideline, étude) qui l'explique. La tête appelante fait le reste.
   **Cette table EST l'appui** : l'appelante l'intègre, elle ne la recompose pas.
@@ -161,8 +167,14 @@ Critère d'arrêt : celui fixé à l'étape Cadrer du Déroulé commun — le po
 
 ### D — Corpus de données internes
 « Aide-moi à extraire des insights de [outil/données]. »
-1. Pas de connecteur pour l'outil d'analytics concerné : formuler
-   précisément quoi extraire — métrique, segment, période, format d'export.
+1. L'outil d'analytics est branché (connecteur ou API) : extraire soi-même —
+   métrique, segment, période —, en chiffres agrégés, et citer la requête. Un
+   terme du designer qui a plusieurs lectures dans l'outil (un segment, une
+   métrique au nom proche) se fait trancher par lui avant l'extraction, les
+   lectures possibles sous les yeux. L'unité d'un chiffre se vérifie dans la
+   description que l'outil donne de ses colonnes, ou dans sa documentation ;
+   non vérifiée, le chiffre ne se cite pas. Sinon :
+   formuler précisément quoi extraire — métrique, segment, période, format d'export.
    Ne jamais supposer le contenu d'une donnée non fournie.
 2. L'utilisateur rapporte ; intégrer comme sources R*.
 3. Synthèse : signaux forts/faibles, données manquantes à collecter.

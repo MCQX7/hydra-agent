@@ -331,6 +331,7 @@ strong, b{ font-weight:700; }
     <div class="cell"><div class="name">Outil de design</div><div class="desc"><b>Maquettes et design system.</b> Lit un écran, sa structure et ses valeurs&nbsp;; pour un écran nouveau, pioche les composants dans tes librairies.</div></div>
     <div class="cell"><div class="name">Benchmark</div><div class="desc"><b>Ce qui se fait.</b> Écrans et parcours de produits réels. Plusieurs outils&nbsp;: dans ton ordre de préférence. Sans outil, l'accueil te suggère Lazyweb, gratuit, et Hydra visite les produits en ligne.</div></div>
     <div class="cell"><div class="name">Le navigateur</div><div class="desc"><b>Captures et mesures.</b> Hydra regarde chaque proto qu'il compose, et mesure le build pendant une recette.</div></div>
+    <div class="cell"><div class="name">Analytics</div><div class="desc"><b>Les chiffres d'usage.</b> Une donnée qui manque — la valeur d'un indicateur, l'étape où les gens décrochent — se cherche dans l'outil avant de se déclarer absente&nbsp;: chiffres agrégés, chacun avec sa source. Par connecteur, ou par l'API de l'outil avec une clé qui reste sur ta machine, jamais dans la conversation. Sans outil, Hydra lit les exports que tu déposes.</div></div>
   </div>
   <p class="note">Un outil déclaré mais non branché&nbsp;: Hydra t'aide à le brancher. Aucun outil pour un rôle&nbsp;: il le dit, applique son repli, et la confiance baisse là où ça compte — jamais en silence.</p>
 </section>
@@ -376,9 +377,7 @@ strong, b{ font-weight:700; }
   <h2>Ce qui vient</h2>
   <p>Des pistes, pas des engagements&nbsp;:</p>
   <ul class="plain">
-    <li><b>Lire l'analytics directement</b> — avec l'outil de la mission branché, Hydra ira chercher lui-même la donnée qui lui manque au lieu de te la demander&nbsp;: moins de questions de cadrage laissées ouvertes, moins de décisions en attente, des runs plus autonomes. Et, sur demande, la synthèse d'un indicateur sur une période, sans export à déposer.</li>
-    <li><b>Une tête par sous-agent</b> — chacune dans son propre contexte&nbsp;: des runs plus rapides et moins coûteux, des protos composés en parallèle.</li>
-    <li><b>S'arrêter avant les protos</b> — lire la fiche, le rapport et le brief, puis décider si les protos valent leur coût.</li>
+    <li><b>La synthèse d'un indicateur</b> — sur demande, l'évolution d'un indicateur sur une période, lue dans l'outil d'analytics branché, sans export à déposer.</li>
     <li><b>Partir d'un ticket</b> — le sujet récupéré dans l'outil de gestion de la mission, le livrable rendu au même endroit.</li>
   </ul>
 </section>
@@ -389,8 +388,8 @@ strong, b{ font-weight:700; }
   <div class="encart">
     <div class="encart__kicker">Démarrer</div>
     <h3 class="encart__title">Une session, et l'accueil te guide</h3>
-    <p>Il faut Claude Code avec accès à Opus, Node.js 22 ou plus récent, et Chrome. Le code — à télécharger en ZIP, sans git —, les prérequis et l'installation sont sur <a href="https://github.com/MCQX7/hydra-agent">github.com/MCQX7/hydra-agent</a>, dans le <code>README.md</code>.</p>
-    <p>Ensuite, ouvre une session Claude Code dans le dossier d'Hydra et commence par «&nbsp;je viens de lancer Hydra&nbsp;». C'est ce qui réveille l'accueil&nbsp;: il pré-remplit ton contexte avec toi, puis tu lances ton premier sujet.</p>
+    <p>Il faut Claude Code avec accès à Opus, Node.js 22 ou plus récent, et Chrome. Deux façons d'installer Hydra, pour la même méthode&nbsp;: <b>en plugin de Claude Code</b>, installé pour le seul dossier de ta mission — deux commandes, une pour le mettre à jour — ou <b>en copie</b>, à télécharger en ZIP, sans git. Les prérequis et l'installation sont sur <a href="https://github.com/MCQX7/hydra-agent">github.com/MCQX7/hydra-agent</a>, dans le <code>README.md</code>.</p>
+    <p>Ensuite, en plugin, lance Claude Code dans le dossier de ta mission et écris «&nbsp;je viens d'installer Hydra&nbsp;»&nbsp;: il y pose ses règles et les modèles de ton contexte, et l'accueil reprend quand tu relances Claude Code dans ce dossier. En copie, ouvre la session dans le dossier d'Hydra et commence par «&nbsp;je viens de lancer Hydra&nbsp;». L'accueil pré-remplit ton contexte avec toi, puis tu lances ton premier sujet.</p>
     <p>Compte quelques minutes pour une question, une vingtaine à une demi-heure pour un sujet complet jusqu'aux protos. Hydra est conçu pour travailler avec Opus en effort élevé&nbsp;: c'est un parti pris. Il fonctionne aussi avec Sonnet ou un effort plus bas, si ton offre ne permet pas mieux — ses livrables sont alors moins bons.</p>
   </div>
 </section>

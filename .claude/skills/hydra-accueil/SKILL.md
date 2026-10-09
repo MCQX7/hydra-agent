@@ -16,9 +16,11 @@ description: >
 
 <!-- PRINCIPE : cette tête ne contient aucun contenu de mission. Elle s'appuie sur
 les modèles vides et le guide du contexte rangés dans son dossier, sous `references/`
-(`.claude/skills/hydra-accueil/references/` depuis la racine de l'instance),
+(`${CLAUDE_SKILL_DIR}/references/`),
 qui disent, fichier par fichier, à quoi il sert, ce qui se dégrade sans lui, quelles
 sources le remplissent et comment l'enrichir. Elle les lit, elle ne les recopie pas. -->
+
+Tutoyer le designer, dès le premier message.
 
 ## Quand elle tourne
 
@@ -47,8 +49,8 @@ protos, textes vérifiés. Dix lignes au plus : le reste s'apprend sur le premie
 
 ### 2. Poser les modèles
 
-Lire `.claude/skills/hydra-accueil/references/GUIDE-CONTEXTE.md`. Proposer de recopier les modèles de
-`.claude/skills/hydra-accueil/references/context/` dans `context/` ; au go du designer, ne recopier que les
+Lire `${CLAUDE_SKILL_DIR}/references/GUIDE-CONTEXTE.md`. Proposer de recopier les modèles de
+`${CLAUDE_SKILL_DIR}/references/context/` dans `context/` ; au go du designer, ne recopier que les
 fichiers absents de `context/` — jamais par-dessus un fichier existant.
 
 ### 3. Pré-remplir, fichier par fichier
@@ -106,13 +108,26 @@ Pour chaque fichier, quatre temps, d'après le guide :
 - Un outil que la mission a sans qu'il soit branché : le déclarer avec « aucun
   connecteur », et aider à le brancher depuis la documentation de l'outil, cherchée
   par Hydra — le designer n'a ni lien ni procédure à fournir. Par son connecteur ; à
-  défaut, par son API et une clé que le designer génère, rangée dans un réglage local,
-  jamais dans le dépôt, et notée « API, clé locale ». Ce que la commande `/mcp` montre
+  défaut, par son API et une clé que le designer génère. **La clé ne se colle jamais dans
+  la conversation** (elle finirait dans la trace) : Hydra cherche dans la documentation de
+  l'outil les noms des variables que son API demande, lance le préparateur avec ces noms
+  (`node .tools/hydra-cles-preparer.js NOM1 NOM2…`) — il ajoute une ligne `NOM=` vide
+  par nom au fichier des clés de l'instance, sans toucher une ligne déjà remplie, et
+  l'ouvre dans un éditeur de texte —, puis dit au designer, en clair : où générer sa
+  clé dans l'outil, de la coller après le `=` de la ligne du nom, d'enregistrer le
+  fichier, et de le dire. Le designer n'a pas à savoir où est le fichier. Hydra vérifie
+  ensuite que l'outil répond (un appel par `node .tools/hydra-api.js`, qui lit la clé
+  lui-même), sans jamais la voir. La ligne de l'outil est notée « API, clé locale » avec
+  le nom des variables — jamais leur valeur —, pour que personne n'ait à ouvrir le
+  fichier. Ce que la commande `/mcp` montre
   ensuite fait foi pour un connecteur.
-- **L'analytics** : demander si l'outil est branché à Claude par un connecteur (MCP)
-  — pas si le designer y a accès, c'est une autre question. Dire qu'aujourd'hui Hydra
-  travaille sur les exports et restitutions déposés dans un sujet : un connecteur
-  d'analytics se déclare, mais Hydra ne va pas encore y chercher les données lui-même.
+- **L'analytics** : l'outil se branche comme les autres, par connecteur ou par API et
+  une clé. Branché, Hydra y cherche lui-même les chiffres qui lui manquent — agrégés
+  seulement — au lieu de les demander ; sinon, il travaille sur les exports déposés dans
+  un sujet. Au branchement, Hydra cale l'outil avec le designer : l'espace à interroger
+  (un site, une propriété), lu dans une requête que le designer copie depuis l'outil
+  plutôt que dans une configuration qu'il n'a souvent pas le droit d'ouvrir, puis un ou
+  deux chiffres comparés à son écran. L'espace s'écrit dans la ligne de l'outil.
 - Un rôle sans outil reste vide : la tête qui en a besoin le dira et appliquera son repli.
 
 **Le design system** : suivre le `README.md` de `context/design/`. Outil de design
