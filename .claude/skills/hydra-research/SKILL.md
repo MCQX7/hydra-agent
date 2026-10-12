@@ -232,6 +232,7 @@ porte le condensé, et le chemin du livrable.
 | # | Source | Lien | Visuel | Date | Ce qu'elle établit |
 |---|--------|------|--------|------|--------------------|
 ```
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit et la table des références en mode appui prennent ces formes et aucune autre  :* Date du run → Run date · Connecteurs → Connectors · Repères → Key · référence → reference · Réponse courte → Short answer · Confiance → Confidence · Applicabilité au projet → Applicability to the project · Établi → Established · Signal faible → Weak signal · Avec adaptation → With adaptation · Applicable tel quel → Applicable as is · Non transposable → Not transferable · Ce qu'on ne sait pas → What we don't know · Références (R*) → References (R*) · Lien → Link · Visuel → Visual · Ce qu'elle établit → What it establishes · non vérifiable → not verifiable. Restent tels quels : Research, Playbook, Sources, Conclusions, Conclusion, Probable, Source, Date, et les identifiants.
 
 En mode appui : la table des références R* — quand l'appelant travaille un pattern,
 le principe sourcé de chaque référence dans « Ce qu'elle établit » — + une ligne de
@@ -242,7 +243,7 @@ d'abord, puis la table. La tête appelante intègre.
 
 - Faits ≠ interprétations ; quantifier plutôt qu'approximer.
 - Sobriété en run, raisonnement déplié sur audit.
-- Français, direct, sans remplissage.
+- Direct, sans remplissage, dans la langue de travail (CLAUDE.md § Sorties).
 
 ## Ce que ce skill NE fait PAS
 

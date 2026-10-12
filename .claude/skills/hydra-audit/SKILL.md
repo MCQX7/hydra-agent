@@ -278,6 +278,7 @@ porte lien cliquable + visuel **lié** (jamais embarqué) depuis `topics/<nom>/r
 écran nommés, ce qu'elle montre) ; sans lien ni visuel = étiquetée « non
 vérifiable », confiance abaissée]
 ```
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Écrit par → Written by · complété par idéation → completed by ideation · manque → missing · research en appui → backed by research · produit sans research → produced without research · aucun → none · Repères → Key · observation → observation · signal (donnée) → signal (data) · benchmark (référence) → benchmark (reference) · constat → finding · hypothèse de design → design hypothesis · piste → option · Questions de cadrage non résolues → Unresolved framing questions · hypothèse prise → assumption taken · Résumé exécutif → Executive summary · Signal porteur → Lead signal · Constats priorisés → Prioritized findings · Constat → Finding · Confiance → Confidence · Haute → High · Moyenne → Medium · Faible → Low · Haut → High · Moyen → Medium · Bas → Low · écarté : → discarded: · Tensions relevées → Tensions noted · Hypothèses de design → Design hypotheses · Origine → Origin · [dérivé] → [derived] · [analyse] → [analysis] · Si … alors … parce que → If … then … because · Direction recommandée → Recommended direction · Fondé sur → Based on · Incertitudes à vérifier par l'humain → Uncertainties for a human to check · Annexes → Appendix · mesuré → measured · établi → established · forte amplitude → high amplitude · faible amplitude → low amplitude · coordonnées non comparables → coordinates not comparable · non exploité → not used · Écartés → Discarded · non vérifiable → not verifiable. Restent tels quels : Audit, Date, Inputs, Benchmark, Sources, Impact, Effort, Actions, [input], et les identifiants.
 
 ## Règles transverses
 
@@ -288,7 +289,7 @@ vérifiable », confiance abaissée]
 - **Sobriété en run** : livrables structurés, zéro narration dans les messages —
   jamais dans le livrable, dont la prose dit ce qu'elle affirme. Déplier le
   raisonnement complet uniquement quand l'utilisateur audite un point.
-- Écrire en français, ton direct, sans remplissage.
+- Écrire dans la langue de travail (CLAUDE.md § Sorties), ton direct, sans remplissage.
 
 ## Ce que ce skill NE fait PAS
 

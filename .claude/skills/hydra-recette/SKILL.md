@@ -338,6 +338,7 @@ marquable n'a pas d'image. Deux devices : une commande par device (§ Deux devic
 **Non apparié** — maquette sans build : … · build sans maquette : …
 **Incertitudes** *(uniquement si une mesure a échoué)* — …
 ```
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Recette → Design QA · Maquette → Design · Largeur → Width · État → State · Hors périmètre → Out of scope · majeures → major · mineures → minor · Capture annotée → Annotated capture · Élément → Element · Propriété → Property · Attendu → Expected · Constaté → Actual · Preuve → Evidence · Sév. → Sev. · Majeur → Major · Mineur → Minor · mesuré → measured · absent → missing · Non apparié → Unmatched · maquette sans build → design without build · build sans maquette → build without design · Incertitudes → Uncertainties · non recettable → not reviewable ; et les propriétés : taille → size · couleur → color · fond → background · graisse → weight · interligne → line height · police → font · rayon → radius · hauteur → height · largeur → width · bordure → border · marge interne → padding · libellé → label. Restent tels quels : Build, corrections, Desktop, Mobile, dimensions, et les identifiants.
 
 Deux devices : sous chaque zone, `### Desktop` puis `### Mobile`, chacune avec sa
 capture et son tableau (le gabarit ci-dessus, une fois par device) ; le compte global
@@ -379,7 +380,7 @@ courte orientée dev** (« avant de livrer, vérifier que… »), en markdown
   (§ Constat visuel). Une impression, elle, ne s'écrit dans aucun des deux cas.
 - Un faux positif coûte la crédibilité du rapport entier : au doute entre
   dérive et rendu, § Ce qui n'est PAS une dérive tranche — on n'écrit rien.
-- Français, direct, sans remplissage. Le livrable est une liste, pas un texte.
+- Direct, sans remplissage, dans la langue de travail (CLAUDE.md § Sorties). Le livrable est une liste, pas un texte.
 
 ## Ce que ce skill NE fait PAS
 

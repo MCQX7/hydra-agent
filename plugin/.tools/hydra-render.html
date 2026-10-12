@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="<!--HYDRA:LANG-->">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -165,7 +165,7 @@ body{ font-family:var(--sans); font-size:17px; line-height:1.62;
   <div class="masthead__row">
     <div class="masthead__mark">Hydra<span class="dot">.</span></div>
     <div class="masthead__type"><!--HYDRA:TYPE--></div>
-    <button id="copyBtn">Copier le markdown</button>
+    <button id="copyBtn"><!--HYDRA:COPIER--></button>
   </div>
   <div class="masthead__rule"></div>
   <div class="masthead__rule-thin"></div>
@@ -173,14 +173,14 @@ body{ font-family:var(--sans); font-size:17px; line-height:1.62;
 
 <!-- rail gauche : sommaire -->
 <aside class="rail rail-l">
-  <div class="rail__label">Sommaire</div>
+  <div class="rail__label"><!--HYDRA:SOMMAIRE--></div>
   <ol class="rail__toc"><!--HYDRA:TOC--></ol>
 </aside>
 
 <!-- colonne de contenu (seule à défiler) -->
 <main class="main"><article class="article"><!--HYDRA:CONTENT--></article></main>
 
-<div class="toast" id="toast">Copié</div>
+<div class="toast" id="toast"><!--HYDRA:COPIE--></div>
 
 <!-- source markdown brute conservée pour le bouton Copier (seul usage du JS) -->
 <script type="text/markdown" id="mdSource"><!--HYDRA:MDSOURCE--></script>

@@ -15,6 +15,8 @@
    .md, et saute l'écriture si le .html est inchangé (idempotent). */
 const fs = require('fs');
 const path = require('path');
+// Les mots des livrables, en français et en anglais : une source pour tous les outils.
+const LX = require(path.join(__dirname, 'lexique.js'));
 
 // marked vendoré (MIT) — v15 expose .parse directement ; fallback défensif.
 const _marked = require(path.join(__dirname, 'vendor', 'marked.min.js'));
@@ -73,14 +75,19 @@ function embedImages(html, mdDir){
   return html;
 }
 
-function detectType(html, mdPath){
+// Le type affiché dans le bandeau, dans la langue du livrable. Le nom du fichier d'abord,
+// fixé par CLAUDE.md § Sorties ; puis le titre — un rapport s'ouvre sur « Audit — ».
+function detectType(html, mdPath, lg){
+  const P = LX.PAGE[lg] || LX.PAGE.fr;
+  for(const k of ['fiche', 'rapport', 'recherche', 'brief']) if(LX.estLivrable(k, mdPath)) return P[k];
   const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   const t = (m ? stripTags(m[1]) : path.basename(mdPath)).toLowerCase();
-  if(/rapport|action/.test(t)) return "Rapport d'action";
-  if(/research|recherche/.test(t)) return "Recherche";
-  if(/brief|exploration/.test(t)) return "Brief d'exploration";
-  if(/fiche|sujet|cadrage/.test(t)) return "Fiche de sujet";
-  return "Livrable";
+  if(/^(recette|design qa)\b/.test(t)) return P.recette;
+  if(/rapport|report|audit|action/.test(t)) return P.rapport;
+  if(/research|recherche/.test(t)) return P.recherche;
+  if(/brief|exploration/.test(t)) return P.brief;
+  if(/fiche|sujet|cadrage|topic sheet/.test(t)) return P.fiche;
+  return P.livrable;
 }
 
 function buildTOC(html){
@@ -107,33 +114,34 @@ function buildTOC(html){
 function lintStructure(md, mdPath){
   const gaps = [];
   // Déclencheur : section « Hypothèses de design » ← hydra-audit, Format de sortie (Bloc 1)
-  if (/^#{2,6}\s+Hypothèses de design/m.test(md)) {
+  if (LX.re('hypotheses', '^#{2,6}\\s+', '', 'm').test(md)) {
     // « Origine » ← hydra-audit, Format de sortie ; hydra-ideation, étape 4
-    if (!/Origine/.test(md)) gaps.push("section Hypothèses sans ligne « Origine » (input vs apport de l'analyse)");
+    if (!LX.re('origine').test(md)) gaps.push("section Hypothèses sans ligne « Origine » (input vs apport de l'analyse)");
     // étiquettes ← hydra-audit, Phase 2 ; hydra-ideation, étape 4
-    if (!/\[(input|dérivé|analyse)\]/.test(md)) gaps.push("hypothèses sans étiquette [input]/[dérivé]/[analyse]");
+    if (!new RegExp(LX.alt('tagInput') + '|' + LX.alt('tagDerive') + '|' + LX.alt('tagAnalyse')).test(md))
+      gaps.push("hypothèses sans étiquette [input]/[dérivé]/[analyse]");
   }
   // Déclencheur : section « Benchmark » ← hydra-audit, Phase 3. Une SECTION,
   //   pas une simple citation B* : sinon brief/ideation (qui citent le benchmark
   //   sans le produire) sur-déclencheraient.
   // NB : pas de \b autour de « Écartés » — en JS \b se calcule sur \w, qui exclut
   //   les accents → frontière non fiable. Test de présence simple.
-  if (/^#{2,6}\s+.*[Bb]enchmark/m.test(md) && !/Écartés/.test(md))
+  if (/^#{2,6}\s+.*[Bb]enchmark/m.test(md) && !LX.re('ecartes').test(md))
     gaps.push("benchmark sans annexe « Écartés » (réfs consultées non retenues)");
   // Correspondance ← hydra-cortex, clôture : une piste qui porte une objection hors
   //   autorité est NOMMÉE par une entrée de « Questions de cadrage non résolues ». Les
   //   marqueurs sont les types d'objection que cortex énumère dans cette même case de
   //   clôture, repris à l'identique par ideation (plus « arbitrage produit », sa forme
   //   courante). Pas de \b : il ne ferme pas un mot accentué.
-  const OBJ = /capacité non établie|décision produit|arbitrage produit|non-négociable du contexte à trancher/i;
+  const OBJ = new RegExp(['objCapacite', 'objDecision', 'objArbitrage', 'objNonNego'].map(LX.alt).join('|'), 'i');
   const pistes = [], L = md.split('\n'); let cur = null, inQ = false, q = '', secPistes = false;
   for(const l of L){
     const h = /^(#{2,6})\s+(.*)$/.exec(l);
     if(h){
       cur = /^###$/.test(h[1]) && /^P\d+\b/.test(h[2]) ? { id: h[2].match(/^P\d+/)[0], obj: false } : (h[1].length <= 3 ? null : cur);
       if(cur && !pistes.includes(cur)) pistes.push(cur);
-      if(h[1].length <= 2) inQ = /^Questions de cadrage non résolues/.test(h[2]);
-      if(h[1].length === 2 && /^Pistes\b/i.test(h[2])) secPistes = true;
+      if(h[1].length <= 2) inQ = LX.re('questions', '^').test(h[2]);
+      if(h[1].length === 2 && LX.re('pistes', '^', '(?![\\wÀ-ÿ])', 'i').test(h[2])) secPistes = true;
       continue;
     }
     if(cur && OBJ.test(l)) cur.obj = true;
@@ -142,7 +150,7 @@ function lintStructure(md, mdPath){
   // Le RAPPORT seulement, reconnu à son NOM de livrable (CLAUDE.md § Sorties), pas à un
   // titre qu'une réécriture peut changer : le brief reprend les pistes et renvoie au
   // rapport pour les décisions, il ne porte pas la section.
-  const rapport = /(^|\/)02-rapport\.md$/i.test(String(mdPath || '').replace(/\\/g, '/'));
+  const rapport = LX.estLivrable('rapport', mdPath);
   const orphelines = !rapport ? [] : pistes.filter(p => p.obj && !new RegExp('(^|[^\\w])' + p.id + '(?!\\d)').test(q)).map(p => p.id);
   if (orphelines.length) gaps.push('piste(s) portant une objection hors autorité, nommée(s) par aucune entrée de « Questions de cadrage non résolues » : '
     + orphelines.join(', ') + ' — la décision attendue n\'a pas de trace');
@@ -154,14 +162,14 @@ function lintStructure(md, mdPath){
   //   « research en appui » se constate sur son produit — des R* déclarés, en puce
   //   ou en table ; sans eux, il n'y a pas eu d'appui (hydra-research § Deux modes).
   if (rapport) {
-    const bl = md.match(/^\*\*Benchmark\s*:\*\*(.*)$/m);
+    const bl = md.match(LX.re('benchmark', '^\\*\\*', '\\s*:\\*\\*(.*)$', 'm'));
     const hasR = /^\s*-\s+\*\*R\d+\*\*/m.test(md) || /^\|\s*(?:\*\*)?R\d+(?:\*\*)?\s*\|/m.test(md);
     if (!bl) gaps.push("rapport sans ligne d'en-tête « Benchmark : » (research en appui / produit sans research / aucun)");
-    else if (/research en appui/i.test(bl[1])) {
+    else if (LX.re('benchAppui', '', '', 'i').test(bl[1])) {
       if (!hasR) gaps.push("« Benchmark : research en appui » sans référence R* rendue — sans table, il n'y a pas eu d'appui");
     }
-    else if (/produit sans research/i.test(bl[1])) {}
-    else if (/aucun/i.test(bl[1])) {
+    else if (LX.re('benchSans', '', '', 'i').test(bl[1])) {}
+    else if (LX.re('benchAucun', '', '', 'i').test(bl[1])) {
       if (/^#{2,6}\s+.*[Bb]enchmark/m.test(md)) gaps.push("« Benchmark : aucun » alors que le rapport porte une section benchmark");
     }
     else gaps.push("valeur de « Benchmark : » non reconnue (research en appui / produit sans research / aucun)");
@@ -169,8 +177,8 @@ function lintStructure(md, mdPath){
   // Ligne « Non-négociables : » ← hydra-cortex, gabarit de la fiche : sa PRÉSENCE seule,
   //   dans la fiche reconnue à son NOM (01-fiche), jamais un titre. Le contenu ne se lit
   //   pas ici : il se vérifie sur pièce (source nommée, ou fichiers lus contre le transcript).
-  const fiche = /(^|\/)01-fiche\.md$/i.test(String(mdPath || '').replace(/\\/g, '/'));
-  if (fiche && !/^\*\*Non-négociables :\*\*/m.test(md))
+  const fiche = LX.estLivrable('fiche', mdPath);
+  if (fiche && !LX.re('nonNegociables', '^\\*\\*', '\\s*:\\*\\*', 'm').test(md))
     gaps.push("fiche sans ligne « Non-négociables : » — les non-négociables du contexte n'ont pas été relevés");
   return gaps;
 }
@@ -244,18 +252,20 @@ function lintRefUse(md, mdPath, projectRoot){
   const decl = declOf(md);
   // Fiche et brief citent les identifiants du RAPPORT sans les déclarer : sans cet
   // héritage, le contrôle ne s'y exerçait jamais (ensemble vide ⇒ silence).
-  if(mdPath && !/(^|\/)02-rapport\.md$/i.test(String(mdPath).replace(/\\/g, '/'))){
-    try { for(const id of declOf(fs.readFileSync(path.join(path.dirname(mdPath), '02-rapport.md'), 'utf8'))) decl.add(id); }
-    catch(e){}
+  if(mdPath && !LX.estLivrable('rapport', mdPath)){
+    for(const n of LX.nomsLivrable('rapport'))
+      try { for(const id of declOf(fs.readFileSync(path.join(path.dirname(mdPath), n), 'utf8'))) decl.add(id); }
+      catch(e){}
   }
   const out = [];
   // Champs d'étiquette : les identifiants qu'ils portent ne sont pas des substituts…
-  const LABEL = /^\s*\*\*(Fondé sur|Signal porteur|Sources?|Ancrage|Repères)\b/;
+  const LABEL = new RegExp('^\\s*\\*\\*(?:' + ['fondeSur', 'signalPorteur', 'ancrage', 'reperes'].map(LX.alt).join('|')
+    + '|Sources?)(?![\\wÀ-ÿ])');
   // … mais un champ ne se RÉDUIT pas à eux. Tout champ en gras (« **Ancrage :** », « **Pari** : »)
   // dit d'abord ce qu'il porte ; seul « Fondé sur » est un index (lintCoherence le lit, sous
   // une reco rédigée) et reste une liste. Vide = rien, une fois retirés les identifiants,
   // « (référence Rn) » et la ponctuation.
-  const INDEX = /^Fondé sur$/i;
+  const INDEX = LX.re('fondeSur', '^', '$', 'i');
   const CHAMP = /^\s*(?:[-*]\s+)?\*\*([^*]{1,40}?)\s*(?::\s*\*\*|\*\*\s*:)(.*)$/;
   const vide = t => !/[a-zà-ÿ]{2,}/i.test(t.replace(/\b[OSBRCHPVD]\d+\b/g, '').replace(/références?/gi, '')
     .replace(/(^|[^a-zà-ÿ])(et|ou)(?![a-zà-ÿ])/gi, '$1'));
@@ -286,7 +296,7 @@ function lintRefUse(md, mdPath, projectRoot){
   L.forEach((l, i) => {
     if(!/^\s*\|/.test(l)){ col = -1; return; }
     const c = l.split('|').slice(1, -1).map(s => s.trim());
-    const h = c.findIndex(s => /^élément$/i.test(s));
+    const h = c.findIndex(s => LX.re('colElement', '^', '$', 'i').test(s));
     if(h >= 0){ col = h; return; }
     if(col >= 0 && /^(idem|id\.|〃|")/i.test(c[col] || '')) idem.push('l.' + (i + 1));
   });
@@ -303,7 +313,7 @@ function lintRefUse(md, mdPath, projectRoot){
     // astérisque de `**Fondé sur :**` et le champ n'est jamais reconnu.
     if(LABEL.test(l.replace(/^\s*[-*]\s+/, ''))) inLabel = true;
     else if(!/^\s+\S/.test(l)) inLabel = false;
-    if(/^\s*\|/.test(l) || /^#{1,6}\s/.test(l) || /^\*Repères/.test(l)
+    if(/^\s*\|/.test(l) || /^#{1,6}\s/.test(l) || LX.re('reperes', '^\\*').test(l)
       || /^\s*-\s+\*\*[OSBR][\w-]*\*\*/.test(l) || /^\s*\d+\.\s+\*\*H\d/.test(l)
       || inLabel) return;
     let d = 0; const inPar = [];
@@ -377,7 +387,7 @@ function loadDesignValues(projectRoot){
   return { hex, num };
 }
 function lintBriefDS(md, mdPath, projectRoot){
-  if(!/(^|\/)03-brief\.md$/i.test(String(mdPath).replace(/\\/g, '/'))) return [];
+  if(!LX.estLivrable('brief', mdPath)) return [];
   let ds; try { ds = loadDesignValues(projectRoot); } catch(e){ return []; }
   if(!ds.hex.size && !ds.num.size) return [];
   const hits = []; let manque = false;
@@ -385,7 +395,7 @@ function lintBriefDS(md, mdPath, projectRoot){
     if(!l.trim()){ manque = false; return; }                 // fin de paragraphe
     if(/^#{1,6}\s/.test(l)){ manque = false; return; }
     if(/^\s*[-*]\s|^\s*\d+\.\s/.test(l)) manque = false;       // nouvelle puce
-    if(/manque/i.test(l)) manque = true;
+    if(/manque|missing|\bgaps?\b/i.test(l)) manque = true;
     if(manque) return;
     const h = (l.match(/#[0-9a-f]{3,8}(?![0-9a-z])/gi) || []).filter(x => ds.hex.has(x.toLowerCase()));
     const n = [...new Set((l.match(/(?<![\w.,#\/-])\d+(?:[.,]\d+)?(?![\w.,])/g) || []).map(x => x.replace(',', '.')))];
@@ -445,11 +455,24 @@ function linkifyRefs(html){
 // pas. Normalisation de la confiance : on retient le niveau LE PLUS HAUT présent
 // dans la cellule — « Moyenne-Haute » compte comme « Haute » (couvrir vers le haut
 // ne contourne pas le plafond) ; une valeur non reconnue émet un gap.
-const CONF = { haute:3, moyenne:2, faible:1, basse:1 };
-function confRank(s){ let r = 0; for(const w in CONF) if(new RegExp(w,'i').test(s)) r = Math.max(r, CONF[w]); return r; }
-function lintCoherence(md){
+// Les niveaux, dans les deux langues, en mots entiers : « low » ne se lit pas dans « below ».
+const CONF = [[3, 'confHaute'], [2, 'confMoyenne'], [1, 'confFaible']].map(([r, k]) => [r, LX.re(k, '(?<![\\wÀ-ÿ])', '(?![\\wÀ-ÿ])', 'i')]);
+function confRank(s){ let r = 0; for(const [n, x] of CONF) if(x.test(s)) r = Math.max(r, n); return r; }
+// Un titre de section du rapport, reconnu dans les deux langues, en entier.
+const titre = k => LX.re(k, '^', '$', 'i');
+function lintCoherence(md, mdPath){
   const gaps = [];
-  if(!/^#{2,6}\s+(Constats priorisés|Résumé exécutif)/m.test(md)) return gaps; // non-rapport → no-op
+  const declencheur = new RegExp('^#{2,6}\\s+(?:' + LX.alt('constats') + '|' + LX.alt('resume') + ')', 'm');
+  if(!declencheur.test(md)){
+    // Un rapport, reconnu à son nom, dont aucun titre n'est reconnu : tout ce qui suit se
+    // tairait. Il le dit — des titres traduits autrement que la ligne « En anglais » du
+    // gabarit, ou un rapport encore réduit à son en-tête.
+    if(mdPath && LX.estLivrable('rapport', mdPath) && /^#{2,6}\s/m.test(md))
+      gaps.push('rapport sans titre « Constats priorisés » ni « Résumé exécutif » reconnu (ni leur forme anglaise : '
+        + LX.MOTS.constats.en[0] + ', ' + LX.MOTS.resume.en[0] + ') — cran, confiance et lien diagnostic ↔ reco NON vérifiés ; '
+        + 'reprendre les titres du gabarit, ou ceux de sa ligne « En anglais »');
+    return gaps;
+  }
 
   // Découpe en sections par titre (niveaux 2-6).
   const sec = {}; let cur = '__pre__'; sec[cur] = [];
@@ -467,10 +490,13 @@ function lintCoherence(md){
   const cran = {};
   const defRe = /^\s*[-*]\s*\*\*(S(?:\d+|-[A-Za-z0-9]+))\*\*\s*\*?\(([^)]*)\)\*?/gm;
   let m; while((m = defRe.exec(md))) cran[m[1]] = m[2].toLowerCase();
-  for(const id in cran) if(!/mesur[ée]|[ée]tabli/.test(cran[id]))
+  const base = new RegExp(['cranMesure', 'cranEtabli'].map(LX.alt).join('|'), 'i');
+  for(const id in cran) if(!base.test(cran[id]))
     gaps.push(id + ' (' + cran[id] + ') — cran non classé (base attendue « mesuré » ou « établi ») — vérification partielle');
-  const K = c => ({ etabli:/[ée]tabli/.test(c), forte:/forte amplitude/.test(c), faible:/faible amplitude/.test(c),
-    horsCoord:/coordonn[eé]es?\s*(≠|non\s*comparable|incomparable)/.test(c), ecarte:/non exploité/.test(c) });
+  const K = c => ({ etabli: LX.re('cranEtabli', '', '', 'i').test(c), forte: LX.re('cranForte', '', '', 'i').test(c),
+    faible: LX.re('cranFaible', '', '', 'i').test(c),
+    horsCoord: /coordonn[eé]es?\s*(≠|non\s*comparable|incomparable)|coordinates?\s*(≠|not\s*comparable|incomparable)/i.test(c),
+    ecarte: LX.re('nonExploite', '', '', 'i').test(c) });
   // Plafond de confiance autorisé par les signaux cités (comparable = coordonnées OK).
   function plafond(ids){
     let etabli = 0, forteC = 0, comparable = 0;
@@ -485,13 +511,14 @@ function lintCoherence(md){
   const NAME = { 3:'Haute', 2:'Moyenne', 1:'Faible' };
 
   // (B) Constats : confiance écrite vs plafond. Échec de parsing → gap.
-  if(/^#{2,6}\s+Constats/m.test(md)){
-    const rows = body(/^Constats priorisés$/i).split('\n').filter(l => /^\s*\|/.test(l));
+  // Le début du titre suffit, comme avant : « Constats » seul déclenche, et l'absence de la table se dit.
+  if(new RegExp('^#{2,6}\\s+(?:Constats|Findings|' + LX.alt('constats') + ')', 'm').test(md)){
+    const rows = body(titre('constats')).split('\n').filter(l => /^\s*\|/.test(l));
     if(rows.length < 2){ gaps.push('table de constats introuvable ou illisible — bornage de confiance NON vérifié'); }
     else {
       const cells = r => r.split('|').slice(1,-1).map(s => s.trim());
       const head = cells(rows[0]).map(h => h.toLowerCase());
-      const iS = head.findIndex(h => /source/.test(h)), iC = head.findIndex(h => /confiance/.test(h));
+      const iS = head.findIndex(h => /source/.test(h)), iC = head.findIndex(h => LX.re('colConfiance', '', '', 'i').test(h));
       if(iS < 0 || iC < 0){ gaps.push('colonnes « Sources »/« Confiance » introuvables — bornage NON vérifié'); }
       else for(const r of rows.slice(2)){
         const c = cells(r); if(c.length <= Math.max(iS, iC)) continue;
@@ -514,8 +541,8 @@ function lintCoherence(md){
 
   // Usage = tout S* cité en constats, hypothèses, PISTES ou résumé (porteur inclus).
   // Proposer une piste sur un signal l'exploite autant que le citer en constat.
-  const usedAny = new Set([body(/^Constats priorisés$/i), body(/^Hypothèses de design$/i),
-    body(/^Pistes/i), body(/^Résumé exécutif$/i)]
+  const usedAny = new Set([body(titre('constats')), body(titre('hypotheses')),
+    body(LX.re('pistes', '^', '(?![\\wÀ-ÿ])', 'i')), body(titre('resume'))]
     .join('\n').match(/S(?:\d+|-[A-Za-z0-9]+)/g) || []);
   if(!Object.keys(cran).length && usedAny.size)
     gaps.push('aucun cran de signal lu depuis l\'annexe (format attendu « - **S\\*** *(cran)* ») — bornage NON vérifié');
@@ -532,8 +559,8 @@ function lintCoherence(md){
   // n'a pas de thèse à faire porter par un signal. Sans ce garde, le seul moyen de passer
   // les trois contrôles enchaînés serait d'INVENTER un signal qui déclare qu'il n'y en a
   // pas. Dès qu'UN signal existe, les trois contrôles reprennent entiers.
-  if(/^#{2,6}\s+Résumé exécutif/m.test(md) && Object.keys(cran).length){
-    const pm = body(/^Résumé exécutif$/i).match(/Signal porteur\s*:\s*(.+)/i);
+  if(LX.re('resume', '^#{2,6}\\s+', '', 'm').test(md) && Object.keys(cran).length){
+    const pm = body(titre('resume')).match(LX.re('signalPorteur', '', '\\s*:\\s*(.+)', 'i'));
     if(!pm){ gaps.push('résumé exécutif sans ligne « Signal porteur : S* (cran) » — la thèse ne nomme pas ce qui la porte'); }
     else {
       const stated = pm[1].replace(/[*_`]/g, '').trim();   // sans emphase markdown
@@ -558,15 +585,15 @@ function lintCoherence(md){
   //   section absente       → no-op (audit seul, l'idéation n'est pas passée) ;
   //   section sans aucun C* → UN gap (placeholder OU reco non reliée : indécidable ici) ;
   //   section avec ≥ 1 C*   → contrôle complet, un gap par constat orphelin.
-  if(/^#{2,6}\s+Direction recommandée/m.test(md)){
-    const reco = body(/^Direction recommandée$/i) + '\n' + body(/^Actions$/i);
+  if(LX.re('direction', '^#{2,6}\\s+', '', 'm').test(md)){
+    const reco = body(titre('direction')) + '\n' + body(titre('actions'));
     const cited = new Set(reco.match(/\bC(?:\d+|-[A-Za-z0-9]+)\b/g) || []);
-    const rows = body(/^Constats priorisés$/i).split('\n').filter(l => /^\s*\|/.test(l));
+    const rows = body(titre('constats')).split('\n').filter(l => /^\s*\|/.test(l));
     if(!cited.size){
       gaps.push('« Direction recommandée » ne cite aucun constat — section en attente de l\'idéation, ou reco non reliée au diagnostic (ligne « Fondé sur : C* » manquante)');
     } else for(const r of rows.slice(2)){
       const id = (r.match(/\bC(?:\d+|-[A-Za-z0-9]+)\b/) || [])[0];
-      if(!id || cited.has(id) || /écarté\s*:/i.test(r)) continue;
+      if(!id || cited.has(id) || /écarté\s*:|discarded\s*:/i.test(r)) continue;
       gaps.push(id + ' — repris ni par la direction ni par les actions — le citer sous « Fondé sur : » ou le marquer « écarté : … » dans sa ligne');
     }
   }
@@ -575,8 +602,8 @@ function lintCoherence(md){
   //     présence (sinon la tension n'est pas traçable jusqu'aux constats qu'elle
   //     oppose). AUCUNE note n'est exigée en retour : inventer une tension est pire
   //     que n'en signaler aucune — le lint ne crée jamais l'obligation inverse.
-  const cst = (body(/^Constats priorisés$/i) || '').split('\n');
-  const iT = cst.findIndex(l => !/^\s*\|/.test(l) && /\*\*\s*(Tensions?|Conflit)/i.test(l));
+  const cst = (body(titre('constats')) || '').split('\n');
+  const iT = cst.findIndex(l => !/^\s*\|/.test(l) && LX.re('tensions', '\\*\\*\\s*', '', 'i').test(l));
   if(iT >= 0 && !/\b[COSB](?:\d+|-[A-Za-z0-9]+)\b/.test(cst.slice(iT).join('\n')))
     gaps.push('note de tension sans identifiant (C*/O*/S*/B*) — les lectures en présence ne sont pas rattachées aux constats qu\'elles opposent');
 
@@ -589,13 +616,14 @@ function lintCoherence(md){
 // lit, et le bouton « Copier le markdown ») et quittent le rendu, sommaire compris.
 // UNE source pour les titres : proto-frame importe cette constante pour lire les mêmes
 // tableaux — renommer une section ne peut plus casser l'un sans l'autre.
-const SECTIONS_CONTROLE = { chrome: 'Source du chrome', socle: 'Socle observé' };
+// Chaque titre, dans ses deux langues (lexique.js).
+const SECTIONS_CONTROLE = { chrome: LX.alt('chrome'), socle: LX.alt('socle') };
 function masquerControles(md){
   const out = []; let coupe = 0;                           // niveau du titre masqué, 0 = rien
   for(const l of md.split('\n')){
     const h = /^(#{2,6})\s+(.*)$/.exec(l);
     if(h && coupe && h[1].length <= coupe) coupe = 0;
-    if(h && !coupe && Object.values(SECTIONS_CONTROLE).some(s => h[2].startsWith(s))) coupe = h[1].length;
+    if(h && !coupe && Object.values(SECTIONS_CONTROLE).some(s => new RegExp('^(?:' + s + ')').test(h[2]))) coupe = h[1].length;
     if(!coupe) out.push(l);
   }
   return out.join('\n');
@@ -621,11 +649,17 @@ function convert(mdPath){
   let refOrphans = [];
   try { const lk = linkifyRefs(body); body = lk.html; refOrphans = lk.orphans; }
   catch(e){ log('linkify ignoré (non bloquant) : ' + e.message); }
-  const type = detectType(body, abs);
+  // Les mots de la page (bandeau, sommaire, bouton) suivent la langue du livrable.
+  const lg = LX.langue(md), P = LX.PAGE[lg];
+  const type = detectType(body, abs, lg);
 
   // replacer en FONCTION → aucune substitution accidentelle de $&, $1…
   const out = tpl
     .replace(/<!--HYDRA:TYPE-->/g, () => esc(type))
+    .replace('<!--HYDRA:LANG-->', () => lg)
+    .replace('<!--HYDRA:COPIER-->', () => esc(P.copier))
+    .replace('<!--HYDRA:COPIE-->', () => esc(P.copie))
+    .replace('<!--HYDRA:SOMMAIRE-->', () => esc(P.sommaire))
     .replace('<!--HYDRA:TOC-->', () => t.tocHtml)
     .replace('<!--HYDRA:CONTENT-->', () => body)
     .replace('<!--HYDRA:MDSOURCE-->', () => escScript(visible));
@@ -651,6 +685,17 @@ function convert(mdPath){
   // Structure : rapport d'audit seulement (déclencheurs internes).
   // Acronymes : TOUT livrable .md — un acronyme inventé est un problème partout.
   try { gaps = lintStructure(md, abs); } catch(e){ log('lint structure ignoré : ' + e.message); }
+  // La mission travaille dans une autre langue que le français, et le livrable garde les titres
+  // français du gabarit : le défaut que les contrôles, qui lisent les deux langues, ne voient pas.
+  try {
+    const lm = LX.langueMission(projectRoot);
+    if(lm && lm !== 'fr' && lg === 'fr'){
+      const restes = Object.values(LX.MOTS).filter(m => m.tete && m.fr[0] !== m.en[0])
+        .filter(m => new RegExp('^(#{1,6}\\s+|\\*\\*)' + LX.escRe(m.fr[0]), 'm').test(md)).map(m => m.fr[0]);
+      if(restes.length) gaps.push('titres restés en français (' + restes.slice(0, 4).join(', ') + (restes.length > 4 ? '…' : '')
+        + ') alors que mission.md déclare une autre langue de travail — reprendre les formes de la ligne « En anglais » du gabarit');
+    }
+  } catch(e){ log('contrôle de langue ignoré : ' + e.message); }
   try { gaps = gaps.concat(lintAcronyms(md, projectRoot)); } catch(e){ log('lint acronymes ignoré : ' + e.message); }
   // Lisibilité : TOUT livrable .md — un renvoi qui porte la phrase et un gras qui ne
   // marque plus rien sont des problèmes partout, pas seulement dans le rapport.
@@ -661,12 +706,18 @@ function convert(mdPath){
     + refOrphans.join(', ') + ' — traçabilité rompue');
   // Cohérence (cran + diagnostic/reco) : le catch ÉMET (jamais de fallback
   // silencieux — un échec de parsing doit se signaler comme gap, pas disparaître).
-  try { gaps = gaps.concat(lintCoherence(md)); }
+  try { gaps = gaps.concat(lintCoherence(md, abs)); }
   catch(e){ gaps.push('lint de cohérence non exécuté (parsing : ' + e.message + ') — cran et cohérence diagnostic/reco NON vérifiés'); }
   // Livrable de recette (reconnu à sa ligne de compte) : la réconciliation du garde, dite
   // ICI — le rendu est le canal qui parle à l'agent sans bloquer — et le calcul des
   // conformes inscrit dans le relevé de maquette. Une implémentation, celle du garde.
-  if(/^\*\*\d+ corrections?\*\*/m.test(md)){
+  // Une recette sans ligne de compte (« **N corrections** — … ») passerait sans aucun contrôle :
+  // reconnue à son titre, elle le dit.
+  const compte = LX.re('corrections', '^\\*\\*\\d+ ', '\\*\\*', 'm');
+  if(!compte.test(md) && LX.re('titreRecette', '^#\\s+', '(?![\\wÀ-ÿ])', 'im').test(md))
+    gaps.push('recette sans ligne de compte « **N corrections** — N majeures, N mineures » (en anglais « N major, N minor ») '
+      + '— sans elle, aucun contrôle de recette ne tourne');
+  if(compte.test(md)){
     try {
       const r = require(path.join(__dirname, 'hydra-qa-gate.js'))
         .recetteFaits(rootDir, { livrable: { nom: path.basename(abs), texte: md }, ecrire: true });

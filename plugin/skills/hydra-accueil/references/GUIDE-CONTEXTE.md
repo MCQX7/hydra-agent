@@ -39,6 +39,8 @@ charte réglementaire. C'est le fichier où la précision rapporte le plus :
   modes, ce qui n'en fait pas partie ;
 - **les plateformes** — la principale et les ponctuelles : elles disent pour quels
   écrans Hydra compose ;
+- **les langues** — la langue de travail, celle de vos échanges et des livrables, et la
+  langue du produit, celle des textes de ses écrans : elles peuvent différer ;
 - **le vocabulaire métier** — les noms internes des pages, des étapes, des fonctions,
   des offres, et les sigles : ce qu'un nouvel arrivant ne comprendrait pas, pas les
   mots que tout le monde comprend ;

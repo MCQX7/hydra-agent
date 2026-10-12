@@ -70,7 +70,8 @@ const WEB_TOOLS = new Set(['WebSearch', 'WebFetch']);
 // mission.md, § « Outils de la mission », ligne « Benchmark » : chaque jeton
 // entre accents graves y est le nom d'un connecteur. Rien de déclaré ⇒ seuls les outils
 // web comptent — l'absence se dit au cadrage (cortex), pas ici.
-const SECTION_OUTILS = /^##\s+Outils de la mission\b/i;
+// Le titre dans la langue de la mission : « Outils de la mission » ou « Mission tools » (lexique.js).
+const SECTION_OUTILS = require(path.join(__dirname, 'lexique.js')).re('outils', '^##\\s+', '(?![\\wÀ-ÿ])', 'i');
 const LIGNE_REFERENCES = /^\s*-\s*\*\*Benchmark\*\*/i;
 function connecteursReferences(projectRoot) {
   let md; try { md = fs.readFileSync(path.join(projectRoot, 'context', 'mission.md'), 'utf8'); }

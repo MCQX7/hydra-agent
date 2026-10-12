@@ -677,7 +677,7 @@ function lireLivrable(t){
     const m = /^\|\s*(\d+)\s*\|([^|]*)\|[^|]*\|[^|]*\|([^|]*)\|/.exec(l);
     if(m && cur){
       const ids = idsLigne(m[2]);
-      cur.lignes.push({ n: +m[1], ids, absent: /(^|[^\p{L}])absente?s?([^\p{L}]|$)/iu.test(m[3]) });
+      cur.lignes.push({ n: +m[1], ids, absent: /(^|[^\p{L}])(absente?s?|missing)([^\p{L}]|$)/iu.test(m[3]) });
     }
   }
   return sections;

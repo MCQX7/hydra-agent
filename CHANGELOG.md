@@ -1,5 +1,47 @@
 # Ce qui change d'une version à l'autre
 
+## 2.1 — 12 octobre 2026
+
+### Nouveau
+
+- **Hydra travaille dans ta langue.** Il te parle et écrit ses livrables dans la langue
+  de ta mission, notée dans `context/mission.md` (« Langue de travail »). Le français
+  reste la langue par défaut. En anglais, tout suit : les titres et les libellés des
+  livrables, leurs noms (`01-topic-sheet`, `02-report`, `02-research`, `03-brief`) et les
+  pages rendues (sommaire, boutons, galerie). Dans une autre langue, le texte est dans ta
+  langue et les titres restent en anglais.
+- **La langue du produit est à part.** Les textes des protos suivent la langue de ton
+  produit (« Langue du produit », dans le même fichier), qui peut être différente de la
+  tienne. Un libellé ou une citation tirés du produit restent tels quels.
+- **Les contrôles des livrables marchent dans les deux langues**, et disent quand ils ne
+  reconnaissent rien au lieu de se taire : un rapport dont aucun titre n'est reconnu, une
+  recette sans ligne de compte, ou un livrable resté en français dans une mission en
+  anglais, sont signalés.
+
+### Changé
+
+- **Le README et la présentation sont réécrits** en phrases simples, et existent aussi en
+  anglais : `README.en.md` et la présentation en anglais (bouton EN en haut de la page).
+- **Le bandeau d'un rapport** dit « Rapport d'action » au lieu de « Livrable ».
+
+### Passer de la 2.0 à la 2.1
+
+Ton contexte et tes sujets ne changent pas. Une mission sans langue déclarée continue en
+français, ou dans la langue où tu écris à Hydra. Pour la fixer, ajoute ces deux lignes dans
+`context/mission.md`, section « Le client et le produit » :
+
+```
+- **Langue de travail** : français
+- **Langue du produit** : français
+```
+
+**En plugin** : `claude plugin update hydra@hydra-agent --scope local`, depuis le dossier
+de ta mission, puis relance la session quand Hydra te le demande.
+
+**En copie** : récupère la 2.1 dans un dossier à part, puis remplace dans ton dossier Hydra
+`CLAUDE.md`, `README.md`, `CHANGELOG.md`, et ajoute `README.en.md` ; remplace aussi les dossiers `.claude/skills/hydra-*`, `.tools/`
+et `docs/`. Ne touche ni à `context/`, ni à `topics/`, ni à `.claude/settings.local.json`.
+
 ## 2.0 — 9 octobre 2026
 
 ### Nouveau

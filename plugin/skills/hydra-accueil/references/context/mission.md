@@ -19,12 +19,16 @@
 > elles fixent les rendus des protos (une appli : mobile ; un site : mobile et desktop).
 > Le cadre réglementaire, s'il existe : ce qu'il interdit ou impose au design —
 > Hydra en fait un non-négociable.
+> Les langues : celle dans laquelle Hydra te parle et écrit ses livrables (la langue
+> de travail), et celle du produit, dans laquelle il écrit les textes de ses protos.
 
 - **Client** :
 - **Secteur / registre visuel** :
 - **Domaine de la mission** :
 - **Plateformes** (principale, ponctuelles) :
 - **Cadre réglementaire** :
+- **Langue de travail** :
+- **Langue du produit** :
 
 ## Périmètre de la mission
 

@@ -33,6 +33,8 @@
    silencieux. Un outil renommé ferait sinon taire le garde sans que personne le voie. */
 
 const fs = require('fs'), path = require('path'), cp = require('child_process');
+// Les mots des livrables, en français et en anglais (une recette suit la langue de la mission).
+const LX = require(path.join(__dirname, 'lexique.js'));
 
 const ROOT = process.env.CLAUDE_PROJECT_DIR || process.cwd();
 const BUDGET_MS = 150000;          // au-delà : plus de régénération, plus de blocage
@@ -185,6 +187,11 @@ function lecturesADire(tp, sid){
 // Attendu. Demande une normalisation des valeurs (« N px » / « Npx ») que
 // personne n'a calibrée ; tant qu'elle n'existe pas, ce serait du faux positif.
 const CRANS = ['Majeur', 'Mineur'];   // hydra-recette § Sévérité : deux niveaux
+// Une sévérité écrite dans l'une ou l'autre langue → son nom de cran (« Major » → « Majeur »).
+const SEV = { majeur: 'Majeur', major: 'Majeur', mineur: 'Mineur', minor: 'Mineur', bloquant: 'Bloquant', blocking: 'Bloquant' };
+const SEV_ALT = ['majeur', 'mineur', 'bloquant'].map(LX.alt).join('|');
+// La ligne de compte : « **N corrections** — N majeures, N mineures » (« N major, N minor »).
+const COMPTE = LX.re('corrections', '^\\*\\*\\d+ ', '\\*\\*', 'm');
 // Une case qui ne contient qu'une coordonnée : « y = N px », « x = N px ».
 const ABSOLU = /^[xy]\s*=\s*-?\d+(?:[.,]\d+)?\s*px$/;
 
@@ -233,7 +240,7 @@ function recetteFaits(sub, opts = {}){
     // souvent le même nom de fichier.
     const ou = path.basename(sub) + '/' + f;
     // Un livrable de recette se reconnaît à sa ligne de compte, quelle que soit sa forme.
-    if(!/^\*\*\d+ corrections?\*\*/m.test(t)) continue;
+    if(!COMPTE.test(t)) continue;
 
     // — contrôle 0 : l'en-tête porte les seuls champs du gabarit, puis le tableau. Un
     //   paragraphe de prose avant le premier tableau (avertissement sur la maquette,
@@ -244,8 +251,9 @@ function recetteFaits(sub, opts = {}){
     for(const l of t.split('\n')){
       const s = l.trim();
       if(/^\||^#{2,}\s/.test(s)) break;
-      if(!s || /^#\s/.test(s) || /^\*\*Maquette :\*\*/.test(s) || /^\*\*\d+ corrections?\*\*/.test(s)
-         || /^\*\*\d+ valeurs? vérifiées?/.test(s) || /non recettable|pas été recettés|non recettés/i.test(s)) continue;
+      if(!s || /^#\s/.test(s) || LX.re('maquette', '^\\*\\*', '\\s*:\\*\\*').test(s) || COMPTE.test(s)
+         || /^\*\*\d+ (valeurs? vérifiées?|values? checked)/i.test(s)
+         || /non recettable|pas été recettés|non recettés|not reviewable|not reviewed/i.test(s)) continue;
       prose.push('« ' + s.replace(/\*\*/g, '').slice(0, 70) + (s.length > 70 ? '…' : '') + ' »');
     }
     if(prose.length) dits.push(ou + ' : ' + prose.length + ' paragraphe(s) de prose entre l\'en-tête et le '
@@ -253,19 +261,19 @@ function recetteFaits(sub, opts = {}){
       + '(maquette, build, largeur, état, hors périmètre, compte), puis le tableau ; la recette ne juge ni la '
       + 'maquette ni son ancienneté.');
 
-    const tete = /^\*\*(\d+) corrections?\*\*\s*—\s*(\d+) majeures?,\s*(\d+) mineures?/m.exec(t);
+    const tete = new RegExp('^\\*\\*(\\d+) (?:' + LX.alt('corrections') + ')\\*\\*\\s*—\\s*(\\d+) (?:majeures?|major),\\s*(\\d+) (?:mineures?|minor)', 'mi').exec(t);
     // Une ligne de compte à trois niveaux (« N bloquantes, ») n'est pas reconnue, et le
     // livrable échapperait en silence à tout contrôle : elle se dit.
     // Les autres contrôles ne dépendent pas de sa forme : ils tournent quand même.
     if(!tete){
-      dits.push(ou + ' : ligne de compte ' + (/^\*\*\d+ corrections?\*\*\s*—\s*\d+ bloquantes?,/m.test(t)
+      dits.push(ou + ' : ligne de compte ' + (/^\*\*\d+ corrections?\*\*\s*—\s*\d+ (bloquantes?|blocking),/mi.test(t)
         ? 'à trois niveaux — le niveau Bloquant n\'existe plus (hydra-recette § Sévérité : Majeur, Mineur)'
         : 'hors gabarit (« N corrections — N majeures, N mineures »)') + ' ; les compteurs ne sont pas contrôlés');
     } else {
       // — contrôle 1a : les sévérités du tableau contre la ligne de tête
-      const lignes = [...t.matchAll(/^\|\s*\d+\s*\|.*\|\s*(Bloquant|Majeur|Mineur)\s*\|\s*$/gm)];
+      const lignes = [...t.matchAll(new RegExp('^\\|\\s*\\d+\\s*\\|.*\\|\\s*(' + SEV_ALT + ')\\s*\\|\\s*$', 'gmi'))];
       const vu = { Bloquant: 0, Majeur: 0, Mineur: 0 };
-      for(const m of lignes) vu[m[1]]++;
+      for(const m of lignes) vu[SEV[m[1].toLowerCase()]]++;
       const dit = { total: +tete[1], Majeur: +tete[2], Mineur: +tete[3] };
       if(lignes.length !== dit.total || CRANS.some(c => vu[c] !== dit[c]))
         bloquants.push(ou + ' — annoncé ' + dit.total + ' (' + dit.Majeur + ' maj. / '
@@ -317,14 +325,14 @@ function recetteFaits(sub, opts = {}){
         + 'si l\'élément n\'en a aucun, décris-le en mots courts ; le chemin, s\'il sert, va '
         + 'dans l\'identifiant caché <!--r:…-->.');
     // L'interligne ne se recette pas.
-    const interlignes = [...t.matchAll(/^\|\s*(\d+)\s*\|[^|]*\|\s*interligne\s*\|/gim)].map(m => m[1]);
+    const interlignes = [...t.matchAll(/^\|\s*(\d+)\s*\|[^|]*\|\s*(interligne|line[ -]height)\s*\|/gim)].map(m => m[1]);
     if(interlignes.length)
       dits.push(ou + ' : ' + interlignes.length + ' ligne(s) sur l\'interligne (' + interlignes.slice(0, 8).join(', ')
         + (interlignes.length > 8 ? '…' : '') + ') — l\'interligne ne se recette pas : retire ces lignes.');
 
     // — contrôle 1b : aucun « conforme » au livrable, pas même le compte. Les conformes
     //   vivent dans le relevé de maquette, pour le travail.
-    if(/^\*\*\d+ valeurs? vérifiées? conformes?\*\*/m.test(t))
+    if(/^\*\*\d+ (valeurs? vérifiées? conformes?|values? checked)/mi.test(t))
       dits.push(ou + ' : ligne « valeurs vérifiées conformes » — le compte des conformes ne va '
         + 'plus au livrable (hydra-recette § Format de sortie)');
 
@@ -495,13 +503,15 @@ function seContredisent(cat, attendu){
 const CLES = { taille: 'taille', couleur: 'couleur', fond: 'fond', graisse: 'graisse',
   interligne: 'interligne', police: 'police', rayon: 'rayon', hauteur: 'h', largeur: 'l',
   dimensions: 'lh', bordure: 'bordure', interieur: 'interieur', texte: 'texte' };
+// Une propriété écrite en anglais prend la clé de sa forme française (lexique.js, PROPRIETES).
+const PROP_EN = new Map(Object.entries(LX.PROPRIETES).flatMap(([k, formes]) => formes.map(f => [f, k])));
 function canonProp(p){
   const s = String(p || '').toLowerCase().replace(/<!--.*?-->/g, '').trim();
   if(/^couleur (du )?texte$|^couleur$/.test(s)) return 'couleur';
   if(/bordure/.test(s)) return 'bordure';
   if(/^(libellé|texte|wording)$/.test(s)) return 'texte';
   if(/^marge interne$|^padding$/.test(s)) return 'interieur';
-  return s;
+  return PROP_EN.get(s) || s;
 }
 // hauteur, largeur et dimensions décrivent la même boîte : une ligne « dimensions » porte
 // une dérive de hauteur.

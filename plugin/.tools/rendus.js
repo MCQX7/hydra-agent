@@ -7,12 +7,14 @@
    un défaut ne passe jamais pour une déclaration. */
 const fs = require('fs');
 const path = require('path');
+const LX = require(path.join(__dirname, 'lexique.js'));
 
 function rendusDuSujet(sujetDir){
   const defaut = raison => ({ m: true, d: true, etat: '⚠ Rendus : mobile et desktop, par défaut — ' + raison });
-  for(const f of [path.join(sujetDir, '.src', '01-fiche.md'), path.join(sujetDir, '01-fiche.md')]){
+  // La fiche sous son nom français ou anglais (01-fiche, 01-topic-sheet), champ « Rendus » ou « Renders ».
+  for(const f of LX.nomsLivrable('fiche').flatMap(n => [path.join(sujetDir, '.src', n), path.join(sujetDir, n)])){
     let md; try { md = fs.readFileSync(f, 'utf8'); } catch(e){ continue; }
-    const champ = /\*\*Rendus\s*:\*\*\s*([^·\n]*)/i.exec(md);
+    const champ = LX.re('rendus', '\\*\\*', '\\s*:\\*\\*\\s*([^·\\n]*)', 'i').exec(md);
     if(!champ) return defaut('la fiche ne dit pas les rendus');
     const v = champ[1].toLowerCase(), r = { m: /mobile/.test(v), d: /desktop/.test(v) };
     if(!r.m && !r.d) return defaut('rendus illisibles dans la fiche (« ' + champ[1].trim() + ' »)');

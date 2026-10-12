@@ -147,7 +147,7 @@ improviser un substitut.
   users.md, tag interne comme [HYPOTHÈSE], hypothèse numérotée d'un doc externe)
   s'écrit en clair, jamais en code. **Une ABSENCE ne prend jamais d'identifiant** :
   un identifiant désigne une pièce qui existe et qu'on peut aller voir, donc en
-  coder un vide le fait passer pour une pièce. Ce qui manque se nomme en français,
+  coder un vide le fait passer pour une pièce. Ce qui manque se nomme en clair,
   et se nomme une fois. Un raisonnement chiffré se
   décode à la première lecture : nommer le mécanisme — ce qui se produit, pas
   seulement le résultat chiffré. Mener par une phrase-lead ; rationner le gras.
@@ -206,10 +206,10 @@ jamais la réponse.
 
 - **Structure d'un sujet** `topics/<nom>/` — trois livrables NUMÉROTÉS (l'ordre de
   lecture), à la RACINE en `.html` :
-  - **`01-fiche`** — le cadrage ; écrit par l'orchestrateur au cadrage express.
-  - **`02-rapport`** — le fruit de la réflexion (constats, hypothèses, pistes,
+  - **`01-fiche`** (en anglais `01-topic-sheet`) — le cadrage ; écrit par l'orchestrateur au cadrage express.
+  - **`02-rapport`** (`02-report`) — le fruit de la réflexion (constats, hypothèses, pistes,
     critique, convergence, reco) ; écrit par `hydra-audit`, complété par `hydra-ideation`.
-  - **`03-brief`** — le passage à l'exploration visuelle ; écrit par `hydra-maquette`.
+  - **`03-brief`** (le même en anglais) — le passage à l'exploration visuelle ; écrit par `hydra-maquette`.
   - `.src/` sources markdown · `explorations/` prototypes · `refs/` visuels de
     référence (liés, jamais embarqués) · `inputs/` matériaux déposés.
 - **Références vérifiables** : toute référence de benchmark (R*/B*) citée dans
@@ -233,4 +233,15 @@ jamais la réponse.
   livrable déjà rendu : `node "${CLAUDE_PLUGIN_ROOT}/.tools/md-to-html.js" <sujet>/.src/<livrable>.md` les
   redonne, même quand le rendu n'a pas changé — jamais supprimer un rendu ni recopier
   une source pour forcer un nouveau rendu.
-- En français, direct, sans remplissage.
+- **Langue** : tu parles au designer et tu écris les livrables dans la **langue de
+  travail** que `mission.md` déclare ; sans déclaration, dans celle où le designer t'écrit,
+  et en français dans le doute. Un message isolé dans une autre langue ne la change pas ;
+  le designer peut en demander une autre pour un sujet. Les gabarits des têtes sont écrits
+  en français : en anglais, chaque titre, libellé et valeur qu'un gabarit impose prend la
+  forme que donne la ligne « En anglais » sous ce gabarit, et aucune autre — les contrôles
+  ne reconnaissent que ces deux formes ; dans toute autre langue, le texte suit la mission
+  et les titres et libellés prennent la forme anglaise. Les noms des livrables suivent
+  (ci-dessus, `02-research` pour `02-recherche`). Ce qui vient du produit garde sa langue :
+  les textes des protos suivent la **langue du produit** que `mission.md` déclare, et un
+  libellé, un verbatim ou un extrait cité se recopie tel quel, jamais traduit.
+- Direct, sans remplissage.

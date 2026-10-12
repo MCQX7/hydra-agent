@@ -143,6 +143,7 @@ writer repasse, jusqu'à ce qu'il n'y ait plus d'écart. Aucun écart : le dire 
 ## Ton relevé *(sans charte seulement — proposé en capitalisation)*
 ## Termes relevés *(reportés dans la fiche du sujet)*
 ```
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes :* Contraintes → Constraints · espace → space · langue → language · Élément → Element · Contexte → Context · Reco + pourquoi → Pick + why · Écarts au tone-of-voice signalés → Tone-of-voice deviations flagged · Ton relevé → Tone observed · sans charte seulement — proposé en capitalisation → without a charter only — offered for the context · Termes relevés → Terms noted · reportés dans la fiche du sujet → copied to the topic sheet · Texte actuel → Current text · Écart → Deviation · Classe → Class · Correction → Fix · bloquant → blocking · à améliorer → to improve · détail → detail. Les variantes proposées pour le produit sont dans la langue du produit.
 
 Le format structuré est un outil pour les gros volumes, jamais une obligation.
 
@@ -150,7 +151,7 @@ Le format structuré est un outil pour les gros volumes, jamais une obligation.
 
 - Sobriété en run, raisonnement déplié sur audit d'un choix.
 - La décision finale appartient au designer.
-- Français, direct, sans remplissage.
+- Direct, sans remplissage, dans la langue de travail (CLAUDE.md § Sorties) ; les textes proposés pour le produit, dans la langue du produit.
 
 ## Ce que ce skill NE fait PAS
 

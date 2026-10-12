@@ -50,6 +50,8 @@ const fs = require('fs');
 const path = require('path');
 // Titres des tableaux du brief : la constante de md-to-html, qui les masque au rendu.
 const { SECTIONS_CONTROLE } = require(path.join(__dirname, 'md-to-html.js'));
+// Les mots des livrables et de la page, en français et en anglais.
+const LX = require(path.join(__dirname, 'lexique.js'));
 // index.html s'écrit par renommage : deux écritures parallèles font assembler la même
 // galerie par deux hooks à la fois, et une écriture en place se lirait à demi faite.
 // UNE implémentation, celle de hydra-bilan.
@@ -96,15 +98,16 @@ function resolveExplorationsDir(p){
 // Hydra : portable, zéro contenu client. Échec d'extraction => statut explicite,
 // JAMAIS un « 0/0 » qui certifierait une couverture complète.
 function readRapportPistes(explorationsDir){
-  const md = path.join(path.dirname(explorationsDir), '.src', '02-rapport.md');
-  if(!fs.existsSync(md)) return { status:'no-file', pistes:[] };
+  // Le rapport sous son nom français ou anglais (02-rapport, 02-report).
+  const md = LX.nomsLivrable('rapport').map(n => path.join(path.dirname(explorationsDir), '.src', n)).find(f => fs.existsSync(f));
+  if(!md) return { status:'no-file', pistes:[] };
   const seen = {}, pistes = []; let inSec = false;
   // id de piste : P1 · P0 (chiffre) · P-A · P-alt · P-B3 (tiret, SANS chiffre) · PA (majuscule).
   // Rejette Pré · Pré-requis · Pari · Pistes · PDF. Un « Pa » bas-de-casse sans séparateur
   // n'est pas attrapé (ambigu avec un mot) : s'il est seul → 0 piste → statut no-table → invérifiable.
   const idRe = /\bP(?:\d[A-Za-z0-9]*|-[A-Za-z0-9]+|[A-Z]\d*)\b/g;
   for(const ln of fs.readFileSync(md,'utf8').split('\n')){
-    if(/^##\s+/.test(ln)){ inSec = /^##\s+Pistes\b/i.test(ln); continue; }
+    if(/^##\s+/.test(ln)){ inSec = LX.re('pistes', '^##\\s+', '(?![\\wÀ-ÿ])', 'i').test(ln); continue; }
     if(!inSec) continue;
     let m; idRe.lastIndex = 0;
     while((m = idRe.exec(ln))){
@@ -143,14 +146,14 @@ function refsAsset(html){
 // Parseur de tableau markdown d'un FRÈRE .src/ — mutualisé par les lecteurs de brief.
 // La ligne de séparation sépare l'en-tête des données : avant elle, rien n'est une ligne
 // de tableau. Repère déterministe, là où comparer aux titres de colonnes serait fragile.
-// `heading` est un littéral du code, jamais une entrée : pas d'échappement à prévoir.
+// `heading` est l'alternance déjà échappée du lexique (ses deux langues), jamais une entrée.
 function readTable(explorationsDir, file, heading){
   const md = path.join(path.dirname(explorationsDir), '.src', file);
   let txt; try { txt = fs.readFileSync(md, 'utf8'); } catch(e){ return { status:'no-file', rows:[] }; }
   // Pas de `\b` en fin de titre : il est ASCII, donc il ne ferme pas « Socle observé »
   // (é n'est pas un caractère de mot — même morsure que les statuts du tableau du
   // chrome). Un lookahead qui refuse une lettre, accent compris.
-  const re = new RegExp('^#{2,3}\\s+' + heading + '(?![\\wÀ-ÿ-])', 'i');
+  const re = new RegExp('^#{2,3}\\s+(?:' + heading + ')(?![\\wÀ-ÿ-])', 'i');
   const rows = []; let inSec = false, afterSep = false;
   for(const ln of txt.split('\n')){
     if(/^#{2,3}\s/.test(ln)){ inSec = re.test(ln); afterSep = false; continue; }
@@ -176,8 +179,8 @@ function readChrome(explorationsDir){
   const rows = t.rows.map(c => {
     const k = sansAccent(c[1]);
     return { el: c[0], fait: c[2],                           // st null CONSERVÉ : une ligne
-      st: /^lie/.test(k) ? 'lie' : /^ecart/.test(k) ? 'ecarte'
-        : /^refus/.test(k) ? 'refuse' : null,                // au statut illisible se signale
+      st: /^(lie|link)/.test(k) ? 'lie' : /^(ecart|discard)/.test(k) ? 'ecarte'
+        : /^refus/.test(k) ? 'refuse' : null,                // au statut illisible se signale (refus… : refusé, refused)
       // DUPLICATION CONNUE : cette regex et cette normalisation sont celles d'IMG_RE et
       // normRef (plus bas, lecture des captures du socle). Laissée en l'état pour ne pas
       // toucher ce lecteur hors besoin — à fusionner : si l'une change seule, un même
@@ -194,7 +197,7 @@ function readChrome(explorationsDir){
 // identiquement amputés ne peuvent plus se valider entre eux.
 function readSocle(explorationsDir){
   const t = readTable(explorationsDir, '03-brief.md', SECTIONS_CONTROLE.socle);
-  const none = t.rows.some(c => /aucun ecran existant/.test(sansAccent(c.join(' '))));
+  const none = t.rows.some(c => /aucun ecran existant|no existing screen/.test(sansAccent(c.join(' '))));
   const blocs = [], ecrans = [];
   t.rows.forEach(c => {
     const id = c[2].replace(/[`\s]/g, '').toLowerCase();
@@ -284,7 +287,7 @@ function obsPane(explorationsDir, e, i, k){
   const slot = (cls, cap, vw) => {
     const hide = cls === 'd-slot' ? ' hide' : '', dev = cls === 'd-slot' ? 'desktop' : 'mobile';
     if(!cap) return `<div class="frame-wrap ${cls} obs${hide}"><p class="obs-miss">Capture ${dev} de l'écran « ${esc(e.ecranNom)} » non déclarée au socle — étape non montrable.</p></div>`;
-    if(!cap.ok) return `<div class="frame-wrap ${cls} obs${hide}"><p class="obs-miss">${esc(cap.f)} déclarée au socle, absente de <code>refs/</code> — étape non montrable.</p></div>`;
+    if(!cap.ok) return `<div class="frame-wrap ${cls} obs${hide}"><p class="obs-miss">${LX.PAGE[LX.langueSujet(path.dirname(explorationsDir))].obsManquante(esc(cap.f))}</p></div>`;
     const w = cap.w, shown = w ? Math.min(w, vw) : vw;
     const dim = !w ? 'largeur non lue, ajustée au cadre'
       : w > vw ? `${w} px, réduite à ${Math.round(vw / w * 100)} %` : `${w} px, taille réelle`;
@@ -350,7 +353,7 @@ function briefVariantes(explorationsDir){
     const h = /^(#{2,4})\s+(.*)$/.exec(l);
     if(h){
       const v = /^V\d+\b/.exec(h[2]); if(v) ids.add(v[0]);
-      if(h[1].length === 2) lat = /^Latitude\b/i.test(h[2]);
+      if(h[1].length === 2) lat = /^(Latitude|Creative latitude)\b/i.test(h[2]);
       continue;
     }
     const p = lat && /^\s*[-*+]\s+(?:\*\*|__)?(V\d+)\b/.exec(l); if(p) ids.add(p[1]);
@@ -374,6 +377,8 @@ function etatDe(html){ const m = /<!--hydra-etat\n([\s\S]*?)\n-->/.exec(html || 
 function assemble(explorationsDir){
   const srcDir = path.join(explorationsDir, '.src');
   if(!fs.existsSync(srcDir)) return null;
+  // Les mots de la page suivent la langue du sujet (celle de sa fiche).
+  const P = LX.PAGE[LX.langueSujet(path.dirname(explorationsDir))];
   // Lu AVANT de reconstruire : c'est le rendu précédent qui porte le verdict figé.
   const outPath = path.join(explorationsDir, OUT_NAME);
   let prev = ''; try { prev = fs.readFileSync(outPath, 'utf8'); } catch(e){}
@@ -501,7 +506,7 @@ function assemble(explorationsDir){
       if(!parcours || k === 0 || v.obs) return '';
       const x = attr(v.html, 'data-hydra-geste');
       // Numéro de l'étape précédente, le même que dans la barre : k (base 0) = son rang.
-      if(x && x.trim()) return `<p class="geste"><span>Depuis l'étape ${k}</span> ${lib(i, k, 'geste', x.trim())}</p>`;
+      if(x && x.trim()) return `<p class="geste"><span>${esc(P.depuis(k))}</span> ${lib(i, k, 'geste', x.trim())}</p>`;
       gestesManquants.push((protoPisteId(v) || g.label) + ' · ' + (rangEcran(v) !== Infinity ? so.ecrans[rangEcran(v)].ecranNom : v.label));
       return '';
     };
@@ -509,7 +514,7 @@ function assemble(explorationsDir){
     // tête du panneau. Deux protos d'un même écran gardent leur libellé pour se distinguer.
     // Écran indéterminable : le libellé du proto, suivi de « écran ? » — et la ligne Socle le dit.
     const nomEtape = (v, k) => { const j = rangEcran(v);
-      if(!parcours || j === Infinity) return (v.declare ? lib(i, k, 'label', v.label) : esc(v.label)) + (parcours ? ' · écran ?' : '');
+      if(!parcours || j === Infinity) return (v.declare ? lib(i, k, 'label', v.label) : esc(v.label)) + (parcours ? ' · ' + esc(P.ecranInconnu) : '');
       return esc(so.ecrans[j].ecranNom) + (g.items.filter(x => !x.obs && rangEcran(x) === j).length > 1 ? ' · ' + esc(v.label) : ''); };
     // Le panneau s'ouvre sur la première étape COMPOSÉE : l'entrée d'une piste montre la
     // piste, pas l'existant qu'elle laisse en place.
@@ -517,8 +522,8 @@ function assemble(explorationsDir){
     // La barre se lit sans explication : un titre qui dit que c'est un parcours et combien
     // il a d'étapes, chaque étape numérotée, une flèche entre deux. Le geste reprend le numéro.
     const num = k => `<span class="stepb__n">${k + 1}</span>`;
-    const nav = multi ? `<div class="steps__t">Parcours en ${g.items.length} étapes</div><nav class="steps">` + g.items.map((v,k) => (k ? '<span class="steps__sep" aria-hidden="true">›</span>' : '') + (v.obs
-        ? `<button class="stepb stepb--obs${k === on ? ' on' : ''}" data-p="${i}" data-s="${k}">${num(k)}${esc(v.obs.ecranNom)} · existant</button>`
+    const nav = multi ? `<div class="steps__t">${esc(P.parcours(g.items.length))}</div><nav class="steps">` + g.items.map((v,k) => (k ? '<span class="steps__sep" aria-hidden="true">›</span>' : '') + (v.obs
+        ? `<button class="stepb stepb--obs${k === on ? ' on' : ''}" data-p="${i}" data-s="${k}">${num(k)}${esc(v.obs.ecranNom)} · ${esc(P.existant)}</button>`
         : `<button class="stepb${k === on ? ' on' : ''}" data-p="${i}" data-s="${k}">${num(k)}${nomEtape(v, k)}</button>`)).join('') + `</nav>` : '';
     const panes = g.items.map((v,k) => v.obs ? obsPane(explorationsDir, v.obs, i, k) :
         `<div class="step-pane${(multi && k !== on) ? ' hide' : ''}" data-p="${i}" data-s="${k}">`
@@ -661,34 +666,34 @@ function assemble(explorationsDir){
       ? `<div class="cov cov--warn">Assets : ${gaps.join(' · ')}</div>`
       : `<div class="cov cov--ok">Assets : ${ch.rows.length} élément(s) de chrome déclaré(s)${approx ? `, dont <strong>${approx} approximé(s)</strong> en esquisse` : ''}</div>`;
   const ghostRows = missing.map((p,k) =>
-    `<li><button class="piste piste--ghost" data-i="${G.length+k}"><span class="num">—</span><span>${esc(p.id)}${p.title?' — '+esc(p.title):''} <em>(non composée)</em></span></button></li>`
+    `<li><button class="piste piste--ghost" data-i="${G.length+k}"><span class="num">—</span><span>${esc(p.id)}${p.title?' — '+esc(p.title):''} <em>(${esc(P.nonComposee)})</em></span></button></li>`
   ).join('\n');
   // ---- barre latérale : les pistes, puis la latitude créative ------------------------
   // Ce que la barre numérote est ce que la ligne Couverture compte : les variantes vont sous
   // leur propre intitulé, avec leur id et la piste qu'elles re-forment.
-  const mark = g => g.rank === Infinity ? ' <em>(rang ?)</em>'
-                  : rc[g.rank] > 1 ? ` <em>(rang ${g.rank} partagé)</em>` : '';
+  const mark = g => g.rank === Infinity ? ` <em>(${esc(P.rangInconnu)})</em>`
+                  : rc[g.rank] > 1 ? ` <em>(${esc(P.rangPartage(g.rank))})</em>` : '';
   // En parcours, l'entrée dit ce que la piste recompose du parcours, pas combien de fichiers.
-  const nb = g => parcours ? ` <em>(${g.done} / ${so.ecrans.length} étapes composées)</em>`
-                : g.steps.length > 1 ? ` <em>(${g.steps.length} étapes)</em>` : '';
+  const nb = g => parcours ? ` <em>(${esc(P.etapesComposees(g.done, so.ecrans.length))})</em>`
+                : g.steps.length > 1 ? ` <em>(${esc(P.etapes(g.steps.length))})</em>` : '';
   const row = (g, i, num, sub) => `<li><button class="piste" data-i="${i}"><span class="num">${num}</span><span>${libelle(g, i)}${sub}${mark(g)}${nb(g)}</span></button></li>`;
   let n = 0;
   const pistes = G.map((g,i) => g.variante ? '' : row(g, i, pad(++n), '')).filter(Boolean).join('\n');
   const nomDe = {}; G.forEach(g => { const p = protoPisteId(g.steps[0]); if(!g.variante && p && !nomDe[p]) nomDe[p] = g.label; });
   const vRows = G.map((g,i) => !g.variante ? '' : row(g, i, esc(g.vid),
-    g.re && nomDe[g.re] ? ` <em>(variante de « ${esc(nomDe[g.re])} »)</em>` : '')).filter(Boolean).join('\n');
+    g.re && nomDe[g.re] ? ` <em>(${esc(P.varianteDe(nomDe[g.re]))})</em>` : '')).filter(Boolean).join('\n');
   // Le brief déclare sa latitude (maquette § Brief : au moins une direction COMPOSÉE en
   // variante). Déclarée et jamais composée ⇒ l'absence se dit à l'endroit où la variante
   // serait. Rien de déclaré, rien de composé ⇒ rien : un sujet sans variante n'en porte aucune trace.
   const vDecl = briefVariantes(explorationsDir);
   const latitude = vRows
-    ? `<div class="rail__label rail__label--sub">Latitude créative</div><ol class="rail__toc">${vRows}</ol>`
+    ? `<div class="rail__label rail__label--sub">${esc(P.latitude)}</div><ol class="rail__toc">${vRows}</ol>`
     : '';
   const latitudeEtat = !vRows && vDecl
     ? `<div class="cov cov--warn">Latitude : aucun proto déclaré en variante — le brief en déclare ${vDecl} ; au moins une se compose, et se déclare (<code>data-hydra-variante</code>)</div>`
     : '';
   const ghostPanels = missing.map((p,k) =>
-    `<section class="panel panel--ghost" data-i="${G.length+k}"><div class="pnote"><span class="h">${esc(p.id)}${p.title?' — '+esc(p.title):''}</span>Aucun proto : piste du rapport non composée — non arbitrable en l'état.</div></section>`
+    `<section class="panel panel--ghost" data-i="${G.length+k}"><div class="pnote"><span class="h">${esc(p.id)}${p.title?' — '+esc(p.title):''}</span>${esc(P.aucunProto)}</div></section>`
   ).join('\n');
 
   const verdict = briefVerdict(explorationsDir, files, prev);
@@ -704,6 +709,8 @@ function assemble(explorationsDir){
   // Remplacement en FONCTION, comme md-to-html : en chaîne, « $$ » devient « $ » et « $& »,
   // « $' » réinjectent le gabarit — le code des protos serait réécrit à l'insertion.
   const rendre = lignes => TEMPLATE
+    .replace('<html lang="fr">', () => '<html lang="' + (P === LX.PAGE.en ? 'en' : 'fr') + '">')
+    .replace('<div class="rail__label">Pistes</div>', () => '<div class="rail__label">' + esc(P.pistes) + '</div>')
     .replace('<!--COVERAGE-->', () => '<!--hydra-etat\n' + lignes.join('\n').replace(/--/g, '- -') + '\n-->')
     .replace('<!--SHOTS-->', () => '')
     .replace('<!--DEVBAR-->', () => (rendus.m ? '<button data-dev="m">Mobile 390×844</button>' : '')

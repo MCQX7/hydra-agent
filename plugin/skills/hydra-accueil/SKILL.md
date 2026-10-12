@@ -86,6 +86,15 @@ Dans cet ordre : `mission.md` (dont la section des outils), `design/`, `kpi.md`,
 `users.md`, `tone-of-voice/`. Le registre de recette ne se remplit pas : la recette
 s'en charge.
 
+**La langue de travail** se pose d'abord : celle où le designer écrit. La dire en une
+ligne (« Je travaille en anglais, et les livrables seront en anglais — dis-le si tu en
+veux une autre. ») et l'écrire dans `mission.md`, avec la langue du produit, qu'on lui
+demande si les écrans ne la montrent pas. Les fichiers du contexte s'écrivent dans la
+langue de travail : dans une autre langue que le français, chaque titre des modèles se
+traduit — la marque « hydra-accueil : en cours » reste telle quelle, et la section des
+outils, que les contrôles lisent, prend en anglais le titre de la ligne ci-dessous.
+*En anglais :* Le client et le produit → The client and the product · Langue de travail → Working language · Langue du produit → Product language · Périmètre de la mission → Mission scope · Vocabulaire métier → Business vocabulary · Contraintes de faisabilité (terrain) → Feasibility constraints (field) · La mission au quotidien → The mission day to day · Outils de la mission → Mission tools.
+
 `mission.md` est le fichier qui rapporte le plus : y passer le temps qu'il faut, section
 par section, et creuser jusqu'au niveau que le guide décrit (domaine et périmètre
 précis, plateformes principale et ponctuelles, vrai vocabulaire métier, contraintes de

@@ -155,6 +155,7 @@ propre au client). Sa structure est ce gabarit, et lui seul :
 | Terme | Source | Statut |
 |---|---|---|
 ```
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Fiche de sujet → Topic sheet · Date → Date · Mode → Mode · d'un trait → in one go · séquencé → step by step · Rendus → Renders · mobile et desktop → mobile and desktop · Protos → Protos · dans la foulée → straight away · après relecture du brief → after the brief is reviewed · Demande → Request · Inputs → Inputs · manque → missing · Le problème → The problem · non fixé → not set · KPI décisionnel et seuil de succès → Decision KPI and success threshold · Cible → Target · Périmètre et déjà-tranché → Scope and already decided · Non-négociables → Non-negotiables · aucun déclaré — lu : → none declared — read: · Données décisives à aller chercher → Decisive data to fetch · Termes relevés → Terms noted · Terme → Term · Statut → Status · à définir → to define · défini → defined · écarté → discarded.
 
 - **Run d'un trait** : toutes les phases sans pause. Les questions que les
   skills poseraient sont consignées en tête de rapport dans « Questions de

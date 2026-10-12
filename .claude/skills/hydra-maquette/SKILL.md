@@ -171,6 +171,7 @@ Assemblage : [le levier déterminant, et ce qui le rend utilisable]
 ## Écarts relevés à la composition
 [ce qui s'écarte de l'observé, assumé ou découvert, daté]
 ```
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Brief d'exploration → Exploration brief · Écrans → Screens · composés → composed · non composés — en attente de la relecture du designer → not composed — awaiting the designer's review · Écrit par → Written by · Repères → Key · Langage visuel → Visual language · Manques du design system → Design system gaps · Source du chrome → Chrome source · Élément → Element · Statut → Status · Fait → Evidence · lié → linked · écarté → discarded · refusé → refused · Socle observé → Observed base · Écran → Screen · Bloc → Block · Identifiant → Identifier · aucun écran existant → no existing screen · Parcours et étapes → Journey and steps · Pistes à composer → Options to compose · Assemblage → Assembly · Prompt de composition → Composition prompt · Latitude créative → Creative latitude · re-forme P… → reshapes P… · transversale → cross-cutting · États à couvrir → States to cover · Écarts relevés à la composition → Gaps found while composing · schéma — absent du design system → sketch — missing from the design system. Restent tels quels : Date, Protos, Capture, et les identifiants. Les textes des protos, eux, suivent la langue du produit.
 
 ### Source du chrome — un tableau, rempli AVANT la première ligne de proto
 Une ligne par élément du chrome non reconstructible en CSS (logo, badges,

@@ -194,6 +194,7 @@ contrôle de correspondance la lisent :
 ## Risques majeurs
 - **[nom de la piste]** (P1) — si [X], alors la personne [Y].
 ```
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Pistes explorées → Options explored · Intention reformulée → Restated intent · Origine → Origin · levier → lever · Pari → Bet · Sacrifie → Gives up · Ancrage → Grounding · Écartés → Discarded · « formes A, B → A retenue » donne « forms A, B → A kept » · Risques majeurs → Major risks · si [X], alors la personne [Y] → if [X], then the person [Y]. Une objection hors autorité s'écrit dans ces termes : capacité non établie → capability not established · décision produit → product decision · arbitrage produit → product call · non-négociable du contexte à trancher → context non-negotiable to settle.
 
 La Direction recommandée, le prochain pas (aux Actions) et les questions ouvertes
 prennent leur place dans le gabarit du rapport — une décision à prendre en « Questions
