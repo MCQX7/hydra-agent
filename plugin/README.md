@@ -111,7 +111,7 @@ in any other folder. Your context and your topics live in that folder.
 5. The welcome session then starts. It explains how Hydra works and fills in the context
    with you: your mission, your language, your tools, your design system, your users.
 6. Give Hydra your first topic. Create `topics/<name>/inputs/`, put your documents in
-   it, and write for example: "Audit [topic]: [design link or production URL]. Run it in
+   it, and write, for example: "Audit [topic]: [design link or production URL]. Run it in
    one go."
 
 **For a new mission**, do the same installation in a new empty folder (steps 1 to 5).
