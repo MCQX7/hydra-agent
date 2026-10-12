@@ -1,6 +1,6 @@
 {
   "name": "hydra",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Hydra, une équipe design dans Claude Code : audit de l'existant, recherche, pistes argumentées et critiquées, protos composés avec ton design system, textes vérifiés, recette graphique du build.",
   "author": {
     "name": "MCQX7",

@@ -152,8 +152,10 @@ function langueSujet(sujetDir){
 function langueMission(projectRoot){
   const fs = require('fs'), path = require('path');
   let md; try { md = fs.readFileSync(path.join(projectRoot, 'context', 'mission.md'), 'utf8'); } catch(e){ return null; }
-  const m = /^\s*[-*]?\s*\*\*(?:Langue de travail|Working language)\*\*\s*:\s*(.*)$/im.exec(md);
-  const v = m ? m[1].replace(/[*_`]/g, '').trim().toLowerCase() : '';
+  // [ \t] et non \s : une ligne laissée vide (le modèle de l'accueil) ne lit pas la suivante, et
+  // la première ligne remplie compte.
+  const v = [...md.matchAll(/^[ \t]*[-*]?[ \t]*\*\*(?:Langue de travail|Working language)\*\*[ \t]*:[ \t]*(.*)$/gim)]
+    .map(m => m[1].replace(/[*_`]/g, '').trim().toLowerCase()).find(Boolean) || '';
   if(!v) return null;
   if(/^(fr\b|fran[cç]ais|french)/.test(v)) return 'fr';
   if(/^(en\b|anglais|english)/.test(v)) return 'en';

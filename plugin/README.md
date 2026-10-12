@@ -1,257 +1,260 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/banniere-sombre.png">
-  <img alt="Hydra. Un corps, plusieurs têtes. Une équipe design dans Claude Code." src="docs/assets/banniere-clair.png">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/banner-dark.png">
+  <img alt="Hydra. One body, many heads. A design team inside Claude Code." src="docs/assets/banner-light.png">
 </picture>
 
 <p align="center">
-  <a href="https://mcqx7.github.io/hydra-agent/"><img alt="La présentation" src="https://img.shields.io/badge/pr%C3%A9sentation-en%20ligne-d5341a?style=flat-square"></a>
-  <a href="https://github.com/MCQX7/hydra-agent/releases/latest"><img alt="Dernière version" src="https://img.shields.io/github/v/release/MCQX7/hydra-agent?style=flat-square&label=version&color=111111"></a>
-  <a href="LICENSE"><img alt="Licence MIT" src="https://img.shields.io/badge/licence-MIT-111111?style=flat-square"></a>
-  <img alt="Pour Claude Code" src="https://img.shields.io/badge/pour-Claude%20Code-111111?style=flat-square">
-  <img alt="Conçu pour Opus" src="https://img.shields.io/badge/con%C3%A7u%20pour-Opus-111111?style=flat-square">
-  <img alt="En français et en anglais" src="https://img.shields.io/badge/langues-fran%C3%A7ais%20%C2%B7%20anglais-111111?style=flat-square">
+  <a href="https://mcqx7.github.io/hydra-agent/"><img alt="The overview" src="https://img.shields.io/badge/overview-online-d5341a?style=flat-square"></a>
+  <a href="https://github.com/MCQX7/hydra-agent/releases/latest"><img alt="Latest version" src="https://img.shields.io/github/v/release/MCQX7/hydra-agent?style=flat-square&label=version&color=111111"></a>
+  <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-111111?style=flat-square"></a>
+  <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-111111?style=flat-square">
+  <img alt="Built for Opus" src="https://img.shields.io/badge/built%20for-Opus-111111?style=flat-square">
+  <img alt="In English and French" src="https://img.shields.io/badge/languages-English%20%C2%B7%20French-111111?style=flat-square">
 </p>
 
-<p align="center"><b>Français</b> · <a href="README.en.md">English</a></p>
+<p align="center"><b>English</b> · <a href="README.fr.md">Français</a></p>
 
 ---
 
-Tu donnes un sujet à Hydra : un écran existant, des documents, un problème. Il s'en
-occupe de bout en bout. Il audite l'existant, cherche ce qui se fait ailleurs, propose
-des pistes et les critique, compose des protos avec ton design system, vérifie les
-textes, et sait aussi recetter un build. Il fait le travail d'une petite équipe autour
-de toi, et c'est toi qui décides.
+You give Hydra a topic: an existing screen, some documents, a problem. Hydra sees it
+through from start to finish. It audits what exists, looks at what others do, suggests
+options and critiques them, builds protos with your design system, checks the copy, and
+can also check a build against the design. It does the work of a small team around you,
+and you make the decisions.
 
-Il ne te dit pas ce que tu veux entendre. Si une idée est faible, il le dit et explique
-pourquoi. Chaque affirmation cite sa source. S'il manque des données, il le dit au lieu
-d'inventer.
+It won't just tell you what you want to hear. If an idea is weak, it says so and explains
+why. Every claim cites its source. If data is missing, it tells you rather than inventing
+it.
 
-## Comment ça marche
+## How it works
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/flux-sombre.png">
-  <img alt="Une demande entre. Cortex la cadre et l'envoie aux têtes, qui s'appuient sur les outils de la mission. Des livrables sortent. Le tout repose sur le contexte de la mission." src="docs/assets/flux-clair.png">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/flow-dark.png">
+  <img alt="A request comes in. Cortex frames it and sends it to the heads, which rely on the mission's tools. Deliverables come out. Everything rests on the mission's context." src="docs/assets/flow-light.png">
 </picture>
 
-Cortex cadre ta demande et n'appelle que les têtes dont elle a besoin. L'audit et la
-recherche font la phase de discovery : l'audit regarde ton existant, la recherche
-regarde ce qui se fait ailleurs.
+Cortex frames your request and only calls the heads it needs. Audit and Research make up
+the discovery phase: Audit looks at what you have, and Research looks at what others do.
 
-## Ce qu'un sujet produit
+## What a topic produces
 
-| Livrable | Ce qu'il contient |
+| Deliverable | What it contains |
 |---|---|
-| `01-fiche` | Le cadrage : le problème, l'indicateur qui tranchera et son seuil, les personnes touchées, le périmètre, les rendus (mobile, desktop) et ce qui est déjà décidé. |
-| `02-rapport` | Les constats sur l'existant, les hypothèses, les références, les pistes avec leur critique, puis la recommandation. Chaque affirmation renvoie à sa source. |
-| `03-brief` | Pour chaque piste : ce que l'écran doit montrer, avec quels composants, et un texte de composition que n'importe qui peut reprendre dans son propre outil. |
-| `explorations/` | La galerie : un proto HTML par piste, qu'on peut manipuler, dans les rendus de ta plateforme. |
-| Recette | Pour le développeur : un tableau par zone de l'écran, en desktop et en mobile, avec la valeur attendue, la valeur mesurée sur le build, la sévérité et une capture annotée. |
+| `01-topic-sheet` | The framing: the problem, the decision metric and its success threshold, the people affected, the scope, the renders (the screen sizes to build for: mobile, desktop or both) and what has already been decided. |
+| `02-report` | Findings on what exists, hypotheses, references, options with their critique, then the recommendation. Every claim points to its source. |
+| `03-brief` | For each option: what the screen must show, which components to use, and a composition prompt anyone can reuse in their own tool. |
+| `explorations/` | The gallery: one clickable HTML proto per option, in your platform's renders. |
+| Design QA | For the developer: one table per area of the screen, on desktop and mobile, with the expected value, the value measured on the build, the severity and an annotated screenshot. |
 
-Tu choisis comment le sujet se déroule. **D'un trait** : Hydra va jusqu'au bout et note
-ce qu'il a dû supposer. **Par étapes** : il s'arrête aux moments clés pour que tu
-tranches. Pour les protos, qui coûtent le plus, tu choisis aussi le moment : **tout de
-suite**, ou **après avoir lu le brief**, si les pistes en valent la peine. Hydra te pose
-ces deux questions au cadrage.
+You choose how the topic runs. **In one go**: Hydra goes all the way and writes down
+what it had to assume. **Step by step**: it stops at the key moments so you can decide.
+For the protos, which cost the most, you also choose when: **straight away**, or **after
+you've read the brief**, if the options are worth it. Hydra asks you both questions when
+it frames the topic.
 
-## La langue
+## Language
 
-Hydra travaille dans ta langue. Il te parle et écrit ses livrables dans la langue de ta
-mission, que l'accueil note avec toi, en français par défaut. En anglais, tout suit :
-les titres, les noms des livrables (`01-topic-sheet`, `02-report`, `03-brief`) et les
-pages rendues. Dans une autre langue, le texte est dans ta langue et les titres restent
-en anglais.
+Hydra works in your language. It talks to you and writes its deliverables in your
+mission's working language: the one you write to it in, which the welcome session
+records. If in doubt, it uses French. In English, everything switches to English: the
+headings, the deliverable names (`01-topic-sheet`, `02-report`, `03-brief`) and the
+rendered pages. In any other language, the text is in that language and the headings
+stay in English.
 
-Les textes des protos, eux, suivent la langue de ton produit, qui peut être une autre.
-La méthode reste écrite en français (les règles, les têtes, les messages des outils),
-mais tu n'as pas à la lire.
+The copy in the protos follows your product's language, which may be different. The
+method itself is written in French: the rules, the heads, and the messages the tools
+send to Hydra. You never need to read it, though you may see a few of those messages go
+by. Just write to Hydra in English from your very first message.
 
-## Démarrer
+## Getting started
 
-**Il te faut :**
-- **Claude Code**, idéalement avec **Opus**. Hydra est réglé pour Opus en effort élevé
-  (la recette en effort moyen), d'après des tests comparés. Il marche aussi avec Sonnet
-  ou un effort plus bas si ton abonnement ne permet pas mieux, mais ses livrables sont
-  alors moins bons.
-- **Node.js 22** ou plus récent, et **Google Chrome** (ou Chromium). Les outils sont des
-  scripts Node sans rien à installer : ils capturent les protos et mesurent le build.
-- **Les outils de ta mission**, si tu en as, branchés comme connecteurs MCP dans Claude
-  Code : un outil de design pour lire les maquettes, un outil de benchmark pour voir des
-  écrans de vrais produits. Si tu n'as pas d'outil de benchmark, l'accueil te propose
-  Lazyweb, qui est gratuit. Aucun outil n'est obligatoire. Tu donnes leur nom, Hydra
-  trouve comment les brancher. Si ton outil d'analytics est branché, Hydra va chercher
-  lui-même les chiffres qui lui manquent. Sinon, il lit les exports que tu déposes dans
-  un sujet.
+**You need:**
+- **Claude Code**, ideally with **Opus**. Hydra is tuned for Opus at high effort (and
+  for Recette, the design QA head, at medium effort), based on side-by-side tests. It
+  also works with Sonnet or at a lower effort if your plan doesn't allow more, but its
+  deliverables are weaker.
+- **Node.js 22** or later, and **Google Chrome** (or Chromium). The tools are Node
+  scripts with nothing to install: they capture the protos and measure the build.
+- **Your mission's tools**, if you have any, connected to Claude Code as MCP connectors:
+  a design tool to read your design files, and a benchmark tool to see screens from real
+  products. If you have no benchmark tool, the welcome session suggests Lazyweb, which
+  is free. No tool is required. You just name them; Hydra works out how to connect them.
+  If your analytics tool is connected, Hydra fetches the missing numbers itself.
+  Otherwise, it reads the exports you drop into a topic.
 
-**Ensuite, deux façons de l'installer.** Les deux font tourner la même méthode.
+Your mission is the client project you're working on: each one gets its own folder.
 
-### En plugin (conseillé)
+**Then, there are two ways to install Hydra.** Both run the same method.
 
-Hydra s'installe comme un plugin de Claude Code, pour le seul dossier de ta mission. Il
-n'apparaît dans aucun autre dossier. Ton contexte et tes sujets vivent dans ce dossier.
+### As a plugin (recommended)
 
-1. Crée un dossier vide pour ta mission, par exemple `hydra-ma-mission`, et ouvre le
-   Terminal dedans.
-2. Installe Hydra pour ce dossier :
+Hydra installs as a Claude Code plugin, for your mission folder only. It doesn't show up
+in any other folder. Your context and your topics live in that folder.
+
+1. Create an empty folder for your mission, for example `hydra-my-mission`, and open a
+   terminal in it.
+2. Install Hydra for this folder:
    ```
    claude plugin marketplace add MCQX7/hydra-agent
    claude plugin install hydra@hydra-agent --scope local
    ```
-   La première commande présente Hydra à Claude Code, une fois par machine. La seconde
-   l'installe pour ce dossier seulement.
-3. Lance `claude` dans ce dossier et écris **« je viens d'installer Hydra »**. Hydra te dit
-   ce qu'il va poser ici, et le pose si tu es d'accord : ses règles (`CLAUDE.md`, qu'il
-   tient à jour, n'y touche pas), ses réglages (Opus, effort élevé, et l'écart des
-   `CLAUDE.md` des dossiers au-dessus), les modèles de ton contexte et le dossier de tes
-   sujets. Il ne s'installe que dans un dossier vide. Si le dossier contient déjà autre
-   chose, il ne touche à rien et t'explique quoi faire.
-4. Quitte, puis relance `claude` dans le même dossier. Les règles d'Hydra ne se chargent
-   qu'à l'ouverture d'une session.
-5. L'accueil reprend. Il t'explique comment Hydra fonctionne et remplit le contexte avec
-   toi : ta mission, ta langue, tes outils, ton design system, tes utilisateurs.
-6. Donne-lui ton premier sujet. Crée `topics/<nom>/inputs/`, mets-y tes documents, et
-   écris par exemple : « Audit de [sujet] : [lien de la maquette ou URL de prod].
-   Déroule. »
+   The first command adds Hydra's marketplace to Claude Code; you only need it once per
+   machine. The second installs Hydra for this folder only.
+3. Run `claude` in this folder and write **"I just installed Hydra"**. Hydra tells you
+   what it will set up here, and sets it up if you agree: its rules (`CLAUDE.md`; Hydra
+   keeps it up to date, so don't edit it), its settings (Opus, high effort, and
+   excluding the `CLAUDE.md` files of parent folders), your context templates and the
+   folder for your topics. It only installs into an empty folder. If the folder already
+   contains something else, it leaves everything alone and tells you what to do.
+4. Quit, then run `claude` again in the same folder. Hydra's rules only load when a
+   session starts.
+5. The welcome session then starts. It explains how Hydra works and fills in the context
+   with you: your mission, your language, your tools, your design system, your users.
+6. Give Hydra your first topic. Create `topics/<name>/inputs/`, put your documents in
+   it, and write for example: "Audit [topic]: [design link or production URL]. Run it in
+   one go."
 
-**Pour une nouvelle mission**, refais la même installation dans un nouveau dossier vide
-(étapes 1 à 5). La première commande de l'étape 2 n'est plus utile.
+**For a new mission**, do the same installation in a new empty folder (steps 1 to 5).
+You can skip the first command in step 2.
 
-**Pour mettre à jour**, tape `claude plugin update hydra@hydra-agent --scope local` dans
-le Terminal, depuis le dossier de ta mission. À la session suivante, Hydra réécrit les
-règles du dossier et te dit « Hydra vient d'être mis à jour : relance la session pour
-charger les nouvelles règles ». Il faut relancer parce que Claude Code lit les règles
-avant que le plugin ne les réécrive. Ton contexte et tes sujets ne bougent pas.
+**To update**, run `claude plugin update hydra@hydra-agent --scope local` in a terminal,
+from your mission folder. In your next session, Hydra rewrites the folder's rules, tells
+you it has been updated and asks you to restart the session to load the new rules. You
+need to restart because Claude Code reads the rules before the plugin rewrites them. Your
+context and your topics are left untouched.
 
-### En copie
+### As a copy
 
-La méthode est copiée dans ton dossier de travail, comme en 1.x. Pour la mettre à jour,
-tu remplaces ses fichiers (voir le CHANGELOG, « Passer de la 1.x à la 2.0 »).
+The method is copied into your working folder, as in 1.x. To update it, you replace its
+files (see the CHANGELOG, in French, under the version you're moving to).
 
-1. Récupère Hydra, comme tu préfères :
-   - **sans rien installer** : en haut de cette page, bouton vert **Code**, puis
-     **Download ZIP**. Décompresse le dossier où tu veux ;
-   - **en une commande**, dans le Terminal, depuis le dossier où tu veux le mettre :
-     `npx degit MCQX7/hydra-agent hydra`. Un dossier `hydra` est créé ;
-   - **avec git**, si tu t'en sers : `git clone https://github.com/MCQX7/hydra-agent.git`.
+1. Get Hydra, whichever way you prefer:
+   - **Without installing anything**: click the green **Code** button at the top of
+     this page, then **Download ZIP**, and unzip it wherever you like.
+   - **With one command**, in a terminal, from the folder where you want it:
+     `npx degit MCQX7/hydra-agent hydra`. This creates a `hydra` folder.
+   - **With git**, if you use it: `git clone https://github.com/MCQX7/hydra-agent.git`.
 
-   Ouvre ensuite une session Claude Code à la racine de ce dossier.
-2. Écris **« je viens de lancer Hydra »**. L'accueil t'explique comment Hydra fonctionne,
-   pose les modèles vides du contexte et les remplit avec toi : ta mission, ta langue,
-   tes outils, ton design system, tes utilisateurs.
-3. Donne-lui ton premier sujet, comme en plugin.
+   Then open a Claude Code session at the root of this folder.
+2. Write **"I just launched Hydra"**. The welcome session explains how Hydra works, sets
+   up the empty context templates and fills them in with you: your mission, your
+   language, your tools, your design system, your users.
+3. Give Hydra your first topic, as with the plugin.
 
-Tu peux avoir les deux sur la même machine : le plugin n'existe que dans les dossiers où
-tu l'as installé.
+You can have both on the same machine: the plugin only exists in the folders where you
+installed it.
 
-Le contexte n'a pas besoin d'être complet le premier jour. À chaque cadrage, Hydra
-demande ce qui manque, te propose de l'ajouter, et ne l'écrit qu'avec ton accord.
+The context doesn't need to be complete on day one. Each time it frames a topic, Hydra
+asks for what's missing, offers to add it, and only writes it with your approval.
 
 <details>
-<summary><b>Écarter tes autres fichiers d'instructions</b> (à faire si tu as un <code>CLAUDE.md</code> personnel ou dans un dossier au-dessus)</summary>
+<summary><b>Excluding your other instruction files</b> (do this if you have a personal <code>CLAUDE.md</code> or one in a parent folder)</summary>
 
-Claude Code charge dans chaque session ton `CLAUDE.md` personnel (`~/.claude/CLAUDE.md`)
-et ceux des dossiers au-dessus. Ils se mélangeraient à la méthode d'Hydra. En plugin, le
-dossier de mission écarte dès sa création ceux qu'il trouve au-dessus de lui. En copie,
-ou pour un fichier ajouté plus tard, écarte-les dans `.claude/settings.local.json`
-(un fichier qui n'est jamais versionné) :
+Claude Code loads your personal `CLAUDE.md` (`~/.claude/CLAUDE.md`) and those of parent
+folders into every session. They would mix with Hydra's method. With the plugin, Hydra
+excludes the ones it finds in parent folders when it sets up the mission folder. With
+the copy, or for a file added later, exclude them in `.claude/settings.local.json` (a
+file that is never committed):
 
 ```json
 {
   "claudeMdExcludes": [
-    "/chemin/absolu/vers/le/dossier/parent/CLAUDE.md"
+    "/absolute/path/to/the/parent/folder/CLAUDE.md"
   ]
 }
 ```
 
-Mets un chemin par fichier à écarter. Un motif comme `**/mon-dossier/CLAUDE.md` marche
-aussi. Le `CLAUDE.md` d'Hydra, lui, doit rester chargé. L'accueil le vérifie avec toi, et
-si tu ajoutes plus tard un `CLAUDE.md` sans l'écarter, Hydra te le signale à la session
-suivante.
+One path per file to exclude. A pattern like `**/my-folder/CLAUDE.md` works too.
+Hydra's own `CLAUDE.md` must stay loaded. The welcome session checks this with you, and
+if you later add a `CLAUDE.md` without excluding it, Hydra flags it in the next session.
 </details>
 
-## Demander une seule chose
+## Asking for just one thing
 
-Tout n'est pas un sujet complet. Hydra choisit les têtes d'après ta demande, tu n'as pas
-à les nommer. Il s'arrête au livrable que tu as demandé et te propose la suite, sans
-l'enchaîner tout seul.
+Not everything is a full topic. Hydra picks the heads based on your request; you don't
+have to name them. It stops at the deliverable you asked for and suggests the next step,
+without running it on its own.
 
-| Tu demandes | Ce que tu reçois |
+| You ask | You get |
 |---|---|
-| « Audite cette page », « trouve les points de friction de ce parcours » | La fiche et le rapport : constats priorisés, hypothèses, références, actions. |
-| « Quels sont les meilleurs patterns pour… », « les bonnes pratiques de… » | Un livrable de recherche court, avec les écrans en images et les liens vers les sources. |
-| « Que disent les études sur… », sur une question précise | Un livrable de recherche : ce que les études, les articles et les guides établissent, et ce que ça change pour ton sujet. |
-| Un benchmark ou un état de l'art approfondi | La fiche et un livrable de recherche complet, avec des produits visités en direct. |
-| « Challenge cette idée », « aide-moi à trancher » | La fiche et le rapport : les pistes, leur critique, une recommandation. |
-| « Quel libellé pour… », « relis ces textes » | Des variantes argumentées, directement dans la conversation. |
-| « Est-ce conforme à la maquette ? » | La recette : la liste des corrections pour le développeur. |
+| "Audit this page", "find the friction points in this journey" | The topic sheet and the report: prioritised findings, hypotheses, references, actions. |
+| "What are the best patterns for…", "best practices for…" | A short research deliverable, with the screens as images and links to the sources. |
+| "What do studies say about…", on a specific question | A research deliverable: what studies, articles and guides establish, and what it means for your topic. |
+| An in-depth benchmark or state-of-the-art review | The topic sheet and a full research deliverable, including live visits to real products. |
+| "Challenge this idea", "help me decide" | The topic sheet and the report: the options, their critique, a recommendation. |
+| "What should this label say?", "review this copy" | Reasoned variants, right in the conversation. |
+| "Does it match the design?" | The design QA: the list of fixes for the developer. |
 
-## Les têtes
+## The heads
 
-| Tête | Ce qu'elle fait |
+A head's name is the name of its skill. Three of them are French words: accueil
+(welcome), maquette (mockup) and recette (design QA).
+
+| Head | What it does |
 |---|---|
-| `hydra-accueil` | À la première session, explique Hydra et remplit le contexte avec toi. |
-| `hydra-cortex` | Orchestre le sujet : cadrage, déroulé, pauses, clôture. Il n'écrit aucun livrable. |
-| `hydra-audit` | Évalue ton existant, une page en ligne ou une maquette, et le croise avec tes documents. Il en tire des constats et des hypothèses. |
-| `hydra-research` | Cherche ce qui se fait et ce qui est prouvé ailleurs : écrans de vrais produits, produits visités, design systems publics, études. Chaque référence est sourcée et datée. |
-| `hydra-ideation` | Ouvre des pistes, les critique, puis choisit sur des critères explicites. |
-| `hydra-maquette` | Compose les pistes en protos HTML, avec les composants de tes librairies. |
-| `hydra-writer` | Vérifie les textes des protos par rapport à ta charte de ton, ou au ton de ton produit. |
-| `hydra-recette` | Compare la maquette au build, chiffres à l'appui, pour le développeur. |
+| `hydra-accueil` | The welcome: in the first session, explains Hydra and fills in the context with you. |
+| `hydra-cortex` | Runs the topic: framing, order of work, pauses, wrap-up. Apart from the topic sheet, it writes no deliverable. |
+| `hydra-audit` | Assesses what you have (a live page or a design file) and cross-checks it with your documents. It draws findings and hypotheses from it. |
+| `hydra-research` | Looks for what others do and what is proven: screens from real products, live visits to products, public design systems, studies. Every reference is sourced and dated. |
+| `hydra-ideation` | Explores options, critiques them, then picks one based on stated criteria. |
+| `hydra-maquette` | Builds every option into an HTML proto, using the components from your libraries. |
+| `hydra-writer` | Checks the copy in the protos against your tone of voice guidelines, or your product's tone. |
+| `hydra-recette` | The design QA: compares the design with the build, with numbers, for the developer. |
 
-## Comment c'est rangé
+## How it's organised
 
-Trois couches, qui ne se mélangent jamais :
-1. **La méthode** : les règles (`CLAUDE.md`), les têtes `hydra-*` et les outils
-   (`.tools/`). Elle ne contient rien d'un client et elle est la même pour tous. En
-   plugin, elle vit dans le plugin, et ton dossier de mission ne garde qu'une copie des
-   règles, qu'Hydra tient à jour. En copie, elle vit dans ton dossier (`CLAUDE.md`,
-   `.claude/skills/hydra-*`, `.tools/`).
-2. **Le contexte**, dans `context/` : tout ce qui est propre à ta mission. Changer de
-   mission, c'est remplacer ce dossier.
-3. **Les sujets**, dans `topics/<nom>/` : un dossier par sujet, avec ce que tu déposes et
-   ce qu'Hydra produit. Un sujet terminé se range dans `topics/.archive/`.
+Three layers that never mix:
+1. **The method**: the rules (`CLAUDE.md`), the `hydra-*` heads and the tools
+   (`.tools/`). It contains nothing client-specific and is the same for everyone. With
+   the plugin, it lives in the plugin, and your mission folder only holds a copy of the
+   rules, which Hydra keeps up to date. With the copy, it lives in your folder
+   (`CLAUDE.md`, `.claude/skills/hydra-*`, `.tools/`).
+2. **The context**, in `context/`: everything specific to your mission. Changing
+   missions means replacing this folder.
+3. **The topics**, in `topics/<name>/`: one folder per topic, with what you drop in and
+   what Hydra produces. A finished topic goes into `topics/.archive/`.
 
-## Ce qu'Hydra ne fait pas
+## What Hydra doesn't do
 
-- Pas de recherche utilisateur. Il ne mène ni entretiens ni tests, mais il exploite ceux
-  que tu lui donnes.
-- Il ne modifie jamais ta maquette dans l'outil de design. Il la lit, et compose ses
-  protos à part, en HTML.
-- La recette est visuelle : elle ne couvre ni l'accessibilité ni les tests fonctionnels.
-- Pas de contenu marketing long. Writer s'occupe des textes d'interface.
-- Il n'invente ni composant, ni valeur, ni convention. Ce qui manque, il le signale.
+- No user research. It doesn't run interviews or tests, but it works with the findings
+  you give it.
+- It never edits your design file. It reads it, and builds its protos separately, in
+  HTML.
+- The design QA is visual: it covers neither accessibility nor functional testing.
+- No long-form marketing content. Writer handles interface copy.
+- It never makes up a component, a value or a convention. It flags whatever is missing.
 
 <details>
-<summary><b>Les outils, et ce qui casse sans eux</b></summary>
+<summary><b>The tools, and what breaks without them</b></summary>
 
-Les outils sont branchés par le plugin (en copie, par les réglages du dossier) et
-tournent tout seuls. Si l'un d'eux ne se lance pas, Hydra le signale une fois, sans
-bloquer.
+The tools are wired in by the plugin (with the copy, by the folder's settings) and run
+on their own. If one of them fails to start, Hydra says so once, without blocking.
 
-| Outil | Ce qu'il fait | Sans lui |
+| Tool | What it does | Without it |
 |---|---|---|
-| `md-to-html.js` | Transforme chaque livrable markdown en page HTML lisible, et le contrôle au passage (sigles non définis, références, gras, titres du gabarit), en français comme en anglais. | Pas de page HTML, aucun contrôle des livrables. |
-| `lexique.js` | Les titres et les mots des livrables que les contrôles reconnaissent, en français et en anglais. | Les contrôles ne reconnaissent plus rien et le disent. |
-| `proto-frame.js` | Assemble la galerie des protos d'un sujet, vérifie que chaque piste a son proto et que ses boutons réagissent. | Pas de galerie, et une piste sans proto passe inaperçue. |
-| `proto-shot.js` | Capture chaque proto dans les rendus que demande la fiche du sujet, pour que la tête voie ce qu'elle a composé. | La tête ne voit pas son rendu : un texte qui déborde ou deux blocs qui se chevauchent passent. |
-| `rendus.js` | Lit dans la fiche du sujet les rendus demandés (mobile, desktop ou les deux). | Tous les protos sortent en mobile et en desktop. |
-| `hydra-qa-gate.js` | Contrôle de fin de tour. Il bloque tant que des captures neuves n'ont pas été regardées, ou que les compteurs d'une recette ne tombent pas juste. | Un proto corrigé peut partir sans avoir été revu. |
-| `hydra-mesure.js` | Relève les vraies valeurs du build (tailles, couleurs, positions) pour la recette. | La recette ne peut pas chiffrer ses écarts. |
-| `hydra-bilan.js` | Signale pendant la session un document déposé jamais lu, une recherche faite hors de research, la lecture d'un autre sujet, ou un fichier d'instructions étranger. | Ces oublis passent sans que personne ne les voie. |
-| `hydra-dossier.js` | En plugin : crée le dossier de mission, met ses règles à jour à chaque ouverture de session, et fait taire les outils hors d'un dossier de mission. | Pas de dossier de mission, et après une mise à jour, d'anciennes règles sans que rien ne le dise. |
-| `hydra-render.html`, `vendor/` | Le gabarit des pages de livrables, et la bibliothèque qui convertit le markdown (marked, licence MIT). | Rien ne s'affiche. |
+| `md-to-html.js` | Turns each markdown deliverable into a readable HTML page, and checks it along the way (undefined acronyms, references, overuse of bold, template headings), in English and in French. | No HTML pages, and no checks on deliverables. |
+| `lexique.js` | The headings and words of the deliverables that the checks recognise, in English and in French. | The checks no longer recognise anything, and say so. |
+| `proto-frame.js` | Assembles a topic's gallery of protos, and checks that every option has its proto and that its buttons respond. | No gallery, and an option without a proto goes unnoticed. |
+| `proto-shot.js` | Captures each proto in the renders the topic sheet asks for, so the head sees what it built. | The head doesn't see its render: overflowing text or overlapping blocks slip through. |
+| `rendus.js` | Reads the requested renders (mobile, desktop or both) from the topic sheet. | Every proto comes out in both mobile and desktop. |
+| `hydra-qa-gate.js` | End-of-turn check. It blocks as long as new screenshots haven't been looked at, or a design QA's counts don't match its table. | A corrected proto can go out without being reviewed. |
+| `hydra-mesure.js` | Measures the actual values of the build (sizes, colours, positions) for the design QA. | The design QA can't put numbers on its gaps. |
+| `hydra-bilan.js` | During the session, flags a document dropped in but never read, research done outside the Research head, files read from another topic, or an instruction file that isn't Hydra's. | These slips go unnoticed. |
+| `hydra-dossier.js` | With the plugin: creates the mission folder, updates its rules each time a session starts, and silences the tools outside a mission folder. | No mission folder, and after an update, the old rules stay in place with no warning. |
+| `hydra-render.html`, `vendor/` | The template for deliverable pages, and the library that converts markdown (marked, MIT licence). | No deliverable page can be displayed. |
 </details>
 
-## Règle d'or
+## Golden rule
 
-Aucun contenu client dans la méthode : ni nom, ni chiffre, ni exemple tiré d'une
-mission. Tout ce qui est propre à une mission vit dans `context/` et dans `topics/`.
+No client content in the method: no names, no figures, no examples taken from a
+mission. Everything specific to a mission lives in `context/` and in `topics/`.
 
 ## Versions
 
-Ce qui change d'une version à l'autre, et comment mettre à jour sans toucher à ton
-contexte ni à tes sujets : [CHANGELOG.md](CHANGELOG.md).
+What changes from one version to the next, and how to update without touching your
+context or your topics: [CHANGELOG.md](CHANGELOG.md) (in French).
 
 ## Licence
 
-[MIT](LICENSE). Tu peux l'utiliser, le modifier et le redistribuer librement, en citant
-l'auteur.
+[MIT](LICENSE). You're free to use, modify and redistribute it, as long as you keep the
+copyright and licence notice.

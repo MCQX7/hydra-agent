@@ -46,8 +46,28 @@ const PLUGIN = path.dirname(__dirname);
 const INSTALLE = 'hydra@hydra-agent';
 const TEMOIN = path.join('.claude', 'hydra.json');
 const ENTETE = 'Fichier géré par Hydra, ne pas modifier — tes consignes vont dans context/\n\n';
-const MIS_A_JOUR = 'Hydra vient d\'être mis à jour : relance la session pour charger les nouvelles règles.';
-const DEPLACE = 'Hydra a changé d\'emplacement : relance la session pour charger ses règles à jour.';
+// Les messages d'ouverture de session vont tels quels au designer : dans la langue de travail que
+// déclare context/mission.md, en anglais pour toute autre langue que le français (lexique.js).
+const MESSAGES = {
+  fr: { misAJour: 'Hydra vient d\'être mis à jour : relance la session pour charger les nouvelles règles.',
+        deplace: 'Hydra a changé d\'emplacement : relance la session pour charger ses règles à jour.',
+        manquait: 'Le CLAUDE.md de ce dossier manquait : Hydra l\'a remis. Relance la session pour charger les règles.',
+        modifie: 'Le CLAUDE.md de ce dossier ne correspondait plus aux règles d\'Hydra : il est rétabli — il est géré par '
+          + 'Hydra, tes consignes vont dans context/. Relance la session pour charger les règles.',
+        echec: e => 'Hydra n\'a pas pu mettre à jour le CLAUDE.md de ce dossier (' + e + ') : '
+          + 'les règles chargées dans cette session peuvent être anciennes.' },
+  en: { misAJour: 'Hydra has just been updated: restart the session to load the new rules.',
+        deplace: 'Hydra has moved: restart the session to load its current rules.',
+        manquait: 'This folder\'s CLAUDE.md was missing: Hydra has put it back. Restart the session to load the rules.',
+        modifie: 'This folder\'s CLAUDE.md no longer matched Hydra\'s rules, so it has been restored. Hydra manages it; '
+          + 'your own instructions go in context/. Restart the session to load the rules.',
+        echec: e => 'Hydra could not update this folder\'s CLAUDE.md (' + e + '), so the rules loaded in this '
+          + 'session may be out of date.' },
+};
+const messages = d => {
+  let lm = null; try { lm = require(path.join(__dirname, 'lexique.js')).langueMission(d); } catch (e) {}
+  return MESSAGES[lm && lm !== 'fr' ? 'en' : 'fr'];
+};
 // Réglages du dossier de mission : ceux de la copie d'Hydra (son .claude/settings.json), que
 // les réglages d'un plugin ne savent pas porter.
 const REGLAGES = { model: 'opus', effortLevel: 'high' };
@@ -94,12 +114,10 @@ function tenirRegles(d) {
   if (actuel !== attendu) ecrire(path.join(d, 'CLAUDE.md'), attendu);
   if (t.version !== v || t.plugin !== PLUGIN) ecrireTemoin(d, v);
   if (actuel === attendu) return null;
-  if (t.version && t.version !== v) return MIS_A_JOUR;
-  if (t.plugin && t.plugin !== PLUGIN) return DEPLACE;
-  return actuel === null
-    ? 'Le CLAUDE.md de ce dossier manquait : Hydra l\'a remis. Relance la session pour charger les règles.'
-    : 'Le CLAUDE.md de ce dossier ne correspondait plus aux règles d\'Hydra : il est rétabli — il est géré par '
-      + 'Hydra, tes consignes vont dans context/. Relance la session pour charger les règles.';
+  const M = messages(d);
+  if (t.version && t.version !== v) return M.misAJour;
+  if (t.plugin && t.plugin !== PLUGIN) return M.deplace;
+  return actuel === null ? M.manquait : M.modifie;
 }
 // Les autorisations du plugin dans un objet de réglages : celles d'un ancien emplacement
 // retirées, les siennes ajoutées. Rend true si l'objet a changé.
@@ -123,8 +141,7 @@ function sessionStart() {
   try { tenirAutorisations(d, lireTemoin(d).plugin); } catch (e) {}
   let msg;
   try { msg = tenirRegles(d); }
-  catch (e) { msg = 'Hydra n\'a pas pu mettre à jour le CLAUDE.md de ce dossier (' + e.message + ') : '
-    + 'les règles chargées dans cette session peuvent être anciennes.'; }
+  catch (e) { msg = messages(d).echec(e.message); }
   if (!msg) return;
   process.stdout.write(JSON.stringify({ systemMessage: 'Hydra — ' + msg, hookSpecificOutput: {
     hookEventName: 'SessionStart',

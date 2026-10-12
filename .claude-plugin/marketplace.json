@@ -12,7 +12,7 @@
       "name": "hydra",
       "source": "./plugin",
       "description": "Hydra, une équipe design dans Claude Code : audit, recherche, pistes, protos, textes, recette.",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "author": {
         "name": "MCQX7"
       },

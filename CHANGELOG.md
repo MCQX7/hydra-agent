@@ -1,5 +1,29 @@
 # Ce qui change d'une version à l'autre
 
+## 2.1.1 — 12 octobre 2026
+
+### Corrigé
+
+- **Une fausse alerte dans une mission neuve.** Tant que la ligne « Langue de travail » de
+  `context/mission.md` restait vide, chaque livrable en français recevait l'alerte « titres
+  restés en français ». La ligne vide ne compte plus.
+- **Les messages du plugin à l'ouverture de session** (« Hydra vient d'être mis à jour… »)
+  sont en anglais dans une mission en anglais : ils s'affichent tels quels.
+
+### Changé
+
+- **La page du dépôt et la présentation s'ouvrent en anglais.** Le README de la page du
+  dépôt est en anglais, sa version française est `README.fr.md` ; la présentation s'ouvre
+  en anglais, avec un bouton FR/EN en haut de la page. L'anglais a été relu de bout en bout.
+
+### Passer de la 2.1 à la 2.1.1
+
+**En plugin** : `claude plugin update hydra@hydra-agent --scope local`, depuis le dossier
+de ta mission, puis relance la session quand Hydra te le demande.
+
+**En copie** : remplace `README.md`, `CHANGELOG.md`, les dossiers `.claude/skills/hydra-*`,
+`.tools/` et `docs/` ; ajoute `README.fr.md` et supprime `README.en.md`.
+
 ## 2.1 — 12 octobre 2026
 
 ### Nouveau

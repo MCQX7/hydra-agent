@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hydra · Présentation</title>
-<!-- Page de présentation d'Hydra. Elle dit ce qu'Hydra fait et produit ; elle ne
-     détaille pas chaque règle des têtes, qui changent plus souvent qu'elle. La
-     source de vérité reste CLAUDE.md et .claude/skills/hydra-* : en cas de
-     désaccord, ce sont eux qui ont raison. Installer et démarrer : README.md.
-     La version anglaise, presentation.en.html, dit la même chose : changer l'une, c'est
-     changer l'autre. Le style est commun : presentation.css. -->
+<title>Hydra · Overview</title>
+<!-- Page de présentation d'Hydra, en anglais : la page par défaut du site (index.html y
+     mène). Elle dit ce qu'Hydra fait et produit ; la source de vérité reste CLAUDE.md et
+     .claude/skills/hydra-*. La version française, presentation.fr.html, dit la même chose :
+     changer l'une, c'est changer l'autre. Style commun : presentation.css. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -21,41 +19,41 @@
 <header class="masthead">
   <div class="masthead__row">
     <div class="masthead__mark">Hydra<span class="dot">.</span></div>
-    <div class="masthead__right"><span class="masthead__type">Présentation</span><a class="masthead__lang" href="presentation.en.html" hreflang="en" lang="en" title="Read in English">EN</a><a class="masthead__btn" href="https://github.com/MCQX7/hydra-agent">Voir le repo</a></div>
+    <div class="masthead__right"><span class="masthead__type">Overview</span><a class="masthead__lang" href="presentation.fr.html" hreflang="fr" lang="fr" title="Lire en français">FR</a><a class="masthead__btn" href="https://github.com/MCQX7/hydra-agent">See the repo</a></div>
   </div>
   <div class="masthead__rule"></div>
   <div class="masthead__rule-thin"></div>
 </header>
 
 <div class="hero">
-  <h1>Un corps,<br>plusieurs têtes.</h1>
-  <p class="lede">Une équipe design dans Claude Code. Tu lui donnes un <strong>sujet brut</strong>, ou simplement une question. Hydra le cadre, l'analyse, regarde ce qui se fait ailleurs, ouvre des pistes et les compose en protos avec ton design system. Tu reçois des <strong>livrables sur lesquels tu peux trancher</strong>.</p>
+  <h1>One body,<br>many heads.</h1>
+  <p class="lede">A design team inside Claude Code. You give it a <strong>raw topic</strong>, or just a question. Hydra frames it, analyses it, looks at what others do, explores options and builds them into protos with your design system. You get <strong>deliverables you can decide on</strong>.</p>
 </div>
 
 <section>
-  <h2>À quoi ça sert</h2>
-  <p class="big">Un écran qui ne marche pas assez bien, un nouvel écran à concevoir, une page à auditer, les bonnes pratiques d'un composant, une idée à challenger, un libellé à choisir, un build à recetter. Hydra fait le travail d'une petite équipe autour du designer (<strong>analyse, recherche, exploration, rédaction, recette</strong>), et c'est le designer qui décide.</p>
-  <p>Ce n'est pas une machine à sortir des écrans. Hydra réfléchit avant de composer. Il établit ce qui est vrai chez toi, cherche ce qui marche ailleurs, met plusieurs pistes en concurrence, et te dit laquelle il recommande, pourquoi, et avec quelles preuves. Il ne te dit pas ce que tu veux entendre&nbsp;: si une idée est faible, il le dit et explique pourquoi. Et quand il ne sait pas, il le dit au lieu d'inventer.</p>
+  <h2>What it's for</h2>
+  <p class="big">A screen that underperforms, a new screen to design, a page to audit, best practices for a component, an idea to challenge, a label to choose, a build to check against the design. Hydra does the work of a small team around the designer (<strong>analysis, research, exploration, UX writing, design QA</strong>), and the designer makes the decisions.</p>
+  <p>It isn't a screen factory. Hydra thinks before it builds. It works out what is true in your product, looks for what works elsewhere, pits several options against each other, and tells you which one it recommends, why, and on what evidence. It won't just tell you what you want to hear: if an idea is weak, it says so and explains why. And when it doesn't know something, it says so instead of making it up.</p>
 </section>
 
 <section>
-  <h2>Comment ça marche</h2>
+  <h2>How it works</h2>
 
-  <figure class="flow" role="img" aria-label="Une demande entre. Cortex la cadre et l'envoie aux têtes, qui s'appuient sur les outils de la mission. Les livrables sortent. Le tout repose sur le contexte de la mission.">
-    <figcaption>Le flux, d'un coup d'œil</figcaption>
+  <figure class="flow" role="img" aria-label="A request comes in. Cortex frames it and sends it to the heads, which rely on the mission's tools. Deliverables come out. Everything rests on the mission's context.">
+    <figcaption>The flow at a glance</figcaption>
     <div class="flow__io flow__io--in">
-      <span class="flow__tag">Entrée</span>
-      <div class="flow__io-body"><b>Une demande</b>&nbsp;: un sujet complet ou une question précise, l'existant s'il y en a un (lien de maquette ou URL), et tes documents</div>
+      <span class="flow__tag">In</span>
+      <div class="flow__io-body"><b>A request</b>: a full topic or a specific question, the current product if there is one (design link or URL), and your documents</div>
     </div>
     <div class="flow__arrow"></div>
     <div class="flow__cortex">
       <div class="flow__cortex-name">Cortex</div>
-      <div class="flow__cortex-role">cadre · oriente · vérifie avant de clore</div>
+      <div class="flow__cortex-role">frames · routes · checks before closing</div>
     </div>
     <div class="flow__arrow"></div>
     <div class="flow__work">
       <div class="flow__heads">
-        <span class="flow__label">Seulement les têtes utiles</span>
+        <span class="flow__label">Only the heads it needs</span>
         <div class="flow__chips">
           <span class="flow__chip">Audit</span>
           <span class="flow__chip">Research</span>
@@ -66,203 +64,203 @@
         </div>
       </div>
       <div class="flow__feed">
-        <span class="flow__label">← Outils de la mission</span>
+        <span class="flow__label">← Mission tools</span>
         <div class="flow__feed-list">design · benchmark</div>
       </div>
     </div>
     <div class="flow__arrow"></div>
     <div class="flow__io flow__io--out">
-      <span class="flow__tag">Sortie</span>
-      <div class="flow__io-body"><b>Des livrables</b> numérotés, sourcés, vérifiables</div>
+      <span class="flow__tag">Out</span>
+      <div class="flow__io-body"><b>Deliverables</b>: numbered, sourced, checkable</div>
     </div>
-    <div class="flow__base"><span class="flow__base-key">context/</span> ta mission, sous toute la chaîne&nbsp;: client, périmètre, vocabulaire, utilisateurs, métriques, design system, ton, outils</div>
+    <div class="flow__base"><span class="flow__base-key">context/</span> your mission, underpinning the whole chain: client, scope, vocabulary, users, metrics, design system, tone, tools</div>
   </figure>
 
   <ol class="steps">
-    <li><b>Tu donnes un sujet.</b> Le problème en une phrase, l'existant s'il y en a un, et tes documents dans le dossier du sujet, sous <code>topics/</code>.</li>
-    <li><b>Cortex cadre, en un seul message.</b> Il dit ce qu'il a trouvé et ce qui manque, la métrique qui jugera le sujet et son seuil, qui est touché, le périmètre, ce qui est déjà décidé, les rendus à produire (mobile, desktop, selon ta plateforme) et le mode de déroulé. Tu corriges d'un mot.</li>
-    <li><b>Les têtes s'enchaînent.</b> L'audit établit ce qui est vrai sur l'existant, research trouve ce qui se fait ailleurs, ideation ouvre les pistes et choisit, maquette les compose, writer vérifie les textes.</li>
-    <li><b>Tu récupères les livrables.</b> Hydra te propose aussi d'ajouter au contexte ce que le sujet a appris&nbsp;: une métrique, un profil, un terme. Rien n'y est écrit sans ton accord.</li>
+    <li><b>You give it a topic.</b> The problem in one sentence, the current product if there is one, and your documents in the topic's folder, under <code>topics/</code>.</li>
+    <li><b>Cortex frames it, in a single message.</b> It says what it found and what's missing, the decision metric and its success threshold, who is affected, the scope, what's already decided, the renders to produce (the screen sizes: mobile, desktop or both, depending on your platform) and how to run the topic. A word from you is enough to correct it.</li>
+    <li><b>The heads take over, one after another.</b> Audit works out what is true about the current product. Research finds what others do. Ideation explores options and picks the strongest. Maquette builds every one of them, and Writer checks the copy.</li>
+    <li><b>You get the deliverables.</b> Hydra also offers to add what the topic taught it to the context: a metric, a profile, a term. Nothing goes in without your approval.</li>
   </ol>
 </section>
 
 <section>
-  <h2>Une demande, pas forcément un sujet</h2>
-  <p>Tout ne demande pas la chaîne complète. Hydra choisit les têtes d'après ta demande, tu n'as pas à les nommer. Il <strong>s'arrête au livrable que tu as demandé</strong> et te propose la suite, sans l'enchaîner tout seul.</p>
+  <h2>A request, not always a topic</h2>
+  <p>Not everything needs the whole chain. Hydra picks the heads based on your request; you don't have to name them. It <strong>stops at the deliverable you asked for</strong> and suggests the next step, without running it on its own.</p>
   <table class="dem">
-    <thead><tr><th>Tu demandes</th><th>Tu reçois</th></tr></thead>
+    <thead><tr><th>You ask</th><th>You get</th></tr></thead>
     <tbody>
-      <tr><td>«&nbsp;Audite cette page&nbsp;», «&nbsp;trouve les points de friction de ce parcours&nbsp;»</td><td>La fiche et le rapport&nbsp;: constats priorisés, hypothèses, références, actions. Hydra propose ensuite d'ouvrir des pistes.</td></tr>
-      <tr><td>«&nbsp;Quels sont les meilleurs patterns pour…&nbsp;», «&nbsp;les bonnes pratiques de…&nbsp;»</td><td>Un livrable de recherche court&nbsp;: la réponse, son niveau de confiance, les écrans en images et les liens vers les sources.</td></tr>
-      <tr><td>«&nbsp;Que disent les études sur…&nbsp;», «&nbsp;qu'est-ce qui marche pour…&nbsp;», sur une question précise</td><td>Un livrable de recherche&nbsp;: ce que les études, les articles et les guides établissent, ce que ça change pour ton sujet, et le niveau de preuve.</td></tr>
-      <tr><td>Un benchmark ou un état de l'art approfondi</td><td>La fiche et un livrable de recherche complet&nbsp;: conclusions, ce qu'on ne sait pas, références datées, avec des produits visités en direct.</td></tr>
-      <tr><td>«&nbsp;Challenge cette idée&nbsp;», «&nbsp;aide-moi à trancher&nbsp;»</td><td>La fiche et le rapport&nbsp;: les pistes, leur critique, une recommandation. Hydra propose ensuite de les composer en protos.</td></tr>
-      <tr><td>«&nbsp;Quel libellé pour…&nbsp;», «&nbsp;relis ces textes&nbsp;»</td><td>Des variantes argumentées, dans la conversation, ou un tableau pour un écran entier.</td></tr>
-      <tr><td>«&nbsp;Est-ce conforme à la maquette&nbsp;?&nbsp;»</td><td>La recette&nbsp;: la liste des corrections pour le développeur, avec les valeurs mesurées.</td></tr>
+      <tr><td>“Audit this page”, “find the friction points in this journey”</td><td>The topic sheet and the report: prioritised findings, hypotheses, references, actions. Hydra then offers to explore options.</td></tr>
+      <tr><td>“What are the best patterns for…”, “best practices for…”</td><td>A short research deliverable: the answer, how confident it is, the screens as images and links to the sources.</td></tr>
+      <tr><td>“What do studies say about…”, “what works for…”, on a specific question</td><td>A research deliverable: what studies, articles and guides establish, what it means for your topic, and the strength of the evidence.</td></tr>
+      <tr><td>An in-depth benchmark or state-of-the-art review</td><td>The topic sheet and a full research deliverable: conclusions, what remains unknown, dated references, including live visits to real products.</td></tr>
+      <tr><td>“Challenge this idea”, “help me decide”</td><td>The topic sheet and the report: the options, their critique, a recommendation. Hydra then offers to build them into protos.</td></tr>
+      <tr><td>“What should this label say?”, “review this copy”</td><td>Reasoned variants, right in the conversation, or a table for a whole screen.</td></tr>
+      <tr><td>“Does it match the design?”</td><td>The design QA: the list of fixes for the developer, with measured values.</td></tr>
     </tbody>
   </table>
 </section>
 
 <section>
-  <h2>Deux façons de dérouler</h2>
-  <p>Au cadrage, cortex <strong>te recommande</strong> un mode, et c'est toi qui choisis.</p>
+  <h2>Two ways to run it</h2>
+  <p>When framing, Cortex <strong>recommends</strong> a mode, and you choose.</p>
   <div class="cards">
     <div class="card">
-      <h3>D'un trait</h3>
+      <h3>In one go</h3>
       <ul>
-        <li>Sans pause&nbsp;: Hydra va jusqu'au bout de ta demande</li>
-        <li>Ce qu'il a dû supposer est <b>noté en hypothèses</b>, à relire</li>
-        <li>Ce qui n'est pas à lui de décider remonte en questions</li>
-        <li>Pour un sujet bien cadré, à question fermée</li>
+        <li>No pauses: Hydra goes all the way through your request</li>
+        <li>What it had to assume is <b>written down as hypotheses</b>, for you to review</li>
+        <li>Decisions that aren't Hydra's to make come back to you as questions</li>
+        <li>For a well-framed topic with a closed question</li>
       </ul>
     </div>
     <div class="card">
-      <h3>Étape par étape</h3>
+      <h3>Step by step</h3>
       <ul>
-        <li>Des pauses aux moments clés</li>
-        <li><b>Tu tranches</b> avant la suite</li>
-        <li>La même profondeur, seules les pauses changent</li>
-        <li>Pour un sujet large, aux pistes à construire</li>
+        <li>Pauses at the key moments</li>
+        <li><b>You decide</b> before it moves on</li>
+        <li>Same depth, only the pauses change</li>
+        <li>For a broad topic, where the options still need building</li>
       </ul>
     </div>
   </div>
-  <p><strong>Les protos, tout de suite ou après ta relecture.</strong> Au cadrage, cortex te demande aussi quand composer les protos, la partie qui coûte le plus. Soit tout de suite, soit après que tu as lu la fiche, le rapport et le brief. Dans ce cas, Hydra s'arrête au brief, et tu demandes les protos si les pistes en valent la peine.</p>
-  <p><strong>Hydra peut contester ta demande, mais il y répond quand même.</strong> S'il pense que le problème est mal posé, il te le dit, et te montre sa façon de le voir à côté, clairement signalée. Mais ses pistes et sa recommandation servent ton objectif, pas le sien. Une contrainte de ta mission (une règle légale, un principe de marque) change la façon d'atteindre l'objectif, jamais l'objectif lui-même. Certaines décisions ne sont jamais à lui&nbsp;: la définition du problème, la métrique et son seuil, le périmètre. Elles te reviennent, même d'un trait.</p>
+  <p><strong>Protos straight away, or after your review.</strong> When framing, Cortex also asks when to build the protos, the most expensive part. Either straight away, or after you've read the topic sheet, the report and the brief. In the second case, Hydra stops at the brief, and you ask for the protos if the options are worth it.</p>
+  <p><strong>Hydra can push back on your request, but it still answers it.</strong> If it thinks the problem is badly framed, it tells you, and shows its own reading alongside, clearly labelled. But its options and its recommendation serve your goal, not its own. A constraint from your mission (a legal requirement, a brand principle) changes how the goal is reached, never the goal itself. Some decisions are never Hydra's: defining the problem, the metric and its threshold, the scope. They come back to you, even when it runs in one go.</p>
 </section>
 
 <section>
-  <h2>Dans ta langue</h2>
-  <p>Hydra te parle et écrit ses livrables dans la langue de ta mission, que l'accueil note avec toi. Le français est la langue par défaut. En anglais, tout suit&nbsp;: les titres, les noms des livrables et les pages rendues. Dans une autre langue, le texte est dans ta langue et les titres restent en anglais.</p>
-  <p>Les textes des protos suivent la langue de ton produit, qui peut être différente&nbsp;: tu peux travailler en français sur un produit en anglais. Un libellé ou une citation tirés du produit restent tels quels, jamais traduits. La méthode, elle, reste écrite en français, mais tu n'as pas à la lire.</p>
+  <h2>In your language</h2>
+  <p>Hydra talks to you and writes its deliverables in your mission's working language: the one you write to it in, which the welcome session records. If in doubt, it uses French. In English, everything switches to English: the headings, the deliverable names and the rendered pages. In any other language, the text is in that language and the headings stay in English.</p>
+  <p>The copy in the protos follows your product's language, which may be different: you can work in English on a product in French. A label or a quote taken from the product stays as it is, never translated. The method itself is written in French, but you never need to read it.</p>
 </section>
 
 <section>
-  <h2>Les têtes</h2>
-  <p>Chaque tête a sa méthode. Cortex décide <em>comment</em> mener le sujet, les autres <em>font</em>. La phase de discovery d'un sujet en réunit deux&nbsp;: l'audit, qui regarde ton existant, et research, qui regarde ailleurs.</p>
+  <h2>The heads</h2>
+  <p>Each head has its own method. Cortex decides <em>how</em> to run the topic; the others <em>do</em> the work. A topic's discovery phase brings two of them together: Audit, which looks at your current product, and Research, which looks elsewhere. Three heads keep their French names: Maquette (mockups), Recette (design QA) and Accueil (welcome).</p>
   <div class="grid">
-    <div class="cell"><div class="name">Cortex</div><div class="desc"><b>Le chef d'orchestre.</b> Cadre le sujet, choisit le mode, enchaîne les têtes utiles, et vérifie avant de clore que rien n'a été oublié.</div></div>
-    <div class="cell"><div class="name">Audit</div><div class="desc"><b>Comprendre ton existant.</b> Analyse ton écran et ton parcours, en ligne ou en maquette, les croise avec tes documents et tes données, et sépare les faits des hypothèses. Pour savoir ce qui se fait ailleurs, il appelle research.</div></div>
-    <div class="cell"><div class="name">Research</div><div class="desc"><b>Ce qui se fait et ce qui est prouvé ailleurs.</b> Des écrans de vrais produits, cherchés d'après ce que fait l'utilisateur et pas seulement dans ton secteur. Des produits visités en ligne, des design systems publics, des études, des articles et des guides sur une question précise, dont il tire ce qui compte pour ton sujet. Chaque référence est sourcée, datée et cliquable. Les autres têtes l'appellent quand elles ont besoin de références.</div></div>
-    <div class="cell"><div class="name">Ideation</div><div class="desc"><b>Ouvrir, puis trancher.</b> Des pistes vraiment différentes, au moins deux formes pour chaque levier, une critique sans complaisance, et un choix sur des critères annoncés.</div></div>
-    <div class="cell"><div class="name">Maquette</div><div class="desc"><b>Composer les écrans.</b> Un proto manipulable par piste, avec les composants de tes librairies, dans les rendus de ta plateforme. Ce que ton design system n'a pas est dessiné en schéma, et signalé comme tel.</div></div>
-    <div class="cell"><div class="name">Writer</div><div class="desc"><b>Les textes d'interface.</b> Vérifie les textes des protos par rapport à ta charte de ton. Sans charte, il se fie au ton qu'il relève dans ton produit.</div></div>
-    <div class="cell"><div class="name">Recette</div><div class="desc"><b>La maquette face au build.</b> Mesure les deux côtés, en desktop et en mobile, chiffre chaque écart, et donne au développeur une liste de corrections.</div></div>
-    <div class="cell"><div class="name">Accueil</div><div class="desc"><b>La première session.</b> Explique Hydra, remplit le contexte avec toi à partir de tes sources, et lance ton premier sujet.</div></div>
+    <div class="cell"><div class="name">Cortex</div><div class="desc"><b>The conductor.</b> Frames the topic, picks the mode, calls the heads it needs, and, before closing, checks that nothing was skipped.</div></div>
+    <div class="cell"><div class="name">Audit</div><div class="desc"><b>Understanding what you have.</b> Analyses your screen and your journey, live or in a design file, cross-checks them with your documents and your data, and keeps facts apart from hypotheses. To see what others do, it calls Research.</div></div>
+    <div class="cell"><div class="name">Research</div><div class="desc"><b>What others do, and what is proven.</b> Screens from real products, searched by what the user is trying to do and not only within your sector. Live visits to products, public design systems, and studies, articles and guides on a specific question, from which it draws what matters for your topic. Every reference is sourced, dated and clickable. The other heads call it when they need references.</div></div>
+    <div class="cell"><div class="name">Ideation</div><div class="desc"><b>Open up, then decide.</b> Options that are genuinely different, at least two ways to design each lever, an unsparing critique, and a choice based on stated criteria.</div></div>
+    <div class="cell"><div class="name">Maquette</div><div class="desc"><b>Building the screens.</b> One clickable prototype per option, using the components from your libraries, in your platform's renders. Anything your design system lacks is drawn as a sketch, and labelled as such.</div></div>
+    <div class="cell"><div class="name">Writer</div><div class="desc"><b>Interface copy.</b> Checks the copy in the protos against your tone of voice guidelines. Without guidelines, it goes by the tone it finds in your product.</div></div>
+    <div class="cell"><div class="name">Recette</div><div class="desc"><b>Design against build.</b> Measures both sides, on desktop and mobile, puts a number on every gap, and hands the developer a list of fixes.</div></div>
+    <div class="cell"><div class="name">Accueil</div><div class="desc"><b>The first session.</b> Explains Hydra, fills in the context with you from your sources, and starts your first topic.</div></div>
   </div>
 </section>
 
 <section>
-  <h2>Ce que tu récupères</h2>
+  <h2>What you get</h2>
   <div class="cards">
     <div class="card">
-      <h3>Les livrables d'un sujet</h3>
+      <h3>A topic's deliverables</h3>
       <ul>
-        <li><b>01 · La fiche</b>&nbsp;: le cadrage, avec le problème, la métrique et son seuil, qui est touché, le périmètre, les rendus et ce qui est décidé</li>
-        <li><b>02 · Le rapport</b>&nbsp;: constats, hypothèses, références, pistes critiquées et recommandation. Ou <b>la recherche</b>, quand la recherche est le sujet</li>
-        <li><b>03 · Le brief</b>&nbsp;: pour chaque piste, ce que l'écran doit montrer, et un texte de composition que n'importe qui peut reprendre dans son outil</li>
-        <li><b>La galerie</b>&nbsp;: un proto par piste, sur le même écran de départ. Seul le levier change, pour comparer sur pièce, en mobile et en desktop si ta plateforme le demande</li>
+        <li><b>01 · The topic sheet</b>: the framing, with the problem, the metric and its threshold, who is affected, the scope, the renders and what's decided</li>
+        <li><b>02 · The report</b>: findings, hypotheses, references, options with their critique, and a recommendation. Or <b>the research deliverable</b> (<code>02-research</code>), when research is the topic</li>
+        <li><b>03 · The brief</b>: for each option, what the screen must show, and a composition prompt anyone can reuse in their own tool</li>
+        <li><b>The gallery</b>: one proto per option, on the same starting screen. Only the lever changes, so you can compare them side by side, on mobile and desktop if your platform needs both</li>
       </ul>
     </div>
     <div class="card">
-      <h3>La recette</h3>
+      <h3>The design QA</h3>
       <ul>
-        <li>Un tableau par zone de l'écran, par plateforme</li>
-        <li>Pour chaque écart, <b>la valeur attendue et la valeur mesurée</b> sur le build, et la sévérité</li>
-        <li>Une capture annotée, avec les écarts numérotés</li>
-        <li>Un tableau et pas de prose, parce qu'il part au développeur</li>
+        <li>One table per area of the screen, per platform</li>
+        <li>For each gap, <b>the expected value and the value measured</b> on the build, and the severity</li>
+        <li>An annotated screenshot, with the gaps numbered</li>
+        <li>Tables, not prose, because it goes to a developer</li>
       </ul>
     </div>
   </div>
-  <p>Tout est écrit dans le dossier du sujet, en markdown transformé en pages HTML. Les références visuelles y sont rangées en images que tu ouvres partout. Les protos sont des pages HTML&nbsp;: ils s'ouvrent dans le navigateur, se cliquent, et ne touchent jamais à ta maquette dans l'outil de design. Un sujet terminé se range dans <code>topics/.archive/</code>.</p>
+  <p>Everything is written in the topic's folder, in markdown turned into HTML pages. Visual references are stored there as images you can open anywhere. The protos are HTML pages: they open in the browser, you can click through them, and they never touch your design file. A finished topic goes into <code>topics/.archive/</code>.</p>
 </section>
 
 <section>
-  <h2>Le contexte, c'est ta mission</h2>
-  <p class="big">La méthode est la même pour tous. <strong>Le dossier <code>context/</code> l'adapte</strong> à ta mission&nbsp;: le client, le périmètre, le vocabulaire métier, les utilisateurs, les métriques, le design system, le ton, les outils, la langue. Changer de mission, c'est remplacer ce dossier, et rien d'autre.</p>
+  <h2>The context is your mission</h2>
+  <p class="big">The method is the same for everyone. <strong>The <code>context/</code> folder tailors it</strong> to your mission, the client project you're working on: the client, the scope, the business vocabulary, the users, the metrics, the design system, the tone, the tools, the language. Changing missions means replacing this folder, nothing else.</p>
   <div class="cards">
     <div class="card">
-      <h3>Le premier jour</h3>
-      <p>L'accueil pose les modèles vides et les remplit avec toi, à partir de tes réponses, d'un brief de mission ou d'une restitution d'étude. La mission d'abord, parce que c'est elle qui rapporte le plus&nbsp;: le domaine précis, tes plateformes, le vrai jargon de l'équipe, ce qu'elle peut absorber.</p>
+      <h3>On day one</h3>
+      <p>The welcome session sets up the empty templates and fills them in with you, from your answers, a mission brief or a study readout. The mission file comes first, because it pays off the most: the exact domain, your platforms, the team's real jargon, what the team can take on.</p>
     </div>
     <div class="card">
-      <h3>Au fil des sujets</h3>
-      <p>Rien n'a besoin d'être complet tout de suite. À chaque cadrage, Hydra compare ce que le sujet nomme avec ce que contient le contexte, demande ce qui manque, puis propose de l'ajouter. Il l'écrit avec ton accord, et n'invente jamais pour boucher un trou.</p>
+      <h3>Topic after topic</h3>
+      <p>Nothing has to be complete right away. Each time it frames a topic, Hydra compares what the topic mentions with what the context holds, asks for what's missing, then offers to add it. It writes it with your approval, and never makes things up to fill a gap.</p>
     </div>
   </div>
-  <p><strong>Le design system</strong> se lit dans tes librairies. Hydra en rédige les fondations, la liste des composants et les règles d'usage (principes, ce qui est figé ou libre, règles par composant, comportement responsive), et tu les valides. Si ton équipe a déjà un fichier de design system en markdown, il s'utilise tel quel. <strong>Les utilisateurs</strong> se décrivent par axes plutôt que par personas&nbsp;: ce qui fait varier une décision de design, et les combinaisons qui reviennent, chacune avec son niveau de preuve. <strong>La charte de ton</strong> est facultative. Sans elle, writer relève le ton de ton produit et te le propose.</p>
+  <p><strong>The design system</strong> is read from your libraries. Hydra writes up its foundations, the list of components and the usage rules (principles, what's fixed and what's flexible, rules per component, responsive behaviour), and you approve them. If your team already has a design system file in markdown, it's used as is. <strong>Users</strong> are described along axes rather than as personas: what changes a design decision, and the combinations that come up, each with its strength of evidence. <strong>Tone of voice guidelines</strong> are optional. Without them, Writer picks up your product's tone and suggests it to you.</p>
 </section>
 
 <section>
-  <h2>Branché sur les outils de ta mission</h2>
-  <p>Hydra ne connaît aucun outil par son nom. Il lit ceux que ta mission déclare, rôle par rôle, et s'en sert.</p>
+  <h2>Connected to your mission's tools</h2>
+  <p>Hydra isn't tied to any tool by name. It reads the tools your mission declares, role by role, and uses them.</p>
   <div class="grid">
-    <div class="cell"><div class="name">Outil de design</div><div class="desc"><b>Maquettes et design system.</b> Lit un écran, sa structure et ses valeurs. Pour un nouvel écran, prend les composants dans tes librairies.</div></div>
-    <div class="cell"><div class="name">Benchmark</div><div class="desc"><b>Ce qui se fait.</b> Écrans et parcours de vrais produits. Si tu as plusieurs outils, il les prend dans ton ordre de préférence. Sans outil, l'accueil te propose Lazyweb, qui est gratuit, et Hydra visite les produits en ligne.</div></div>
-    <div class="cell"><div class="name">Le navigateur</div><div class="desc"><b>Captures et mesures.</b> Hydra regarde chaque proto qu'il compose, et mesure le build pendant une recette.</div></div>
-    <div class="cell"><div class="name">Analytics</div><div class="desc"><b>Les chiffres d'usage.</b> Quand une donnée manque (la valeur d'un indicateur, l'étape où les gens décrochent), Hydra la cherche dans l'outil avant de la déclarer absente. Il ne prend que des chiffres agrégés, chacun avec sa source. Il passe par un connecteur, ou par l'API de l'outil avec une clé qui reste sur ta machine et ne passe jamais par la conversation. Sans outil, il lit les exports que tu déposes.</div></div>
+    <div class="cell"><div class="name">Design tool</div><div class="desc"><b>Design files and design system.</b> Reads a screen, its structure and its values. For a new screen, takes the components from your libraries.</div></div>
+    <div class="cell"><div class="name">Benchmark</div><div class="desc"><b>What others do.</b> Screens and journeys from real products. If you have several tools, it uses them in your order of preference. With none, the welcome session suggests Lazyweb, which is free, and Hydra visits products online.</div></div>
+    <div class="cell"><div class="name">The browser</div><div class="desc"><b>Screenshots and measurements.</b> Hydra looks at every proto it builds, and measures the build during a design QA.</div></div>
+    <div class="cell"><div class="name">Analytics</div><div class="desc"><b>Usage numbers.</b> When a figure is missing (the value of a metric, the step where people drop off), Hydra looks for it in the tool before calling it missing. It only takes aggregated figures, each with its source. It goes through a connector, or through the tool's API with a key that stays on your machine and never appears in the conversation. With no tool, it reads the exports you drop in.</div></div>
   </div>
-  <p class="note">Un outil déclaré mais pas branché&nbsp;: Hydra t'aide à le brancher. Aucun outil pour un rôle&nbsp;: il le dit, fait sans, et baisse sa confiance là où ça compte. Jamais en silence.</p>
+  <p class="note">A tool declared but not connected: Hydra helps you connect it. No tool for a role: it says so, works without it, and lowers its confidence where it matters. Never silently.</p>
 </section>
 
 <section>
-  <h2>Les garde-fous</h2>
+  <h2>The guardrails</h2>
   <div class="cards">
     <div class="card">
-      <h3>Ce qu'Hydra s'interdit</h3>
+      <h3>What Hydra won't do</h3>
       <ul>
-        <li>Inventer un composant, une valeur, une convention</li>
-        <li>Affirmer sans source&nbsp;: tout se cite et se vérifie</li>
-        <li>Proposer un dark pattern&nbsp;: urgence artificielle, coût caché, sortie cachée</li>
-        <li>Écrire dans ton contexte sans ton accord</li>
-        <li>S'inspirer d'un autre sujet&nbsp;: la structure d'un livrable vient de la méthode</li>
+        <li>Make up a component, a value or a convention</li>
+        <li>Claim anything without a source: everything is cited and checkable</li>
+        <li>Suggest a dark pattern: fake urgency, hidden costs, hidden exits</li>
+        <li>Write to your context without your approval</li>
+        <li>Borrow from another topic: a deliverable's structure comes from the method</li>
       </ul>
     </div>
     <div class="card">
-      <h3>Ce que ses outils vérifient</h3>
+      <h3>What its tools check</h3>
       <ul>
-        <li>Chaque proto est capturé, et Hydra doit <b>regarder</b> ses captures avant de rendre</li>
-        <li>La galerie vérifie que chaque piste du rapport a son proto, et clique un par un les boutons des protos. Un bouton qui ne fait rien est signalé</li>
-        <li>Les livrables suivent leur gabarit, en français comme en anglais. Un sigle de la mission non défini, ou une référence réduite à un identifiant, est signalé</li>
-        <li>Les compteurs d'une recette tombent juste avec son tableau</li>
-        <li>Un fichier d'instructions étranger à Hydra, chargé dans la session, est signalé</li>
+        <li>Every proto is captured, and Hydra must <b>look</b> at its screenshots before handing anything over</li>
+        <li>The gallery checks that every option in the report has its proto, and clicks the protos' buttons one by one. A button that does nothing is flagged</li>
+        <li>Deliverables are checked against their template, in English and in French. An undefined mission acronym, or a reference reduced to an ID, is flagged</li>
+        <li>A design QA's totals match its table</li>
+        <li>Any instruction file that isn't Hydra's and gets loaded into the session is flagged</li>
       </ul>
     </div>
   </div>
-  <p>L'accessibilité et le mobile first font partie des règles que toute piste doit tenir, avec celles que ta mission déclare.</p>
+  <p>Accessibility and mobile-first design are among the rules every option must meet, along with those your mission declares.</p>
 </section>
 
 <section>
-  <h2>Ce qu'Hydra ne fait pas</h2>
+  <h2>What Hydra doesn't do</h2>
   <ul class="plain">
-    <li>Pas de recherche utilisateur. Il ne mène ni entretiens ni tests, mais il exploite ceux que tu lui donnes.</li>
-    <li>Il ne modifie jamais ta maquette dans l'outil de design.</li>
-    <li>La recette est visuelle&nbsp;: ni accessibilité, ni tests fonctionnels.</li>
-    <li>Pas de contenu marketing long. Writer s'occupe des textes d'interface.</li>
+    <li>No user research. It doesn't run interviews or tests, but it works with the findings you give it.</li>
+    <li>It never edits your design file.</li>
+    <li>The design QA is visual: no accessibility, no functional testing.</li>
+    <li>No long-form marketing content. Writer handles interface copy.</li>
   </ul>
 </section>
 
 <section>
-  <h2>Ce qui vient</h2>
-  <p>Des idées, pas des promesses&nbsp;:</p>
+  <h2>What's next</h2>
+  <p>Ideas, not promises:</p>
   <ul class="plain">
-    <li><b>La synthèse d'un indicateur.</b> Sur demande, l'évolution d'un indicateur sur une période, lue dans l'outil d'analytics branché, sans export à déposer.</li>
-    <li><b>Partir d'un ticket.</b> Le sujet récupéré dans l'outil de gestion de la mission, et le livrable rendu au même endroit.</li>
+    <li><b>A metric summary.</b> On request, how a metric moved over a period, read from the connected analytics tool, with no export to drop in.</li>
+    <li><b>Starting from a ticket.</b> The topic pulled from the mission's project management tool, and the deliverable posted back in the same place.</li>
   </ul>
 </section>
 
 <section>
-  <h2>Pour qui</h2>
-  <p class="big">Pour un <strong>product designer en mission</strong> qui veut un vrai partenaire de travail&nbsp;: quelqu'un qui analyse l'existant, va chercher les références, challenge ses idées au lieu de les flatter, et lui rend des livrables sur lesquels il peut décider.</p>
+  <h2>Who it's for</h2>
+  <p class="big">For a <strong>product designer working on a client project</strong> who wants a real working partner: someone who analyses what exists, finds the references, challenges their ideas instead of flattering them, and hands over deliverables they can decide on.</p>
   <div class="encart">
-    <div class="encart__kicker">Démarrer</div>
-    <h3 class="encart__title">Une session, et l'accueil te guide</h3>
-    <p>Il te faut Claude Code avec accès à Opus, Node.js 22 ou plus récent, et Chrome. Tu peux installer Hydra de deux façons, pour la même méthode&nbsp;: <b>en plugin de Claude Code</b>, pour le seul dossier de ta mission (deux commandes, et une pour le mettre à jour), ou <b>en copie</b>, à télécharger en ZIP, sans git. Les prérequis et l'installation sont dans le <code>README.md</code>, sur <a href="https://github.com/MCQX7/hydra-agent">github.com/MCQX7/hydra-agent</a>.</p>
-    <p>En plugin, lance ensuite Claude Code dans le dossier de ta mission et écris «&nbsp;je viens d'installer Hydra&nbsp;». Il y pose ses règles et les modèles de ton contexte, et l'accueil reprend quand tu relances Claude Code dans ce dossier. En copie, ouvre la session dans le dossier d'Hydra et commence par «&nbsp;je viens de lancer Hydra&nbsp;». L'accueil remplit ton contexte avec toi, puis tu lances ton premier sujet.</p>
-    <p>Compte quelques minutes pour une question, et vingt à trente minutes pour un sujet complet jusqu'aux protos. Hydra est réglé pour Opus en effort élevé, et c'est voulu. Il marche aussi avec Sonnet ou un effort plus bas si ton abonnement ne permet pas mieux, mais ses livrables sont alors moins bons.</p>
+    <div class="encart__kicker">Get started</div>
+    <h3 class="encart__title">One session, and you're guided through</h3>
+    <p>You need Claude Code with access to Opus, Node.js 22 or later, and Chrome. You can install Hydra in two ways, and both run the same method: <b>as a Claude Code plugin</b>, for your mission folder only (two commands to install, one to update), or <b>as a copy</b>, downloaded as a ZIP, with no git needed. Requirements and installation are in the <code>README.md</code>, on <a href="https://github.com/MCQX7/hydra-agent">github.com/MCQX7/hydra-agent</a>.</p>
+    <p>With the plugin, start Claude Code in your mission folder and write “I just installed Hydra”. It sets up its rules and your context templates there, and the welcome session starts when you restart Claude Code in that folder. With the copy, open a session in Hydra's folder and start with “I just launched Hydra”. The welcome session fills in your context with you; then you start your first topic.</p>
+    <p>Allow a few minutes for a question, and twenty to thirty minutes for a full topic, through to the protos. Hydra is tuned for Opus at high effort, and that's deliberate. It also works with Sonnet or at a lower effort if your plan doesn't allow more, but its deliverables are weaker.</p>
   </div>
 </section>
 
-<div class="footer">Hydra · un corps, plusieurs têtes · <a href="https://github.com/MCQX7/hydra-agent" style="color:inherit">le dépôt sur GitHub</a> · licence MIT</div>
+<div class="footer">Hydra · one body, many heads · <a href="https://github.com/MCQX7/hydra-agent" style="color:inherit">the repository on GitHub</a> · MIT licence</div>
 
 </div>
 </body>
