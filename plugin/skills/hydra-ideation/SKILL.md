@@ -80,7 +80,11 @@ Ne jamais critiquer ni proposer sans avoir explicité :
   - **modèle mental** — changer la façon dont l'utilisateur se représente
     l'action ;
   - **niveau de guidage** — changer QUI décide (utilisateur libre ↔ système
-    qui recommande ou automatise).
+    qui recommande ou automatise) ;
+  - **point d'entrée** — changer D'OÙ l'on arrive et ce qu'on voit en premier
+    (le choix, la proposition déjà faite, le résultat, le contexte) ;
+  - **structure du parcours** — changer COMBIEN d'écrans et dans quel ordre
+    (tout sur un écran, pas à pas, une feuille par-dessus l'écran d'où l'on vient).
   Trois pistes = trois leviers différents. Ces leviers sont des AXES de
   divergence, jamais un stock de solutions : ne pas recycler une solution
   d'un sujet précédent au motif qu'elle illustre bien un levier.
@@ -105,6 +109,28 @@ Ne jamais critiquer ni proposer sans avoir explicité :
   abaisser la confiance, consigner la dette — jamais une référence de mémoire
   comme substitut.** Une piste sans référence réelle reste recevable, mais
   étiquetée « non référencée ».
+- **Chaque piste va au bout de son principe**, pas au milieu : une piste
+  « pas à pas » l'est entièrement, une piste « le système propose » ne se réduit
+  pas à une suggestion posée sur l'écran habituel. Le milieu est l'endroit où les
+  pistes se ressemblent.
+- **Test de divergence, avant de rendre les pistes** : décrire chacune en une
+  phrase sans adjectif visuel ni nom de composant — « la personne voit d'abord X,
+  fait Y, obtient Z ». Deux phrases qui se ressemblent sont une seule piste : en
+  refaire une, ou déclarer l'une variante de l'autre. Un découpage en étapes
+  différent ne fait une piste que s'il change ce que la personne voit d'abord ou ce
+  qu'elle fait ; le même parcours coupé autrement est une variante. Une différence
+  de couleur, de taille, de ton, d'ordre des mêmes blocs ou de forme d'un composant
+  est une variante, jamais une piste. La phrase s'écrit au rapport, sur la ligne de
+  la piste.
+- **Le régime de composition borne les leviers** (fiche, champ « Composition ») : en
+  régime reproduire, les pistes partagent le châssis de l'existant, donc les leviers
+  « point d'entrée » et « structure du parcours » ne s'y composent pas. Une piste
+  forte sur l'un d'eux se garde, mais s'étiquette « demande le régime explorer » et
+  la question part en tête du rapport (§ Questions de cadrage non résolues) — le
+  designer tranche. Le périmètre borne de même, mais seulement celui que la fiche tient
+  de la demande, du designer ou du contexte : un levier ne s'écarte jamais au nom d'une
+  limite que personne n'a posée (« hors périmètre », « pas l'objet du sujet ») — il se
+  compose, ou s'écarte sur le fond.
 - Inclure sciemment **une piste inconfortable** (radicale, contre-intuitive) —
   pour tester les limites du cadre, même si elle sera écartée.
 - **Ne pas hiérarchiser** à ce stade : diverger d'abord, juger ensuite.
@@ -186,7 +212,7 @@ contrôle de correspondance la lisent :
 *Intention reformulée : … · Origine : ce qui vient de l'input, l'apport de l'analyse.*
 
 ### P1 — [nom de la piste]
-[étiquette] · levier : … — ce que la piste fait pour la personne. *Pari :* … *Sacrifie :* … *Ancrage :* ce que la référence montre (B* ou R*).
+[étiquette] · levier : … — ce que la piste fait pour la personne. *En une phrase :* la personne voit d'abord …, fait …, obtient …. *Pari :* … *Sacrifie :* … *Ancrage :* ce que la référence montre (B* ou R*).
 
 ### Écartés
 [une ligne par levier : « formes A, B → A retenue, motif » ; puis les angles abandonnés en amont, groupés par motif]
@@ -194,7 +220,7 @@ contrôle de correspondance la lisent :
 ## Risques majeurs
 - **[nom de la piste]** (P1) — si [X], alors la personne [Y].
 ```
-*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Pistes explorées → Options explored · Intention reformulée → Restated intent · Origine → Origin · levier → lever · Pari → Bet · Sacrifie → Gives up · Ancrage → Grounding · Écartés → Discarded · « formes A, B → A retenue » donne « forms A, B → A kept » · Risques majeurs → Major risks · si [X], alors la personne [Y] → if [X], then the person [Y]. Une objection hors autorité s'écrit dans ces termes : capacité non établie → capability not established · décision produit → product decision · arbitrage produit → product call · non-négociable du contexte à trancher → context non-negotiable to settle.
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Pistes explorées → Options explored · Intention reformulée → Restated intent · Origine → Origin · levier → lever · En une phrase → In one sentence · la personne voit d'abord …, fait …, obtient … → the person first sees …, does …, gets … · demande le régime explorer → needs the explore regime · Pari → Bet · Sacrifie → Gives up · Ancrage → Grounding · Écartés → Discarded · « formes A, B → A retenue » donne « forms A, B → A kept » · Risques majeurs → Major risks · si [X], alors la personne [Y] → if [X], then the person [Y]. Une objection hors autorité s'écrit dans ces termes : capacité non établie → capability not established · décision produit → product decision · arbitrage produit → product call · non-négociable du contexte à trancher → context non-negotiable to settle.
 
 La Direction recommandée, le prochain pas (aux Actions) et les questions ouvertes
 prennent leur place dans le gabarit du rapport — une décision à prendre en « Questions

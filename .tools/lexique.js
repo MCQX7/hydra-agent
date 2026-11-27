@@ -23,6 +23,9 @@ const MOTS = {
   // Fiche de sujet (hydra-cortex)
   titreFiche:     M('hydra-cortex', 'Fiche de sujet', 'Topic sheet'),
   rendus:         M('hydra-cortex', 'Rendus', 'Renders'),
+  composition:    M('hydra-cortex', 'Composition', 'Composition'),
+  reproduire:     M('hydra-cortex', 'reproduire', 'reproduce'),
+  explorer:       M('hydra-cortex', 'explorer', 'explore'),
   nonNegociables: M('hydra-cortex', 'Non-négociables', 'Non-negotiables'),
 
   // Rapport (hydra-audit, complété par hydra-ideation)

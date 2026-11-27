@@ -122,6 +122,15 @@ sauté si le designer l'a déjà exprimé :
   plateforme principale de la mission et le consigner. Ils s'écrivent dans le champ
   « Rendus » de la fiche, que les outils lisent : un rendu non demandé n'est ni
   composé ni capturé.
+- **La composition des protos** : **reproduire** — retouche ou refonte d'un écran
+  existant, dont la structure est acquise : les pistes partagent le châssis de
+  l'existant — ou **explorer** — parcours ou composant nouveau, ou carte blanche sur
+  l'interface : chaque piste compose sa propre structure (maquette § Régime de
+  composition). Elle se déduit de la demande (« carte blanche », « nouveau parcours »,
+  « ose » → explorer ; un écran existant à retoucher → reproduire) ; doute : le
+  demander ; en run d'un trait, prendre la lecture la plus proche de la demande et le
+  consigner. Elle s'écrit dans le champ « Composition » de la fiche, que les outils
+  lisent.
 Les réponses forment la **fiche du sujet** (`topics/<nom>/01-fiche`) ; tout
 l'aval s'y réfère. Elle porte ce qui est TRANCHÉ ; un item resté sans réponse n'y
 entre pas comme question — il part en tête du rapport, avec son hypothèse (ci-dessous),
@@ -132,7 +141,7 @@ propre au client). Sa structure est ce gabarit, et lui seul :
 
 ```markdown
 # Fiche de sujet — [Sujet]
-**Date :** … · **Mode :** [d'un trait / séquencé] · **Rendus :** [mobile / desktop / mobile et desktop] · **Protos :** [dans la foulée / après relecture du brief] · Demande : [la demande du designer, en une phrase ; le dépôt complet dans `inputs/`]
+**Date :** … · **Mode :** [d'un trait / séquencé] · **Rendus :** [mobile / desktop / mobile et desktop] · **Protos :** [dans la foulée / après relecture du brief] · **Composition :** [reproduire / explorer] · Demande : [la demande du designer, en une phrase ; le dépôt complet dans `inputs/`]
 **Inputs :** [ce qui a été trouvé] · manque : [tout ce qui manque, en une ligne]
 
 ## Le problème
@@ -145,7 +154,7 @@ propre au client). Sa structure est ce gabarit, et lui seul :
 [le mix de dimensions de users.md touché, et ce que chacune exige]
 
 ## Périmètre et déjà-tranché
-[ce qui est dans le périmètre · ce qui est hors jeu · ce qui est déjà décidé, garde-fous du sujet compris]
+[ce qui est dans le périmètre · ce qui est hors jeu, d'après la demande, le designer ou le contexte · ce qui est déjà décidé, garde-fous du sujet compris]
 **Non-négociables :** [chacun nommé, avec le fichier et la section de `context/` qui le porte · ou « aucun déclaré — lu : » suivi des fichiers de `context/` lus]
 
 ## Données décisives à aller chercher
@@ -155,14 +164,16 @@ propre au client). Sa structure est ce gabarit, et lui seul :
 | Terme | Source | Statut |
 |---|---|---|
 ```
-*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Fiche de sujet → Topic sheet · Date → Date · Mode → Mode · d'un trait → in one go · séquencé → step by step · Rendus → Renders · mobile et desktop → mobile and desktop · Protos → Protos · dans la foulée → straight away · après relecture du brief → after the brief is reviewed · Demande → Request · Inputs → Inputs · manque → missing · Le problème → The problem · non fixé → not set · KPI décisionnel et seuil de succès → Decision KPI and success threshold · Cible → Target · Périmètre et déjà-tranché → Scope and already decided · Non-négociables → Non-negotiables · aucun déclaré — lu : → none declared — read: · Données décisives à aller chercher → Decisive data to fetch · Termes relevés → Terms noted · Terme → Term · Statut → Status · à définir → to define · défini → defined · écarté → discarded.
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Fiche de sujet → Topic sheet · Date → Date · Mode → Mode · d'un trait → in one go · séquencé → step by step · Rendus → Renders · mobile et desktop → mobile and desktop · Protos → Protos · dans la foulée → straight away · après relecture du brief → after the brief is reviewed · Composition → Composition · reproduire → reproduce · explorer → explore · Demande → Request · Inputs → Inputs · manque → missing · Le problème → The problem · non fixé → not set · KPI décisionnel et seuil de succès → Decision KPI and success threshold · Cible → Target · Périmètre et déjà-tranché → Scope and already decided · Non-négociables → Non-negotiables · aucun déclaré — lu : → none declared — read: · Données décisives à aller chercher → Decisive data to fetch · Termes relevés → Terms noted · Terme → Term · Statut → Status · à définir → to define · défini → defined · écarté → discarded.
 
 - **Run d'un trait** : toutes les phases sans pause. Les questions que les
   skills poseraient sont consignées en tête de rapport dans « Questions de
   cadrage non résolues », chacune avec l'hypothèse prise.
   **Limites d'autorité (même sans pause)** : certains arbitrages ne sont PAS à
-  Hydra — la définition du problème, le KPI et son seuil de succès, le périmètre,
-  la décision produit qu'une capacité non établie suppose (la piste, elle, se
+  Hydra — la définition du problème, le KPI et son seuil de succès, le périmètre (le
+  restreindre comme l'étendre : ce que la demande laisse libre reste libre, et une
+  limite que Hydra croit sage, comme une partie de l'existant à ne pas toucher,
+  n'entre pas dans la fiche), la décision produit qu'une capacité non établie suppose (la piste, elle, se
   propose étiquetée). Ils ne se prennent pas en hypothèse silencieuse : ils vont
   en « Questions de cadrage non résolues » comme demandes de décision.
   Test de sous-spécification : si résoudre autrement un item de cadrage
@@ -354,6 +365,13 @@ les deux modes). Deux garde-fous :
   reconstruire, et abaisser la confiance.
 - **Correction rétroactive** : identifier via les identifiants O/S/B ce qui
   dépend de la correction et re-dérouler uniquement les branches touchées.
+- **Retour du designer sur des protos livrés** (« refais une passe », « plus osé ») :
+  une recomposition rouvre la tête maquette (§ Retouche demandée après livraison) — et
+  l'idéation d'abord si le retour porte sur le principe des pistes, pas sur leur
+  rendu —, jamais une composition improvisée hors des têtes ; writer repasse sur les
+  textes changés selon sa règle habituelle (d'office d'un trait, proposé en séquencé). Le
+  message de fin ne dit une tête passée que si elle a tourné dans ce tour — writer, depuis
+  la dernière écriture des protos.
 - **Dépôt sans consigne** : ne jamais lancer un pipeline par défaut — une
   question courte avant toute initiative coûteuse.
 - **Données sensibles** (emails, identifiants personnels — selon le domaine :

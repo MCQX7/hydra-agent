@@ -37,14 +37,20 @@ compose contre le sujet. Registre absent du contexte : le demander, ou le décla
 inféré — jamais le poser en autorité. La constante n'est pas que ce registre soit bas,
 c'est que les écrans d'un même sujet PARTAGENT le leur : sans base commune ils ne se
 comparent plus, et les variantes se départagent sur des effets au lieu du levier.
-Deux barres, indépendantes du registre. **PRÉCISION** : espacement au pas exact du DS,
-hiérarchie juste, détails décidés — « bricolé » est un défaut de précision, pas de
-richesse ; un écran ne se sauve pas en ajoutant du décor. **AMBITION DE FORME** : le
-composant du levier est une PROPOSITION mise en concurrence, pas le premier widget
-conventionnel accepté parce qu'il « marche » — chercher la forme qui sort de ce qu'on
-voit ailleurs, par ARRANGEMENT des composants du DS (jamais un composant inventé pour faire
-original, cf. Ancrage ; DS insuffisant pour la forme → signaler le manque, le convenu
-devient l'honnête réponse).
+Deux barres, indépendantes du registre. **PRÉCISION** : l'exigence de rendu (§ Exigence de
+rendu) tenue sur chaque écran — « bricolé » est un défaut de précision, pas de richesse ; un
+écran ne se sauve pas en ajoutant du décor, il se raffine en retirant. La barre n'est pas
+l'écran existant : c'est le niveau d'exécution des apps en production du même type d'écran,
+que les références du sujet donnent à voir (§ Juger contre les références) — en régime
+reproduire, pour ce qui est composé (§ Socle / variable). **AMBITION DE FORME** :
+chaque piste est une PROPOSITION mise en concurrence, pas le premier widget conventionnel
+accepté parce qu'il « marche ». L'ambition se loge là où le régime du sujet l'autorise
+(§ Régime de composition) : dans le composant du levier quand on reproduit un existant, dans
+la structure, le nombre d'écrans et le point d'entrée quand on explore. Une convention de
+plateforme bien exécutée n'est pas un manque d'ambition ; une rupture mal exécutée n'est pas
+une divergence, c'est un brouillon. Jamais un composant inventé pour faire original
+(cf. Ancrage) ; DS insuffisant pour la forme → signaler le manque, le convenu devient
+l'honnête réponse.
 
 ## Ancrage (source de vérité)
 1. **Lire le design system du projet d'ABORD** (son index, puis ce qu'il décrit) :
@@ -57,7 +63,8 @@ devient l'honnête réponse).
    des blocs, imbrication, composants nommés, tailles) ET les **valeurs** (couleurs, espacements, typo, tokens).
    Une lecture de valeurs seule ne tient PAS lieu de lecture de structure : sinon le
    squelette retombe sur la capture, qui se regarde et n'expose ni arborescence ni token.
-   Reproduire au plus proche. Fallback capture seulement si l'outil de design est **constaté
+   Reproduire au plus proche — en régime reproduire ; en régime explorer, la lecture donne
+   les valeurs et ce que l'existant porte, pas la structure des pistes (§ Régime de composition). Fallback capture seulement si l'outil de design est **constaté
    indisponible** (non déclaré, non branché, ou en échec) (fait positif à vérifier, pas une permission par défaut) — confiance
    abaissée.
    **Écran sans maquette source** (un écran nouveau, pas une refonte) : il n'y a pas de
@@ -71,8 +78,11 @@ devient l'honnête réponse).
    permet pas d'arbitrer. Une représentation simple, juste assez pour que l'écran tienne
    dans son parcours ; composée avec les seules fondations (couleurs de rôle, typographie,
    espacements : la forme est libre, aucune valeur ne s'invente) ; dans les contraintes de
-   la mission. Étiquetée dans le proto « schéma — absent du design system », et listée aux
-   manques du design system du brief : le composant réel se dessine dans l'outil de design.
+   la mission ; au niveau du reste de l'écran (§ Exigence de rendu) — un schéma est une
+   forme simple, pas une forme bâclée. Il se signale HORS de l'écran : attribut
+   `data-hydra-schema` sur son conteneur, et ligne aux manques du design system du brief ;
+   jamais une étiquette dessinée dans la composition, qui ferait partie de ce qu'on juge.
+   Le composant réel se dessine dans l'outil de design.
 3. **Consommer** les pistes d'ideation, leurs références, et la fiche du sujet (KPI,
    cible, non-négociables).
 
@@ -88,6 +98,51 @@ sessions ouvertes. Un lien sans nœud se complète en le demandant, pas en suppo
 - **Placeholder ≠ décision** : le remplissage de l'existant (libellés répétés, valeurs
   vides, données factices) est indistinguable du décidé. Le reproduire COMME placeholder,
   ou le remplir en le DÉCLARANT — jamais compléter avec du plausible.
+
+## Régime de composition — reproduire ou explorer
+La fiche du sujet fixe le régime (champ « Composition », cortex § Cadrage express). Les deux
+régimes tiennent la même exigence de rendu et se jugent contre les mêmes références ; ils
+diffèrent par ce qui est fixe d'une piste à l'autre.
+- **Reproduire** — retouche ou refonte d'un écran existant, dont la structure est acquise.
+  Le châssis reproduit l'existant observé et il est commun à toutes les pistes ; seul le
+  composant du levier varie (§ Socle / variable). Rien de ce que dit cette section ne change
+  ce régime.
+- **Explorer** — parcours ou composant nouveau, ou carte blanche sur l'interface. Seuls sont
+  fixes ce que la fiche et la mission imposent (chrome de la plateforme, mentions
+  obligatoires, fondations du design system). Chaque piste compose SA structure : l'ordre des
+  blocs, le nombre d'écrans, le point d'entrée du parcours suivent son principe — trois
+  pistes qui gardent la structure de l'existant ne sont qu'une piste en trois habillages. L'existant
+  se lit toujours (§ Ancrage) et son socle observé se relève au brief : c'est ce qui dit ce que
+  chaque piste garde, déplace ou retire, pas un plan à suivre. Le kit en code reste la règle
+  pour ce qui est fixe — fondations, chrome, mentions obligatoires, composants du design
+  system tels quels —, et chaque piste assemble les siennes. Ce qui porte la piste — son point
+  focal, l'objet qu'on manipule, ce qu'elle compose de neuf — s'écrit dans la piste, pas en
+  pièce partagée par défaut : une pièce commune donne à toutes les pistes la même forme au
+  même endroit sans qu'on l'ait choisi. Varier ne veut pas dire inventer : placement,
+  alignement, échelle, traitement suffisent souvent. Quand la même forme se justifie — la
+  convention du type d'écran, rien de mieux pour ce principe —, elle se garde et le brief le
+  dit en une ligne.
+- **Régime absent de la fiche** : reproduire si le sujet part d'un écran existant à retoucher,
+  explorer sinon — et le déclarer au brief en une ligne, jamais le supposer en silence. Une
+  demande du designer qui dit « carte blanche », « nouveau parcours », « ose » vaut explorer.
+
+## Juger contre les références
+Les captures d'apps en production que la recherche a rangées dans `refs/` (le benchmark du
+sujet) sont la barre d'exécution. Elles **jugent** le rendu ; elles ne fournissent **jamais**
+la forme — emprunter la forme d'une référence remplace « la première forme qui vient » par
+« la première forme trouvée chez quelqu'un d'autre ».
+- **Avant de composer** : rouvrir les références du même type d'écran que celui qu'on compose
+  (saisie, liste, confirmation, détail…) et écrire au brief, § Niveau visé, ce qui fait leur
+  niveau — des propriétés, pas des formes : échelle et graisses de la typographie, rapport des
+  espacements, densité, place et poids de l'action principale, dose de couleur, traitement des
+  surfaces. Aucune référence du type d'écran dans `refs/` : appeler la recherche en appui pour
+  en trouver, avant de composer — jamais composer sans barre.
+- **Après composition** : poser chaque écran à côté de ces références, à la même largeur
+  (planche : `node .tools/proto-planche.js <sujet> <proto> <référence>…`), et se demander
+  laquelle est la sienne. Ce qui la trahit — pas son contenu, pas son parti pris : son
+  exécution — est la liste des défauts à corriger.
+- **Garde anti-copie** : si l'on peut nommer l'app de référence en regardant la piste, ou si
+  la piste ne pouvait pas exister sans elle, c'est une copie — elle se recompose.
 
 ## Brief d'exploration (`03-brief`) — écrit AVANT de composer
 Ce brief s'écrit **avant** les protos et les gouverne ; on compose chaque piste depuis
@@ -145,6 +200,9 @@ Sa structure est ce gabarit, et lui seul :
 [quels fichiers du design system valent pour quelle zone de l'écran — nommés, jamais recopiés]
 **Manques du design system :** [la seule place d'une valeur que le design system n'a pas]
 
+## Niveau visé
+[les références du même type d'écran, liées depuis `refs/`, et ce qui fait leur niveau — des propriétés, jamais des formes (§ Juger contre les références)]
+
 ## Source du chrome
 | Élément | Statut | Fait |
 |---|---|---|
@@ -158,6 +216,7 @@ Sa structure est ce gabarit, et lui seul :
 
 ## Pistes à composer
 ### P1 — [nom de la piste]
+Structure : [régime explorer — ce que la piste garde, déplace ou retire de l'existant, son nombre d'écrans, son point d'entrée ; en régime reproduire : « châssis commun »]
 Assemblage : [le levier déterminant, et ce qui le rend utilisable]
 *Prompt de composition :* « … »
 
@@ -171,7 +230,7 @@ Assemblage : [le levier déterminant, et ce qui le rend utilisable]
 ## Écarts relevés à la composition
 [ce qui s'écarte de l'observé, assumé ou découvert, daté]
 ```
-*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Brief d'exploration → Exploration brief · Écrans → Screens · composés → composed · non composés — en attente de la relecture du designer → not composed — awaiting the designer's review · Écrit par → Written by · Repères → Key · Langage visuel → Visual language · Manques du design system → Design system gaps · Source du chrome → Chrome source · Élément → Element · Statut → Status · Fait → Evidence · lié → linked · écarté → discarded · refusé → refused · Socle observé → Observed base · Écran → Screen · Bloc → Block · Identifiant → Identifier · aucun écran existant → no existing screen · Parcours et étapes → Journey and steps · Pistes à composer → Options to compose · Assemblage → Assembly · Prompt de composition → Composition prompt · Latitude créative → Creative latitude · re-forme P… → reshapes P… · transversale → cross-cutting · États à couvrir → States to cover · Écarts relevés à la composition → Gaps found while composing · schéma — absent du design system → sketch — missing from the design system. Restent tels quels : Date, Protos, Capture, et les identifiants. Les textes des protos, eux, suivent la langue du produit.
+*En anglais (CLAUDE.md § Sorties, Langue), ce gabarit prend ces formes et aucune autre — les contrôles les lisent :* Brief d'exploration → Exploration brief · Écrans → Screens · composés → composed · non composés — en attente de la relecture du designer → not composed — awaiting the designer's review · Écrit par → Written by · Repères → Key · Langage visuel → Visual language · Manques du design system → Design system gaps · Niveau visé → Target level · Source du chrome → Chrome source · Élément → Element · Statut → Status · Fait → Evidence · lié → linked · écarté → discarded · refusé → refused · Socle observé → Observed base · Écran → Screen · Bloc → Block · Identifiant → Identifier · aucun écran existant → no existing screen · Parcours et étapes → Journey and steps · Pistes à composer → Options to compose · Structure → Structure · châssis commun → shared frame · Assemblage → Assembly · Prompt de composition → Composition prompt · Latitude créative → Creative latitude · re-forme P… → reshapes P… · transversale → cross-cutting · États à couvrir → States to cover · Écarts relevés à la composition → Gaps found while composing. Restent tels quels : Date, Protos, Capture, et les identifiants. Les textes des protos, eux, suivent la langue du produit.
 
 ### Source du chrome — un tableau, rempli AVANT la première ligne de proto
 Une ligne par élément du chrome non reconstructible en CSS (logo, badges,
@@ -230,6 +289,12 @@ l'écran observé, ce que la liste entière est là pour empêcher.
 — | — |`. Un fait déclaré, pas une dispense.
 
 ## Socle / variable
+*Le châssis commun décrit ici est celui du régime reproduire. En régime explorer, les
+étapes 1 à 3 valent pour les pièces partagées (chrome, fondations, composants), chaque piste
+assemble sa propre structure (§ Régime de composition), et « Un écran, ou un parcours ? » se
+tranche piste par piste : le nombre d'écrans d'une piste suit son principe. Le reste — un
+proto par piste, aucun motif ne dispense de composer, le levier visible dans l'état montré —
+vaut dans les deux régimes.*
 Composer le CHÂSSIS de la page UNE fois depuis l'ancrage (chrome, en-têtes, blocs
 structurants, mentions obligatoires). **Au moment de composer le châssis**, RELIRE la
 structure du nœud (§ Ancrage) : une lecture faite pendant l'audit ne vaut pas pour la
@@ -254,7 +319,11 @@ production :**
 3. **Boucler sur les captures** : capturer chaque proto en pleine hauteur, dans chaque
    rendu ; les regarder toutes ; corriger d'un lot, dans le kit quand le défaut est du
    socle — la correction vaut alors pour toutes les pistes —, régénérer, recapturer,
-   jusqu'à ce qu'aucune capture ne montre d'écart à l'écran observé.
+   jusqu'à ce qu'aucune capture ne montre d'écart à l'écran observé. Le châssis
+   s'arrête à zéro écart : la fidélité prime. L'exigence de rendu (§ Exigence de rendu)
+   porte sur ce que le proto compose — le composant du levier ; un écart du châssis
+   reproduit à cette exigence se note au brief (Écarts relevés à la composition), il ne se
+   corrige pas.
 Écran nouveau, sans écran existant : le kit se construit de même, à partir des
 composants des librairies, lus en code dans l'outil de design.
 Puis ne faire varier que le COMPOSANT du levier
@@ -300,17 +369,54 @@ rapport dit lesquels, donc le brief **cite les cases qu'il a lues**. **Une étap
 fichier**, donc chacune capturée et inspectée. Se compose toute étape dont l'écran observé
 SORTIRAIT DIFFÉRENT de la piste — ce que le levier y fait, ou ce qu'il y entraîne : « le
 levier s'exerce ailleurs » n'écarte pas une étape où sa conséquence se lit. Une étape écartée
-n'est pas une absence : la galerie déroule chaque piste sur tous les écrans du socle observé
+n'est pas une absence : en régime reproduire, la galerie déroule chaque piste sur tous les écrans du socle observé
 et montre, à la place de l'étape écartée, sa capture marquée non recomposée — le lecteur
 voit si l'écartement tient. Le brief dit en une ligne ce que chaque étape composée change,
 et pourquoi une étape écartée ressortirait identique.
 
-## Craft-floor (ce qui change une décision de composition)
-La précision (principe central) se décline en :
-- **Hiérarchie** : un seul point d'entrée visuel par écran ; elle se lit avant qu'on lise.
-- **Rythme d'espacement** : au pas exact du DS, constant entre blocs de même niveau.
-- **Détails décidés** : le détail d'un total, un libellé d'état présent plutôt qu'un
-  placeholder — décider, ne pas approximer.
+## Exigence de rendu (ce qui change une décision de composition)
+La précision (principe central) se juge sur l'image, écran par écran. Les valeurs viennent
+du design system ; reste à les COMBINER pour qu'un écran ait le niveau d'une app en
+production. **Le traitement d'un élément découle de son importance** — dans l'écran et dans
+le parcours : on décide d'abord ce qui compte, à chaque écran et d'un écran à l'autre, puis
+sa taille, sa graisse, sa couleur, l'espace qui l'entoure, sa place et sa surface en
+découlent, ensemble. Les points qui suivent sont des façons de vérifier ce principe sur
+l'image, pas une liste à dérouler : un écran les tient tous sans qu'on les ait appliqués un
+à un. Aucun nombre ici n'est une valeur à copier.
+- **Typographie** : une échelle courte, un rôle par taille. Le contraste se fait d'abord par
+  la graisse et par le niveau de gris du texte, ensuite par la taille. **Grand n'est pas
+  lourd** : l'élément qui domine monte, les autres descendent — jamais toute l'échelle en
+  gras. Interligne serré et approche légèrement resserrée sur les titres, plus
+  ouverts sur le texte courant ; chiffres tabulaires là où des montants se comparent.
+- **Rythme** : l'espace entre deux groupes est nettement plus grand que l'espace à
+  l'intérieur d'un groupe ; c'est ce rapport qui fait lire la structure, sans cadre. Un seul
+  espacement partout est un défaut au même titre qu'un espacement au hasard. Une gouttière
+  latérale unique, des bords gauches alignés, pas de boîte dans une boîte.
+- **Hiérarchie** : un point focal et une seule action principale par écran ; elle se lit
+  écran réduit, avant qu'on lise. On fait ressortir en affaiblissant le reste, pas en
+  ajoutant un badge, une pastille, une couleur ou une ombre. L'action principale pèse assez
+  pour clore la hiérarchie qu'elle termine.
+- **Composition verticale** : la séquence de la plateforme du rendu (sur mobile : barre d'état, navigation,
+  contenu, action, zone sûre). Le contenu se compose dans la hauteur de l'écran : un écran
+  court ne finit pas sur un vide entre le contenu et l'action — on regroupe, on centre ou on
+  ancre, on ne laisse pas tomber.
+- **Densité** : celle d'une app livrée du même type d'écran (§ Juger contre les références) —
+  ni trois blocs géants sur un écran vide, ni un entassement.
+- **Couleur et surfaces** : l'accent va à l'action principale et à l'état actif, rarement
+  ailleurs ; les neutres font le reste. Les surfaces se distinguent par la luminosité ; une
+  ombre est réservée à ce qui flotte ; jamais bordure et ombre ensemble.
+- **États** : un état (saisi, erreur, limite, vide, confirmé) change une partie de l'écran,
+  il ne le recompose pas — l'objet qui porte la piste garde sa forme d'un état à l'autre.
+- **Détails** : peu de rayons, hiérarchisés (le rayon d'un élément imbriqué est plus petit
+  que celui de son conteneur) ; un seul jeu d'icônes, une taille par rôle ; les assets à
+  leur taille, jamais étirés ; un texte factice garde l'apparence d'un vrai (le « 0 » et le
+  « € » d'un montant vide ont le même traitement) ; rien de la méthode n'est dessiné dans
+  l'écran. Le test : un développeur pourrait-il intégrer l'écran sans poser de question ?
+- **Les marques du généré** — à chercher sur chaque capture ; chacune est un défaut :
+  espacement identique partout ; tout en gras ou tout en grand ; plusieurs boutons pleins ;
+  chaque groupe dans sa carte ; badges et pastilles sur chaque élément ; accent sur les
+  titres et les icônes ; ombre sous chaque carte ; tout centré ; page qui finit sur du vide ;
+  rayons égaux partout ou très grands ; texte de remplissage.
 - **Motion** : sobre et utile, jamais décorative.
 
 Les non-négociables définis par le contexte projet se tiennent à la composition, pas
@@ -374,20 +480,35 @@ une violation y devient un écart daté, et rien ne se déclare quand ils le son
   mort se regarde, il ne se juge pas — et un levier d'interaction ne s'éprouve pas sur une
   image. Ce que les captures montrent reste l'état de CHARGEMENT : ce qu'un clic révèle se
   vérifie à l'œil, dans la galerie, par le designer (cf. portée des captures, plus bas).
-- **QA en passes bornées** : composer complet, inspecter une fois les rendus de la fiche
-  ensemble, corriger en un lot, **re-capturer et re-regarder les seuls écrans du lot**,
+- **QA en passes bornées** : composer complet, inspecter une fois TOUS les écrans de
+  toutes les pistes, dans les rendus de la fiche, corriger en un lot, **re-capturer et re-regarder les seuls écrans du lot**,
   s'arrêter — pas de polissage sans fin. Ce qu'on inspecte, ce sont les CAPTURES écrites
   par `.tools/proto-shot.js` dans `explorations/.shots/` — l'IMAGE, jamais le source : les
   pièges d'un proto écrit à la main (sélecteurs qui s'annulent, décoration hors flux calée
   en dur qui mord sur le voisin) se voient là et pas à la relecture du CSS. Y chercher
-  d'abord ce qui déborde, ce qui se recouvre, ce qui diffère entre les deux tailles.
+  les pannes — ce qui déborde, ce qui se recouvre, ce qui diffère entre les deux tailles —
+  ET le niveau : l'exigence de rendu, écran par écran, et la planche contre les références
+  (§ Juger contre les références). Chaque capture se lit deux fois : **à sa taille de capture**,
+  une par une (rythme, poids, alignements, détails — une vignette ou une planche réduite ne
+  voit ni un espacement ni une graisse), puis **en vue d'ensemble**, dans la planche ou la
+  galerie (point focal, masses, taches d'accent, niveau égal entre les pistes ; en régime
+  explorer, des pistes dont le point focal a la même forme au même endroit se ressemblent à
+  l'œil, quoi que dise leur texte : la forme se varie, ou le brief dit pourquoi elle se garde). Toutes les pistes sortent au même niveau
+  d'exécution : une piste moins finie qu'une autre perd la comparaison pour une mauvaise
+  raison.
 - **Les deux regards ne posent pas la même question** — c'est ce qui borne la boucle, pas
-  la volonté de s'arrêter. Le premier est OUVERT : qu'est-ce qui cloche, sans liste. Le
+  la volonté de s'arrêter. Le premier est OUVERT : qu'est-ce qui cloche, sans liste
+  arrêtée d'avance — mais il REND une liste : chaque défaut nommé et localisé (écran,
+  élément, ce qui ne tient pas) ; « rien à signaler » sans liste n'est pas un regard. Le
   second est FERMÉ : une ligne par correction du lot, liste arrêtée AVANT de regarder, et
   pour chacune une seule question — **l'EXIGENCE tient-elle**, jamais « le correctif est-il
   appliqué ». Un correctif peut être en place et l'exigence rester violée : c'est le mode
   de panne observé, pas un cas d'école. Un défaut découvert au second regard et absent du
-  lot ne rouvre PAS de passe — il part au brief en écart daté. Une panne d'OUTIL — une
+  lot ne rouvre PAS de passe — il part au brief en écart daté. Seule exception, une PANNE
+  visible — ce qui se recouvre, déborde ou se coupe, et qu'un écran livré ne peut pas
+  porter : elle se corrige sur place, puis seuls ses écrans se re-capturent et se
+  re-regardent, une fois ; si elle tient encore, elle part au brief et le message de fin
+  la dit en tête de ce qui reste. Une panne d'OUTIL — une
   ligne d'état de la galerie qui dit faux, une capture qui ne sort pas — n'est pas un
   écart de composition : elle se dit au message de fin de tour, jamais dans le brief.
 - **Portée des captures** : le jeu de vues a une portée que l'outil documente, et elle a
@@ -405,16 +526,41 @@ une violation y devient un écart daté, et rien ne se déclare quand ils le son
   qu'il faut y chercher —, jamais en question de cadrage, qui porte des décisions à
   prendre et non des vérifications à faire.
 
+## Retouche demandée après livraison
+Une retouche que le designer demande après avoir vu les protos (« refais une passe »,
+« plus osé », « plus gros ») est une composition : elle rouvre cette tête et toute sa
+méthode — brief corrigé et noté, exigence de rendu, références, deux regards —, jamais une
+recomposition improvisée dans la conversation.
+Une demande d'intensité nomme un EFFET, pas un paramètre à appliquer à tout. Reformuler en
+une ligne ce que le designer voit et l'effet qu'il attend ; dire la lecture retenue avant
+d'agir — « plus gros » : creuser l'écart entre l'élément qui domine et le reste, pas grossir
+toute l'échelle ; « plus immersif » : le contenu devient le fond, le chrome se retire ;
+« plus minimaliste » : retirer ce qui ne sert pas la décision de l'écran, pas tout griser ;
+« plus osé » : en régime explorer, la structure et le principe, pas seulement l'habillage ;
+en régime reproduire, le seul composant du levier — si le designer veut toucher au châssis,
+c'est un changement de régime : le lui dire, et le reporter dans la fiche ;
+l'appliquer d'un cran, sur la piste visée — une demande sur une piste ne se propage pas aux
+autres sans le dire ; montrer avant et après à la même taille : copier la capture d'avant
+sous `explorations/.shots/avant-<proto>-m.png` avant de recomposer (un nom qui ne commence
+pas par celui du proto, que les captures fraîches n'écrasent pas), puis la planche les pose
+côte à côte. Si la lecture était fausse,
+c'est la lecture qui change, pas le cran qui s'amplifie.
+
 ## Frontières
 - **research** : elle trouve le QUOI (références, principes sourcés) ; cette
-  tête pose le COMMENT dans CE DS. La maquette ne stocke aucune « bonne pratique » et
-  ne porte AUCUNE méthode de recherche — ni requête, ni source : elle APPELLE research
-  en appui et compose ce qui revient. Research absente : le déclarer,
+  tête pose le COMMENT dans CE DS. La maquette ne porte AUCUNE méthode de recherche —
+  ni requête, ni source : elle APPELLE research en appui et compose ce qui revient ; son
+  exigence de rendu est du métier de composition, pas une bonne pratique de recherche, et
+  les références que research a rangées jugent ses écrans sans leur donner leur forme. Research absente : le déclarer,
   abaisser la confiance, consigner la dette — jamais improviser un substitut.
 - **ideation** : fournit les pistes (levier, pari, ce qu'elles sacrifient) en entrée.
 - **writer** : la maquette écrit les textes de ses protos ; writer — par défaut en
   run d'un trait, proposé au designer en fin de run séquencé — en vérifie la conformité au ton et signale chaque écart ; la maquette
-  réécrit, et writer repasse, jusqu'à ce qu'il n'ait plus rien à signaler.
+  réécrit, et writer repasse, jusqu'à ce qu'il n'ait plus rien à signaler. Une
+  recomposition (§ Retouche demandée après livraison) change des textes : writer y repasse
+  selon la même règle — d'office en run d'un trait, proposé au designer en séquencé. Un
+  compte rendu ne dit les textes relus que si writer a tourné depuis la dernière écriture
+  des protos.
 - **audit / ideation** : produisent le rapport (diagnostic + pistes) que cette
   tête consomme ; le brief d'exploration est SON livrable (ci-dessus).
 - **recette** : le build intégré est à elle ; cette tête livre des protos, pas une liste de corrections.

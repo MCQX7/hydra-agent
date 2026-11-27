@@ -1,5 +1,47 @@
 # Ce qui change d'une version à l'autre
 
+## 2.2 — 27 novembre 2026
+
+### Nouveau
+
+- **Reproduire ou explorer.** Au cadrage, la fiche note comment composer les protos
+  (champ « Composition »), d'après ta demande. **Reproduire** : tu retouches un écran
+  existant ; les pistes gardent sa structure, seul ce qui change varie. **Explorer** : un
+  parcours ou un composant nouveau, ou carte blanche ; chaque piste compose sa propre
+  structure, et ce qui porte une piste ne se partage plus par défaut avec les autres. Une
+  maquette fournie sert de base ; sans maquette, c'est surtout de l'exploration.
+- **Le niveau d'une app en production.** Chaque écran se juge à côté des références du
+  benchmark, que la nouvelle planche (`.tools/proto-planche.js`) pose à côté du proto. Le
+  traitement de chaque élément (taille, graisse, couleur, espace, place) suit son
+  importance dans l'écran et le parcours.
+- **Des pistes qui divergent sur le principe.** Deux nouveaux leviers (le point d'entrée,
+  la structure du parcours) ; chaque piste va au bout de son principe ; un test en une
+  phrase (« la personne voit d'abord…, fait…, obtient… ») écarte deux pistes qui se
+  ressemblent.
+
+### Changé
+
+- **Le périmètre reste le tien.** Hydra n'ajoute plus à la fiche une limite que ni ta
+  demande ni ton contexte ne posent, et n'écarte plus une piste au nom d'une telle limite.
+- **Un défaut visible se corrige avant de livrer** : ce qui se recouvre, déborde ou se
+  coupe, même découvert au dernier regard.
+
+### Corrigé
+
+- **Un appel d'API dont le corps contenait un `$` entre apostrophes** était refusé à tort
+  par la garde des clés. La garde lit maintenant la commande comme le shell.
+
+### Passer de la 2.1.1 à la 2.2
+
+Ton contexte et tes sujets ne changent pas. Un sujet commencé avant la 2.2 n'a pas le champ
+« Composition » : il se compose comme avant, en reproduisant l'existant.
+
+**En plugin** : `claude plugin update hydra@hydra-agent --scope local`, depuis le dossier
+de ta mission, puis relance la session quand Hydra te le demande.
+
+**En copie** : remplace `README.md`, `README.fr.md`, `CHANGELOG.md`, les dossiers
+`.claude/skills/hydra-*`, `.tools/` et `docs/`.
+
 ## 2.1.1 — 12 octobre 2026
 
 ### Corrigé

@@ -125,6 +125,7 @@
     </div>
   </div>
   <p><strong>Protos straight away, or after your review.</strong> When framing, Cortex also asks when to build the protos, the most expensive part. Either straight away, or after you've read the topic sheet, the report and the brief. In the second case, Hydra stops at the brief, and you ask for the protos if the options are worth it.</p>
+  <p><strong>Reproduce or explore.</strong> When framing, Cortex also records how to build the protos, based on your request. <b>Reproduce</b>: you're reworking an existing screen. The options keep its structure, and only what changes varies. <b>Explore</b>: a new flow or component, or a free hand. Each option then builds its own structure, and no two options share the same form without a reason. A design file you provide is the baseline: Hydra rebuilds it faithfully and builds on it. Without one, it's mostly exploration. How far to explore is yours to say in the request; whatever it leaves open stays open, and Hydra doesn't set itself limits you didn't set.</p>
   <p><strong>Hydra can push back on your request, but it still answers it.</strong> If it thinks the problem is badly framed, it tells you, and shows its own reading alongside, clearly labelled. But its options and its recommendation serve your goal, not its own. A constraint from your mission (a legal requirement, a brand principle) changes how the goal is reached, never the goal itself. Some decisions are never Hydra's: defining the problem, the metric and its threshold, the scope. They come back to you, even when it runs in one go.</p>
 </section>
 
@@ -142,7 +143,7 @@
     <div class="cell"><div class="name">Audit</div><div class="desc"><b>Understanding what you have.</b> Analyses your screen and your journey, live or in a design file, cross-checks them with your documents and your data, and keeps facts apart from hypotheses. To see what others do, it calls Research.</div></div>
     <div class="cell"><div class="name">Research</div><div class="desc"><b>What others do, and what is proven.</b> Screens from real products, searched by what the user is trying to do and not only within your sector. Live visits to products, public design systems, and studies, articles and guides on a specific question, from which it draws what matters for your topic. Every reference is sourced, dated and clickable. The other heads call it when they need references.</div></div>
     <div class="cell"><div class="name">Ideation</div><div class="desc"><b>Open up, then decide.</b> Options that are genuinely different, at least two ways to design each lever, an unsparing critique, and a choice based on stated criteria.</div></div>
-    <div class="cell"><div class="name">Maquette</div><div class="desc"><b>Building the screens.</b> One clickable prototype per option, using the components from your libraries, in your platform's renders. Anything your design system lacks is drawn as a sketch, and labelled as such.</div></div>
+    <div class="cell"><div class="name">Maquette</div><div class="desc"><b>Building the screens.</b> One clickable prototype per option, using the components from your libraries, in your platform's renders. Anything your design system lacks is drawn as a sketch, and labelled as such. Every screen is judged next to the benchmark references, at the level of an app in production: each element's size, weight, colour and place follow its importance in the screen and the flow.</div></div>
     <div class="cell"><div class="name">Writer</div><div class="desc"><b>Interface copy.</b> Checks the copy in the protos against your tone of voice guidelines. Without guidelines, it goes by the tone it finds in your product.</div></div>
     <div class="cell"><div class="name">Recette</div><div class="desc"><b>Design against build.</b> Measures both sides, on desktop and mobile, puts a number on every gap, and hands the developer a list of fixes.</div></div>
     <div class="cell"><div class="name">Accueil</div><div class="desc"><b>The first session.</b> Explains Hydra, fills in the context with you from your sources, and starts your first topic.</div></div>
@@ -158,7 +159,7 @@
         <li><b>01 · The topic sheet</b>: the framing, with the problem, the metric and its threshold, who is affected, the scope, the renders and what's decided</li>
         <li><b>02 · The report</b>: findings, hypotheses, references, options with their critique, and a recommendation. Or <b>the research deliverable</b> (<code>02-research</code>), when research is the topic</li>
         <li><b>03 · The brief</b>: for each option, what the screen must show, and a composition prompt anyone can reuse in their own tool</li>
-        <li><b>The gallery</b>: one proto per option, on the same starting screen. Only the lever changes, so you can compare them side by side, on mobile and desktop if your platform needs both</li>
+        <li><b>The gallery</b>: one proto per option, on mobile and desktop if your platform needs both. On a screen being reworked, they all start from the same screen and only the lever changes, so you can compare them side by side; when exploring, each builds its own</li>
       </ul>
     </div>
     <div class="card">
@@ -218,7 +219,7 @@
     <div class="card">
       <h3>What its tools check</h3>
       <ul>
-        <li>Every proto is captured, and Hydra must <b>look</b> at its screenshots before handing anything over</li>
+        <li>Every proto is captured, and Hydra must <b>look</b> at its screenshots before handing anything over, next to the benchmark references to judge the level. Anything that overlaps, overflows or gets cut off is fixed before delivery</li>
         <li>The gallery checks that every option in the report has its proto, and clicks the protos' buttons one by one. A button that does nothing is flagged</li>
         <li>Deliverables are checked against their template, in English and in French. An undefined mission acronym, or a reference reduced to an ID, is flagged</li>
         <li>A design QA's totals match its table</li>

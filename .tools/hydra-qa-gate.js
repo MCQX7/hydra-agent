@@ -651,6 +651,54 @@ function direEtSortir(sortie, sid){
   process.exit(0);
 }
 
+// ---- writer : un message qui le cite, après des textes de protos non relus -----------
+// Le dernier message texte de la tête cite writer, et un texte de proto (explorations/.src/)
+// a été écrit après le dernier appel de hydra-writer — ou sans aucun appel. Le contrôle que
+// writer devait faire n'a pas eu lieu. Lit le transcript seul ; illisible ⇒ rien (invariant 2).
+const ECRIT_PROTO = /topics\/[^/]+\/explorations\/\.src\/[^/]+\.html?$/i;
+const ECRIT_BASH = /explorations\/\.src\//, VERBE_ECRIRE = /(>|\btee\b|\bcp\b|\bmv\b|\bsed\s+-i|writeFile)/;
+const WRITER_MOTIF = "Ton message cite writer, mais writer n'a pas tourné depuis ta dernière écriture "
+  + "de protos (hydra-maquette § Frontières) : lance-le sur les textes changés, ou retire la mention.";
+function controleWriter(tp){
+  let lignes; try { lignes = fs.readFileSync(tp, 'utf8').split('\n'); } catch(e){ return null; }
+  let texte = null, dernierWriter = -1, n = 0;
+  const ecritures = [];                                     // { n, cle } : écritures de protos, dans l'ordre
+  for(const l of lignes){
+    let o; try { o = JSON.parse(l); } catch(e){ continue; }
+    const m = o && o.message, c = m && m.content;
+    if(!Array.isArray(c)) continue;
+    const auAssistant = (m.role || o.type) === 'assistant';
+    const t = c.filter(b => b && b.type === 'text' && typeof b.text === 'string').map(b => b.text).join('\n');
+    if(auAssistant && t) texte = t;
+    for(const b of c){
+      if(!b || b.type !== 'tool_use') continue;
+      const inp = b.input || {};
+      n++;
+      if(['Write', 'Edit', 'MultiEdit'].includes(b.name) && ECRIT_PROTO.test(String(inp.file_path || '').replace(/\\/g, '/')))
+        ecritures.push({ n, cle: String(inp.file_path) });
+      else if(b.name === 'Bash' && ECRIT_BASH.test(String(inp.command || '')) && VERBE_ECRIRE.test(String(inp.command)))
+        ecritures.push({ n, cle: 'bash:' + String(inp.command).slice(0, 200) });
+      else if(b.name === 'Skill' && /(^|[:/])hydra-writer$/.test(String(inp.skill || '')))
+        dernierWriter = n;
+    }
+  }
+  if(!texte || !/writer/i.test(texte)) return null;
+  const apres = ecritures.filter(e => e.n > dernierWriter);
+  if(!apres.length) return null;
+  return { key: 'w:' + [...new Set(apres.map(e => e.cle))].sort().join('|') };
+}
+// Un blocage par état et par session, par le même tampon que les autres (écrit puis relu).
+function marquerWriter(cle, sid){
+  const f = path.join(require('os').tmpdir(), 'hydra-garde-writer.json');
+  const st = readStamp(f);
+  const vus = Array.isArray(st[sid]) ? st[sid] : [];
+  if(vus.includes(cle)) return false;
+  st[sid] = [...vus, cle];
+  if(writeStamp(f, st, [cle])) return true;
+  panne('tampon non persisté (hydra-garde-writer.json) — blocage writer abandonné');
+  return false;
+}
+
 if(require.main === module){
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', d => raw += d);
@@ -763,7 +811,9 @@ process.stdin.on('end', () => {
   // des deux faits bloquants et que l'agent lit seule.
   if(lus){ log(lus.msg); lus.retenir(); }
   const aDire = lus ? { systemMessage: lus.msg } : {};
-  if((!toLook.length && !recette.length) || payload.stop_hook_active
+  let wr = null; try { wr = controleWriter(payload.transcript_path); } catch(e){ wr = null; }
+  const writerBloque = !!wr && !payload.stop_hook_active && Date.now() - t0 <= BUDGET_MS && marquerWriter(wr.key, sid);
+  if((!toLook.length && !recette.length && !writerBloque) || payload.stop_hook_active
      || Date.now() - t0 > BUDGET_MS){
     direEtSortir(aDire, sid);
   }
@@ -776,14 +826,12 @@ process.stdin.on('end', () => {
     + 'affirmation. Corrige la ligne, pas le tableau — et ne recompte pas à la main.');
   if(toLook.length) motifs.push(
     'Captures (re)faites après tes dernières écritures : ' + fresh.join(' · ') +
-    '\nRegarde-les avant de conclure. Le second regard est FERMÉ (hydra-maquette § QA en ' +
-    'passes bornées) : une ligne par correction du lot, et pour chacune « l\'EXIGENCE ' +
-    'tient-elle », jamais « le correctif est-il appliqué ». Un défaut découvert ici et ' +
-    'absent du lot part au brief en écart daté — il ne rouvre pas de passe.'
+    '\nRegarde-les avant de conclure, à taille réelle. Premier regard sur ces écrans : OUVERT — l\'exigence de rendu et la planche contre les références (hydra-maquette § Rendu & QA, § Juger contre les références) ; il rend une liste de défauts nommés et localisés. Second regard : FERMÉ — une ligne par correction du lot, et pour chacune « l\'EXIGENCE tient-elle », jamais « le correctif est-il appliqué » ; un défaut découvert là et absent du lot part au brief en écart daté — il ne rouvre pas de passe, sauf une PANNE visible (ce qui se recouvre, déborde ou se coupe) : elle se corrige sur place et ses seuls écrans se re-regardent, une fois ; si elle tient encore, le message de fin la dit en tête de ce qui reste.'
     // Pas un motif de blocage de plus : une question de plus au regard déjà exigé.
     + (assetsVus.size ? '\nAssets affichés : ' + [...assetsVus].join(' · ') + ' — pour chacun, '
       + 'une ligne de plus au regard fermé : la capture montre-t-elle l\'élément de l\'écran '
       + 'observé, et pas un voisin exporté sous son nom ?' : ''));
+  if(writerBloque) motifs.push(WRITER_MOTIF);
   direEtSortir({ decision: 'block', reason: motifs.join('\n\n'), ...aDire }, sid);
 });
 }

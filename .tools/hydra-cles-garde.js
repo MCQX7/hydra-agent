@@ -52,9 +52,23 @@ process.stdin.on('end', () => {
   }
   const tete = { test: () => bonScript };
   const reste = m ? cmd.slice(m[0].length) : cmd;
-  // Seul $ toléré : celui de $CLAUDE_PROJECT_DIR dans le chemin (retiré avec la tête) ; ni $ ni
-  // enchaînement (; & | ` retour à la ligne) ailleurs, hors des textes entre apostrophes (corps JSON).
-  const parScript = tete.test(cmd) && !/[;&|`\n]/.test(reste.replace(/'[^']*'/g, '')) && !/\$/.test(reste);
+  // Ni $ ni enchaînement (; & | ` retour à la ligne) là où le shell les lit ; entre apostrophes
+  // (corps JSON), ils ne sont que du texte et passent. Le $ de $CLAUDE_PROJECT_DIR part avec la tête.
+  // Lecture comme le shell : apostrophe dans des guillemets ou échappée, ce n'est pas une ouverture ;
+  // une apostrophe jamais refermée arrête la commande.
+  const actif = (s) => {
+    let lu = '', q = null;
+    for (let k = 0; k < s.length; k++) {
+      const c = s[k];
+      if (q === "'") { if (c === "'") q = null; continue; }
+      if (c === '\\') { lu += c + (s[k + 1] || ''); k++; continue; }
+      if (q === '"') { if (c === '"') q = null; lu += c; continue; }
+      if (c === "'" || c === '"') q = c;
+      lu += c;
+    }
+    return q ? lu + '$' : lu;
+  };
+  const parScript = tete.test(cmd) && !/[;&|`\n$]/.test(actif(reste));
   if (parScript) process.exit(0);
   const appel = process.env.CLAUDE_PLUGIN_ROOT ? `"${process.env.CLAUDE_PLUGIN_ROOT}/.tools/hydra-api.js"` : '.tools/hydra-api.js';
   arret(`Commande arrêtée : elle utilise ${cites.join(', ')} hors du script d'appel. Une clé ne s'utilise que par :\n  node ${appel} --url <adresse> [--methode POST] --entete 'Nom-en-tête: {${cites[0]}}' [--corps '<json>']\nLe script place la clé lui-même ; la commande ne porte que le nom de la variable, entre accolades, sans $. Refais l'appel ainsi.`);

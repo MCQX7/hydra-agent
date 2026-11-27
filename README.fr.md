@@ -41,7 +41,7 @@ regarde ce qui se fait ailleurs.
 
 | Livrable | Ce qu'il contient |
 |---|---|
-| `01-fiche` | Le cadrage : le problème, l'indicateur qui tranchera et son seuil, les personnes touchées, le périmètre, les rendus (mobile, desktop) et ce qui est déjà décidé. |
+| `01-fiche` | Le cadrage : le problème, l'indicateur qui tranchera et son seuil, les personnes touchées, le périmètre, les rendus (mobile, desktop), la façon de composer les protos (reproduire ou explorer) et ce qui est déjà décidé. |
 | `02-rapport` | Les constats sur l'existant, les hypothèses, les références, les pistes avec leur critique, puis la recommandation. Chaque affirmation renvoie à sa source. |
 | `03-brief` | Pour chaque piste : ce que l'écran doit montrer, avec quels composants, et un texte de composition que n'importe qui peut reprendre dans son propre outil. |
 | `explorations/` | La galerie : un proto HTML par piste, qu'on peut manipuler, dans les rendus de ta plateforme. |
@@ -52,6 +52,14 @@ ce qu'il a dû supposer. **Par étapes** : il s'arrête aux moments clés pour q
 tranches. Pour les protos, qui coûtent le plus, tu choisis aussi le moment : **tout de
 suite**, ou **après avoir lu le brief**, si les pistes en valent la peine. Hydra te pose
 ces deux questions au cadrage.
+
+Les protos se composent de deux façons, qu'Hydra déduit de ta demande. **Reproduire** :
+tu retouches un écran existant ; les pistes gardent sa structure, seul ce qui change
+varie. **Explorer** : un parcours ou un composant nouveau, ou carte blanche ; chaque piste
+compose sa propre structure. Une maquette que tu donnes sert de base : Hydra la
+reconstruit fidèlement et s'appuie dessus. Sans maquette, c'est surtout de l'exploration,
+et c'est à toi de dire jusqu'où aller. Dans les deux cas, chaque écran se juge à côté
+des références du benchmark, au niveau d'une app en production.
 
 ## La langue
 
@@ -234,6 +242,7 @@ bloquer.
 | `lexique.js` | Les titres et les mots des livrables que les contrôles reconnaissent, en français et en anglais. | Les contrôles ne reconnaissent plus rien et le disent. |
 | `proto-frame.js` | Assemble la galerie des protos d'un sujet, vérifie que chaque piste a son proto et que ses boutons réagissent. | Pas de galerie, et une piste sans proto passe inaperçue. |
 | `proto-shot.js` | Capture chaque proto dans les rendus que demande la fiche du sujet, pour que la tête voie ce qu'elle a composé. | La tête ne voit pas son rendu : un texte qui déborde ou deux blocs qui se chevauchent passent. |
+| `proto-planche.js` | Pose la capture d'un proto à côté de ses références du benchmark, à la même largeur, pour juger son niveau à l'œil. | Le proto se juge de mémoire, sans la référence sous les yeux. |
 | `rendus.js` | Lit dans la fiche du sujet les rendus demandés (mobile, desktop ou les deux). | Tous les protos sortent en mobile et en desktop. |
 | `hydra-qa-gate.js` | Contrôle de fin de tour. Il bloque tant que des captures neuves n'ont pas été regardées, ou que les compteurs d'une recette ne tombent pas juste. | Un proto corrigé peut partir sans avoir été revu. |
 | `hydra-mesure.js` | Relève les vraies valeurs du build (tailles, couleurs, positions) pour la recette. | La recette ne peut pas chiffrer ses écarts. |

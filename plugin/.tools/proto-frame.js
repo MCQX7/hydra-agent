@@ -57,6 +57,7 @@ const LX = require(path.join(__dirname, 'lexique.js'));
 // UNE implémentation, celle de hydra-bilan.
 const { ecrireAtomique } = require(path.join(__dirname, 'hydra-bilan.js'));
 const { rendusDuSujet } = require(path.join(__dirname, 'rendus.js'));
+const { compositionDuSujet } = require(path.join(__dirname, 'composition.js'));
 
 const OUT_NAME = 'index.html';
 
@@ -448,6 +449,9 @@ function assemble(explorationsDir){
     return (r !== null && String(r).trim() !== '' && !isNaN(+r)) ? +r : null; };
   const parcours = so.status === 'ok' && !so.none && so.ecrans.length >= 2
                 && V.some(v => stepOf(v) !== null);
+  // Régime explorer (composition.js) : l'existant est une référence, pas une étape. Chaque piste
+  // déroule SES étapes, dans l'ordre de data-hydra-step, avec son nombre ; rien n'est intercalé.
+  const explorer = compositionDuSujet(path.dirname(explorationsDir)) === 'explorer';
   const ecranDe = new Map(T.map(x => [x.v, x.ecran]));
   const rangEcran = v => { const j = so.ecrans.findIndex(e => e.ecran === ecranDe.get(v));
     return j < 0 ? Infinity : j; };
@@ -469,11 +473,11 @@ function assemble(explorationsDir){
   G.forEach(g => {
     // Infinity − Infinity vaut NaN, donc faux : deux protos hors écran retombent sur `step`.
     const k = g.steps.map((_,j) => j).sort((a,b) =>
-      (parcours ? rangEcran(g.steps[a]) - rangEcran(g.steps[b]) : 0) || g.ord[a] - g.ord[b]);
+      (parcours && !explorer ? rangEcran(g.steps[a]) - rangEcran(g.steps[b]) : 0) || g.ord[a] - g.ord[b]);
     g.steps = k.map(j => g.steps[j]);
     // Un proto dont l'écran est indéterminable (déjà nommé par la ligne Socle) reste dans
     // son panneau, après les écrans connus : on ne le range pas au jugé.
-    g.items = !parcours ? g.steps : so.ecrans.flatMap(e => {
+    g.items = !parcours || explorer ? g.steps : so.ecrans.flatMap(e => {
       const p = g.steps.filter(v => ecranDe.get(v) === e.ecran);
       return p.length ? p : [{ obs: e }];
     }).concat(g.steps.filter(v => rangEcran(v) === Infinity));
@@ -514,7 +518,7 @@ function assemble(explorationsDir){
     // tête du panneau. Deux protos d'un même écran gardent leur libellé pour se distinguer.
     // Écran indéterminable : le libellé du proto, suivi de « écran ? » — et la ligne Socle le dit.
     const nomEtape = (v, k) => { const j = rangEcran(v);
-      if(!parcours || j === Infinity) return (v.declare ? lib(i, k, 'label', v.label) : esc(v.label)) + (parcours ? ' · ' + esc(P.ecranInconnu) : '');
+      if(!parcours || explorer || j === Infinity) return (v.declare ? lib(i, k, 'label', v.label) : esc(v.label)) + (parcours && !explorer ? ' · ' + esc(P.ecranInconnu) : '');
       return esc(so.ecrans[j].ecranNom) + (g.items.filter(x => !x.obs && rangEcran(x) === j).length > 1 ? ' · ' + esc(v.label) : ''); };
     // Le panneau s'ouvre sur la première étape COMPOSÉE : l'entrée d'une piste montre la
     // piste, pas l'existant qu'elle laisse en place.
@@ -590,6 +594,8 @@ function assemble(explorationsDir){
     ? `<div class="cov cov--warn">Socle : ${so.status === 'no-file' ? 'sans brief' : 'non déclaré au brief'} — <strong>invérifiable</strong></div>`
     : so.none
       ? `<div class="cov cov--ok">Socle : aucun écran existant à reproduire, déclaré</div>`
+    : explorer
+      ? `<div class="cov cov--ok">Socle : régime explorer — l'existant sert de référence, ses blocs ne se comptent pas</div>`
       : sansAnnot.length === V.length
         ? `<div class="cov cov--warn">Socle : ${so.blocs.length} bloc(s) observé(s), châssis <strong>non annoté</strong> — fidélité invérifiable</div>`
         : bribes.length
@@ -674,7 +680,7 @@ function assemble(explorationsDir){
   const mark = g => g.rank === Infinity ? ` <em>(${esc(P.rangInconnu)})</em>`
                   : rc[g.rank] > 1 ? ` <em>(${esc(P.rangPartage(g.rank))})</em>` : '';
   // En parcours, l'entrée dit ce que la piste recompose du parcours, pas combien de fichiers.
-  const nb = g => parcours ? ` <em>(${esc(P.etapesComposees(g.done, so.ecrans.length))})</em>`
+  const nb = g => parcours && !explorer ? ` <em>(${esc(P.etapesComposees(g.done, so.ecrans.length))})</em>`
                 : g.steps.length > 1 ? ` <em>(${esc(P.etapes(g.steps.length))})</em>` : '';
   const row = (g, i, num, sub) => `<li><button class="piste" data-i="${i}"><span class="num">${num}</span><span>${libelle(g, i)}${sub}${mark(g)}${nb(g)}</span></button></li>`;
   let n = 0;
@@ -721,7 +727,7 @@ function assemble(explorationsDir){
     .replace('<!--PISTES-->', () => pistes + (ghostRows ? '\n' + ghostRows : ''))
     .replace('<!--LATITUDE-->', () => latitude)
     .replace('<!--PANELS-->', () => panels + (ghostPanels ? '\n' + ghostPanels : ''))
-    .replace('<!--EXTRA-CSS-->', () => (parcours ? OBS_CSS : '') + (latitude ? LAT_CSS : '')
+    .replace('<!--EXTRA-CSS-->', () => (parcours && !explorer ? OBS_CSS : '') + (latitude ? LAT_CSS : '')
       + (G.some(g => g.items.length > 1) ? STEPS_CSS : ''));
   // Les lignes Scripts, Libellés et Contrôles dérivent du reste du fichier (elles se lisent en le
   // chargeant) : la comparaison « inchangé » les ignore, et une galerie inchangée garde

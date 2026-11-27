@@ -40,7 +40,7 @@ the discovery phase: Audit looks at what you have, and Research looks at what ot
 
 | Deliverable | What it contains |
 |---|---|
-| `01-topic-sheet` | The framing: the problem, the decision metric and its success threshold, the people affected, the scope, the renders (the screen sizes to build for: mobile, desktop or both) and what has already been decided. |
+| `01-topic-sheet` | The framing: the problem, the decision metric and its success threshold, the people affected, the scope, the renders (the screen sizes to build for: mobile, desktop or both), how to build the protos (reproduce or explore) and what has already been decided. |
 | `02-report` | Findings on what exists, hypotheses, references, options with their critique, then the recommendation. Every claim points to its source. |
 | `03-brief` | For each option: what the screen must show, which components to use, and a composition prompt anyone can reuse in their own tool. |
 | `explorations/` | The gallery: one clickable HTML proto per option, in your platform's renders. |
@@ -51,6 +51,14 @@ what it had to assume. **Step by step**: it stops at the key moments so you can 
 For the protos, which cost the most, you also choose when: **straight away**, or **after
 you've read the brief**, if the options are worth it. Hydra asks you both questions when
 it frames the topic.
+
+The protos are built in one of two ways, which Hydra works out from your request.
+**Reproduce**: you're reworking an existing screen; the options keep its structure, and
+only what changes varies. **Explore**: a new flow or component, or a free hand; each
+option builds its own structure. A design file you provide is the baseline: Hydra
+rebuilds it faithfully and builds on it. Without one, it's mostly exploration, and how far
+to go is yours to say. Either way, every screen is judged next to the benchmark
+references, at the level of an app in production.
 
 ## Language
 
@@ -236,6 +244,7 @@ on their own. If one of them fails to start, Hydra says so once, without blockin
 | `lexique.js` | The headings and words of the deliverables that the checks recognise, in English and in French. | The checks no longer recognise anything, and say so. |
 | `proto-frame.js` | Assembles a topic's gallery of protos, and checks that every option has its proto and that its buttons respond. | No gallery, and an option without a proto goes unnoticed. |
 | `proto-shot.js` | Captures each proto in the renders the topic sheet asks for, so the head sees what it built. | The head doesn't see its render: overflowing text or overlapping blocks slip through. |
+| `proto-planche.js` | Places a proto's screenshot next to its benchmark references, at the same width, to judge its level by eye. | The proto is judged from memory, without the reference in view. |
 | `rendus.js` | Reads the requested renders (mobile, desktop or both) from the topic sheet. | Every proto comes out in both mobile and desktop. |
 | `hydra-qa-gate.js` | End-of-turn check. It blocks as long as new screenshots haven't been looked at, or a design QA's counts don't match its table. | A corrected proto can go out without being reviewed. |
 | `hydra-mesure.js` | Measures the actual values of the build (sizes, colours, positions) for the design QA. | The design QA can't put numbers on its gaps. |
